@@ -2,22 +2,23 @@ const express = require('express')
 const cors = require('cors')
 const {graphqlHTTP} = require('express-graphql')
 const mongoose = require('mongoose')
-const schema = require("./schema/Schema.js")
-const isAuth = require('./middleware/isAuth.js')
+const schema = require("./schemas/Schema.js")
+const isAuth = require('./middlewares/isAuth.js')
+const dotenv = require('dotenv')
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(isAuth)
+dotenv.config()
 
-// const mongoURL = ''
-// mongoose.connect(mongoURL, {
-//     useCreateIndex: true,
-//     useFindAndModify: true,
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
-// mongoose.connection.once('open', () => console.log("DB Connected..."))
+const mongoURL = process.env.MONGO_URL
+console.log(mongoURL)
+mongoose.connect(mongoURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+mongoose.connection.once('open', () => console.log("DB Connected..."))
 
 app.use("/graphql", graphqlHTTP({
     schema,

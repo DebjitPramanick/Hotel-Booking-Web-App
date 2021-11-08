@@ -12,8 +12,10 @@ const UserSchema = new Schema({
     refreshToken: String,
     accessTokenExp: String,
     refreshTokenExp: String,
-    isAdmin: Boolean,
-    isManager: Boolean
+    isAdmin: {type: Boolean, default: false},
+    isManager: {type: Boolean, default: false},
+    isBlocked: {type: Boolean, default: false},
+    joined: {type: Date, default: Date.now}
 })
 
 module.exports = new mongoose.model('User', UserSchema)
