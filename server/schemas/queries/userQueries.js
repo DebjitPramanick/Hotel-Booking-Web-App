@@ -6,11 +6,13 @@ const bcrypt = require('bcryptjs')
 const isAuth = require('../../middlewares/isAuth.js')
 
 
-const { GraphQLID,
+const {
+    GraphQLID,
     GraphQLString,
     GraphQLInt,
     GraphQLNonNull,
-    GraphQLObjectType
+    GraphQLObjectType,
+    GraphQLList
 } = graphql
 
 
@@ -42,8 +44,8 @@ const login = { // For login existing user
                     email: query.email,
                     name: query.name,
                     age: query.age,
-                    id: query._id, 
-                    accessToken: accessToken, 
+                    id: query._id,
+                    accessToken: accessToken,
                     refreshToken: refreshToken,
                     accessTokenExp: query.accessTokenExp,
                     refreshTokenExp: query.refreshTokenExp,
@@ -60,20 +62,29 @@ const login = { // For login existing user
 const getUser = { // For getting user details
     type: UserType,
     args: {
-        id: {type: GraphQLID}
+        id: { type: GraphQLID }
     },
-    async resolve(parent, args, req){
-        if(!req.isAuth){
+    async resolve(parent, args, req) {
+        if (!req.isAuth) {
             throw new Error("Unauthenticated user!")
         }
-        else{
+        else {
             let user = await User.findById(args.id)
             return user
         }
     }
 }
 
+const getAllUsers = { // For getting user details
+    type: new GraphQLList(UserType),
+    async resolve(parent, args, req) {
+        let users = await User.find({ "isManager": false })
+        return users
+    }
+}
+
 module.exports = {
     login,
-    getUser
+    getUser,
+    getAllUsers
 }
