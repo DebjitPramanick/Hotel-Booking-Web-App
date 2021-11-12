@@ -1,5 +1,6 @@
 const graphql = require('graphql')
 const { createUser, generateToken, makeManager, updateProfile, deleteAccount, blockUser } = require('./mutations/userMutations.js')
+const { addHotel } = require('./mutations/hotelMutations.js')
 
 const { GraphQLObjectType } = graphql
 
@@ -11,7 +12,8 @@ const Mutation = new GraphQLObjectType({
         makeManager,
         updateProfile,
         deleteAccount,
-        blockUser
+        blockUser,
+        addHotel
     }
 })
 

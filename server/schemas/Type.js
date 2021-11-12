@@ -1,10 +1,15 @@
 const graphql = require('graphql')
+const GraphQLDate = require('graphql-date')
+const User = require('../models/User.js')
+const Room = require('../models/Room.js')
+const Booking = require('../models/Booking.js')
 
 const  {GraphQLID, 
     GraphQLInt, 
     GraphQLString, 
     GraphQLBoolean,
-    GraphQLObjectType
+    GraphQLObjectType,
+    GraphQLList
 } = graphql
 
 
@@ -22,7 +27,9 @@ const UserType = new GraphQLObjectType({
         accessTokenExp: { type: GraphQLString },
         refreshTokenExp: { type: GraphQLString },
         isManager: { type: GraphQLBoolean },
-        isAdmin: { type: GraphQLBoolean }
+        isAdmin: { type: GraphQLBoolean },
+        isBlocked: { type: GraphQLBoolean },
+        joined: {type: GraphQLDate}
     })
 })
 
@@ -37,7 +44,98 @@ const AuthType = new GraphQLObjectType({
     })
 })
 
+const HotelType = new GraphQLObjectType({
+    name: "Hotel",
+    fields: () => ({
+        id: { type: GraphQLID },
+        image: { type: GraphQLString },
+        name: {type: GraphQLString},
+        description: { type: GraphQLString },
+        addedOn: {type: GraphQLDate},
+        location: {type: GraphQLString},
+        ratings: {type: GraphQLInt},
+        manager: { 
+            type : UserType,
+            resolve(parent, args){
+                return User.findById(parent.manager)
+            }
+        },
+        rooms: {
+            type : new GraphQLList(RoomType),
+            resolve(parent, args){
+                return Room.findById(parent.id)
+            }
+        }
+    })
+})
+
+const RoomType = new GraphQLObjectType({
+    name: "Room",
+    fields: () => ({
+        id: { type: GraphQLID },
+        image: { type: GraphQLString },
+        name: {type: GraphQLString},
+        description: { type: GraphQLString },
+        addedOn: {type: GraphQLDate},
+        ratings: {type: GraphQLInt},
+        others: {type: new graphql.GraphQLList(GraphQLString)},
+        price: {type: GraphQLInt},
+        occupancy: {type: new GraphQLObjectType({
+            name: "Occupancy",
+            fields: () => ({
+                children: {type: GraphQLInt},
+                adults: {type: GraphQLInt},
+            })
+        })},
+        hotel: { 
+            type : HotelType,
+            resolve(parent, args){
+                return Hotel.findById(parent.hotel)
+            }
+        },
+        bookings: {
+            type : new GraphQLList(BookingType),
+            resolve(parent, args){
+                return Booking.findById(parent.bookingId)
+            }
+        }
+    })
+})
+
+const BookingType = new GraphQLObjectType({
+    name: "Booking",
+    fields: () => ({
+        id: { type: GraphQLID },
+        from: {type: GraphQLDate},
+        to: { type: GraphQLDate },
+        days: {type: GraphQLInt},
+        bookedOn: {type: GraphQLDate},
+        people: {type: GraphQLInt},
+        bookedBy: { 
+            type : UserType,
+            resolve(parent, args){
+                return User.findById(parent.userId)
+            }
+        },
+        room: { 
+            type : RoomType,
+            resolve(parent, args){
+                return Room.findById(parent.roomId)
+            }
+        },
+        hotel: { 
+            type : HotelType,
+            resolve(parent, args){
+                return Hotel.findById(parent.hotelId)
+            }
+        }
+    })
+})
+
 module.exports = {
     AuthType,
-    UserType
+    UserType,
+    HotelType,
+    RoomType,
+    BookingType
 }
