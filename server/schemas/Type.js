@@ -52,6 +52,8 @@ const HotelType = new GraphQLObjectType({
         image: { type: GraphQLString },
         name: {type: GraphQLString},
         description: { type: GraphQLString },
+        totalRooms: { type: GraphQLInt },
+        // roomsMap: {},
         addedOn: {type: GraphQLDate},
         location: {type: GraphQLString},
         ratings: {type: GraphQLInt},

@@ -23,6 +23,7 @@ const addHotel = { // For adding new hotel
         image: { type: GraphQLString },
         name: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: new GraphQLNonNull(GraphQLString) },
+        totalRooms: { type: new GraphQLNonNull(GraphQLInt) },
         manager: {type: new GraphQLNonNull(GraphQLID)},
         location: { type: new GraphQLNonNull(GraphQLString) }
     },

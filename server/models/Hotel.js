@@ -18,6 +18,8 @@ const HotelSchema = new Schema({
     addedOn: {type: Date, default: Date.now},
     location: String,
     ratings: {type: Number, default: null},
+    totalRooms: Number,
+    roomsMap: {name: Number, values: String}
 })
 
 module.exports = new mongoose.model('Hotel', HotelSchema)
