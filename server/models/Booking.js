@@ -6,6 +6,7 @@ const BookingSchema = new Schema({
     from: Date,
     to: Date,
     days: Number,
+    roomNumber: Number,
     bookedOn: {type: Date, default: Date.now},
     paid: {type: Boolean, default: false},
     bookedBy: {

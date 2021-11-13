@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const RoomSchema = new Schema({
-    image: String,
+    images: [String],
     name: String,
     description: String,
     occupancy: {
@@ -21,7 +21,8 @@ const RoomSchema = new Schema({
     bookings: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Booking'
-    }]
+    }],
+    roomNumbers: [Number]
 })
 
 module.exports = new mongoose.model('Room', RoomSchema)

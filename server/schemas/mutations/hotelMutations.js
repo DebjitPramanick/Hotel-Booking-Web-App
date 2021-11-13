@@ -35,7 +35,7 @@ const addHotel = { // For adding new hotel
             let hotel = new Hotel({
                 image: args.image,
                 name: args.name,
-                description: args.name,
+                description: args.description,
                 location: args.location,
                 manager: args.manager,
                 rooms: []

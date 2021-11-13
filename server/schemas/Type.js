@@ -2,6 +2,7 @@ const graphql = require('graphql')
 const GraphQLDate = require('graphql-date')
 const User = require('../models/User.js')
 const Room = require('../models/Room.js')
+const Hotel = require('../models/Hotel.js')
 const Booking = require('../models/Booking.js')
 
 const  {GraphQLID, 
@@ -73,13 +74,14 @@ const RoomType = new GraphQLObjectType({
     name: "Room",
     fields: () => ({
         id: { type: GraphQLID },
-        image: { type: GraphQLString },
+        images: { type: new GraphQLList(GraphQLString) },
         name: {type: GraphQLString},
         description: { type: GraphQLString },
         addedOn: {type: GraphQLDate},
         ratings: {type: GraphQLInt},
         others: {type: new graphql.GraphQLList(GraphQLString)},
         price: {type: GraphQLInt},
+        roomNumbers: {type: new GraphQLList(GraphQLInt)},
         occupancy: {type: new GraphQLObjectType({
             name: "Occupancy",
             fields: () => ({
@@ -111,6 +113,7 @@ const BookingType = new GraphQLObjectType({
         days: {type: GraphQLInt},
         bookedOn: {type: GraphQLDate},
         people: {type: GraphQLInt},
+        roomNumber: {type: GraphQLInt},
         bookedBy: { 
             type : UserType,
             resolve(parent, args){
