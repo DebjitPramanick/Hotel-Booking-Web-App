@@ -20,7 +20,7 @@ const {
 } = graphql
 
 
-const addRoom = { // For adding new hotel
+const addRoom = { // For adding new room
     type: RoomType,
     args: {
         hotel: { type: new GraphQLNonNull(GraphQLID)},
@@ -76,11 +76,11 @@ const addRoom = { // For adding new hotel
     }
 }
 
-const updateRoom = { // For updating hotel
+const updateRoom = { // For updating room
     
 }
 
-const deleteRoom = { // For deleting hotel
+const deleteRoom = { // For deleting room
     
 }
 

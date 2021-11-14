@@ -5,6 +5,7 @@ const User = require("../../models/User.js")
 const Hotel = require("../../models/Hotel.js")
 const verifyToken = require('../../middlewares/verifyToken.js')
 const jwt = require('jsonwebtoken')
+const Room = require('../../models/Room.js')
 
 
 const { 
@@ -55,10 +56,28 @@ const updateProfile = { // For updating hotel
 }
 
 const deleteHotel = { // For deleting hotel
-    
+    type: HotelType,
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+    },
+    async resolve(parent, args) {
+        let hotel = await Hotel.findById(args.id)
+        if (!hotel) {
+            throw new Error('Hotel not found.')
+        }
+        else {
+            hotel.rooms.forEach(async r => {
+                let room = await Room.findById(r._id)
+                await room.delete()
+            })
+            let res = await hotel.delete()
+            return res
+        }
+    }
 }
 
 
 module.exports = {
-    addHotel
+    addHotel,
+    deleteHotel
 }
