@@ -22,7 +22,7 @@ const {
 } = graphql
 
 
-const addBooking = { // For adding new hotel
+const addBooking = { // For adding new booking
     type: BookingType,
     args: {
         from: {type: new GraphQLNonNull(GraphQLDate)},
