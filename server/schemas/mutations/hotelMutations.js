@@ -6,7 +6,7 @@ const Hotel = require("../../models/Hotel.js")
 const verifyToken = require('../../middlewares/verifyToken.js')
 const jwt = require('jsonwebtoken')
 const Room = require('../../models/Room.js')
-
+const Booking = require('../../models/Booking.js')
 
 const { 
     GraphQLID,
@@ -68,6 +68,10 @@ const deleteHotel = { // For deleting hotel
         else {
             hotel.rooms.forEach(async r => {
                 let room = await Room.findById(r._id)
+                room.bookings.forEach(async b => {
+                    let booking = await Booking.findById(b._id)
+                    await booking.delete()
+                })
                 await room.delete()
             })
             let res = await hotel.delete()

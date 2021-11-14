@@ -53,7 +53,7 @@ const addBooking = { // For adding new hotel
         }
         else {
 
-            let cntDays = Math.abs(new Date(args.to)-new Date(args.from)) + 1
+            let cntDays = Math.abs(new Date(args.to).getDate()-new Date(args.from).getDate()) + 1
 
             let booking = new Booking({
                 from: args.from,
@@ -85,5 +85,6 @@ const cancelBooking = { // For cancelling hotel
 
 
 module.exports = {
-    addBooking
+    addBooking,
+    cancelBooking
 }
