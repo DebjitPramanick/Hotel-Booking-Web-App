@@ -45,6 +45,13 @@ const addRoom = { // For adding new hotel
         if (query) {
             throw new Error('Cannot add multiple rooms with same name.')
         }
+        let ass = []
+        args.roomNumbers.forEach(n => {
+            if(hotelData.roomsMap.get(n.toString())) ass.push(n)
+        })
+        if(ass.length > 0){
+            throw new Error('Some room numbers are already assigned. Please try different room numbers.')
+        }
         else {
             let room = new Room({
                 hotel: args.hotel,
@@ -54,11 +61,15 @@ const addRoom = { // For adding new hotel
                 occupancy: args.occupancy,
                 others: args.others,
                 price: args.price,
-                roomNumbers: args.total,
+                roomNumbers: args.roomNumbers,
                 bookings: []
             })
             let res = await room.save()
             hotelData.rooms.push(res._id)
+            room.roomNumbers.forEach(n => {
+                hotelData.roomsMap.set(n.toString(), room.name)
+            })
+            
             await hotelData.save()
             return res
         }

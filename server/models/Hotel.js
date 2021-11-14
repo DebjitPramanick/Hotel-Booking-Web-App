@@ -19,7 +19,7 @@ const HotelSchema = new Schema({
     location: String,
     ratings: {type: Number, default: null},
     totalRooms: Number,
-    roomsMap: {name: Number, values: String}
+    roomsMap: {type: Map, of: String, required: true}
 })
 
 module.exports = new mongoose.model('Hotel', HotelSchema)

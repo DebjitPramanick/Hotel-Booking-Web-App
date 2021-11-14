@@ -5,7 +5,9 @@ const Room = require('../models/Room.js')
 const Hotel = require('../models/Hotel.js')
 const Booking = require('../models/Booking.js')
 
-const  {GraphQLID, 
+const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
+const  {
+    GraphQLID, 
     GraphQLInt, 
     GraphQLString, 
     GraphQLBoolean,
@@ -53,7 +55,7 @@ const HotelType = new GraphQLObjectType({
         name: {type: GraphQLString},
         description: { type: GraphQLString },
         totalRooms: { type: GraphQLInt },
-        // roomsMap: {},
+        roomsMap: {type: GraphQLJSONObject},
         addedOn: {type: GraphQLDate},
         location: {type: GraphQLString},
         ratings: {type: GraphQLInt},
@@ -116,6 +118,8 @@ const BookingType = new GraphQLObjectType({
         bookedOn: {type: GraphQLDate},
         people: {type: GraphQLInt},
         roomNumber: {type: GraphQLInt},
+        amount: {type: GraphQLInt},
+        paid: {type: GraphQLBoolean},
         bookedBy: { 
             type : UserType,
             resolve(parent, args){

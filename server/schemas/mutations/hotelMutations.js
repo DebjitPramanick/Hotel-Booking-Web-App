@@ -39,8 +39,11 @@ const addHotel = { // For adding new hotel
                 description: args.description,
                 location: args.location,
                 manager: args.manager,
+                totalRooms: args.totalRooms,
+                roomsMap: {},
                 rooms: []
             })
+            console.log(hotel)
             let res = await hotel.save()
             return res
         }

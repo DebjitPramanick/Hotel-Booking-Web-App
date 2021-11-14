@@ -9,6 +9,7 @@ const BookingSchema = new Schema({
     roomNumber: Number,
     bookedOn: {type: Date, default: Date.now},
     paid: {type: Boolean, default: false},
+    amount: Number,
     bookedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
