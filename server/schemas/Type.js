@@ -116,26 +116,32 @@ const BookingType = new GraphQLObjectType({
         to: { type: GraphQLDate },
         days: {type: GraphQLInt},
         bookedOn: {type: GraphQLDate},
-        people: {type: GraphQLInt},
+        people: {type: new GraphQLObjectType({
+            name: "People",
+            fields: () => ({
+                children: {type: GraphQLInt},
+                adults: {type: GraphQLInt},
+            })
+        })},
         roomNumber: {type: GraphQLInt},
         amount: {type: GraphQLInt},
         paid: {type: GraphQLBoolean},
         bookedBy: { 
             type : UserType,
             resolve(parent, args){
-                return User.findById(parent.userId)
+                return User.findById(parent.bookedBy)
             }
         },
         room: { 
             type : RoomType,
             resolve(parent, args){
-                return Room.findById(parent.roomId)
+                return Room.findById(parent.room)
             }
         },
         hotel: { 
             type : HotelType,
             resolve(parent, args){
-                return Hotel.findById(parent.hotelId)
+                return Hotel.findById(parent.hotel)
             }
         }
     })
