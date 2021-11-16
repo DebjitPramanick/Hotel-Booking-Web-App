@@ -62,7 +62,7 @@ const login = { // For login existing user
 const getUser = { // For getting user details
     type: UserType,
     args: {
-        id: { type: GraphQLID }
+        id: { type: new GraphQLNonNull(GraphQLID) }
     },
     async resolve(parent, args, req) {
         if (!req.isAuth) {

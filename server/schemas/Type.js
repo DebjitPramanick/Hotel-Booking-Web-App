@@ -68,7 +68,7 @@ const HotelType = new GraphQLObjectType({
         rooms: {
             type : new GraphQLList(RoomType),
             resolve(parent, args){
-                return Room.findById(parent.id)
+                return Room.find({hotel: parent._id})
             }
         }
     })
@@ -102,7 +102,8 @@ const RoomType = new GraphQLObjectType({
         bookings: {
             type : new GraphQLList(BookingType),
             resolve(parent, args){
-                return Booking.findById(parent.bookingId)
+                console.log(parent)
+                return Booking.find({room: parent._id})
             }
         }
     })

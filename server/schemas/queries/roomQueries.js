@@ -16,7 +16,7 @@ const {
 const getRoom = { // For getting room details
     type: RoomType,
     args: {
-        id: { type: GraphQLID }
+        id: { type: new GraphQLNonNull(GraphQLID) }
     },
     async resolve(parent, args, req) {
         if (!args.id) {
@@ -32,12 +32,15 @@ const getRoom = { // For getting room details
 const getAllRooms = { // For getting room details
     type: new GraphQLList(RoomType),
     args: {
-        id: { type: GraphQLID }
+        id: { type: new GraphQLNonNull(GraphQLID) }
     },
     async resolve(parent, args, req) {
-        let hotel = await Hotel.findByID(args.id)
+        let hotel = await Hotel.findById(args.id)
+        if (!args.id) {
+            throw new Error("Hotel ID is required.")
+        }
         let res= []
-        res = hotel.rooms.map(async r => await Room.findByID(r))
+        res = hotel.rooms.map(async r => await Room.findById(r))
         return res
     }
 }

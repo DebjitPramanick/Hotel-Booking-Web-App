@@ -16,7 +16,7 @@ const {
 const getHotel = { // For getting hotel details
     type: HotelType,
     args: {
-        id: { type: GraphQLID }
+        id: { type: new GraphQLNonNull(GraphQLID) }
     },
     async resolve(parent, args, req) {
         if (!args.id) {
