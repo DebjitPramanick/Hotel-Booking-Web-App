@@ -92,11 +92,10 @@ const deleteRoom = { // For deleting room
         }
         else {
             let hotel = await Hotel.findById(room.hotel)
-            let rms = hotel.rooms.filter(rId => rId!== room.id)
-            hotel.rooms = rms
             room.roomNumbers.forEach(n => {
                 hotel.roomsMap.delete(n.toString())
             })
+            await hotel.rooms.remove(args.id)
             await hotel.save()
             room.bookings.forEach(async b => {
                 let booking = await Booking.findById(b._id)

@@ -19,7 +19,8 @@ const Mutation = new GraphQLObjectType({
         deleteHotel,
         addRoom,
         deleteRoom,
-        addBooking
+        addBooking,
+        cancelBooking
     }
 })
 
