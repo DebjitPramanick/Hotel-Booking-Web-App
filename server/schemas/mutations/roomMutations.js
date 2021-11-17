@@ -27,13 +27,7 @@ const addRoom = { // For adding new room
         images: { type: new GraphQLList(GraphQLString) },
         name: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: new GraphQLNonNull(GraphQLString) },
-        occupancy: { type: new GraphQLNonNull(new GraphQLInputObjectType({
-            name: "occupancy",
-            fields: {
-                children: {type: GraphQLInt},
-                adults: {type: GraphQLInt},
-            }
-        })) },
+        occupancy: { type: new GraphQLNonNull(GraphQLInt) },
         others: { type: new GraphQLList(GraphQLString) },
         price: {type: new GraphQLNonNull(GraphQLInt)},
         roomNumbers: {type: new GraphQLNonNull(new GraphQLList(GraphQLInt))},

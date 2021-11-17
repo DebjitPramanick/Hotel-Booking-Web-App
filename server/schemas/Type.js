@@ -86,13 +86,7 @@ const RoomType = new GraphQLObjectType({
         others: {type: new graphql.GraphQLList(GraphQLString)},
         price: {type: GraphQLInt},
         roomNumbers: {type: new GraphQLList(GraphQLInt)},
-        occupancy: {type: new GraphQLObjectType({
-            name: "Occupancy",
-            fields: () => ({
-                children: {type: GraphQLInt},
-                adults: {type: GraphQLInt},
-            })
-        })},
+        occupancy: {type: GraphQLInt},
         hotel: { 
             type : HotelType,
             resolve(parent, args){
