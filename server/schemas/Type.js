@@ -121,6 +121,8 @@ const BookingType = new GraphQLObjectType({
         roomNumber: {type: GraphQLInt},
         amount: {type: GraphQLInt},
         paid: {type: GraphQLBoolean},
+        numOfPeople: {type: GraphQLInt},
+        location: {type: GraphQLString},
         bookedBy: { 
             type : UserType,
             resolve(parent, args){

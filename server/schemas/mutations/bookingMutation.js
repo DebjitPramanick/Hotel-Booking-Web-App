@@ -56,6 +56,7 @@ const addBooking = { // For adding new booking
         else {
 
             let cntDays = Math.abs(new Date(args.to).getDate() - new Date(args.from).getDate()) + 1
+            const total = args.people.children + args.people.adults
 
             let booking = new Booking({
                 from: args.from,
@@ -64,6 +65,8 @@ const addBooking = { // For adding new booking
                 roomNumber: args.roomNumber,
                 paid: args.paid,
                 amount: args.amount,
+                numOfPeople: total,
+                location: hotelData.location,
                 bookedBy: args.bookedBy,
                 people: args.people,
                 room: args.room,
