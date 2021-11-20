@@ -44,7 +44,6 @@ const addHotel = { // For adding new hotel
                 roomsMap: {},
                 rooms: []
             })
-            console.log(hotel)
             let res = await hotel.save()
             return res
         }

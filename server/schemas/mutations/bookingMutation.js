@@ -49,7 +49,7 @@ const addBooking = { // For adding new booking
         let roomData = await Room.findById(args.room)
         if (!roomData) throw new Error('Room ID is wrong.')
 
-        let query = await Booking.findOne({ from: args.from, to: args.to, room: args.room })
+        let query = await Booking.findOne({ from: args.from, to: args.to, room: args.room, roomNumber: args.roomNumber })
         if (query) {
             throw new Error('Cannot book room(s) on same date.')
         }

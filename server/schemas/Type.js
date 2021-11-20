@@ -96,7 +96,6 @@ const RoomType = new GraphQLObjectType({
         bookings: {
             type : new GraphQLList(BookingType),
             resolve(parent, args){
-                console.log(parent)
                 return Booking.find({room: parent._id})
             }
         }

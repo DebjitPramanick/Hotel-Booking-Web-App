@@ -4,6 +4,7 @@ const Hotel = require("../../models/Hotel.js")
 const Booking = require("../../models/Booking.js")
 
 const GraphQLDate = require('graphql-date')
+const { AvailableHotelType } = require('../CustomTypes.js')
 const {
     GraphQLID,
     GraphQLString,
@@ -40,7 +41,7 @@ const getAllHotels = { // For getting hotel details
 }
 
 const searchHotels = { // For searching available hotels
-    type: new GraphQLList(HotelType),
+    type: new GraphQLList(AvailableHotelType),
     args: {
         location: { type: new GraphQLNonNull(GraphQLID) },
         from: { type: new GraphQLNonNull(GraphQLDate) },
@@ -60,10 +61,31 @@ const searchHotels = { // For searching available hotels
                 location: args.location,
                 numOfPeople: { $gte: args.occupancy }
             })
-            let hotelIds = bookings.map(b => b.hotel)
+            let map = new Map()
+            bookings.forEach(b => {
+                let k = b.hotel.toString()
+                let c = map.has(k) ? map.get(k) : new Set()
+                c.add(b.roomNumber)
+                map.set(k, c)
+                return b.hotel
+            })
+            let hotelIds = []
+            let qHotels = await Hotel.find({_id: {$in: hotelIds}})
+            qHotels.forEach(q => {
+                let k = q._id.toString()
+                if(map.has(k) && q.totalRooms > map.get(k).size){
+                    hotelIds.push(q._id)
+                }
+            })
 
             let hotels = await Hotel.find({_id: {$nin: hotelIds}})
-            return hotels
+            let res = []
+            hotels.forEach(h => {
+                let k = h._id.toString()
+                let avR = h.totalRooms - (map.has(k) ? map.get(k).size : 0)
+                res.push({hotel: h, rooms: avR})
+            })
+            return res
         }
     }
 }
