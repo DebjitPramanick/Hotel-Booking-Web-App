@@ -23,10 +23,10 @@ const getHotel = { // For getting hotel details
     },
     async resolve(parent, args, req) {
         if (!args.id) {
-            throw new Error("Hotel ID is required.")
+            throw new Error("Manager ID is required.")
         }
         else {
-            let hotel = await Hotel.findById(args.id)
+            let hotel = await Hotel.find({manager: args.id})
             return hotel
         }
     }
