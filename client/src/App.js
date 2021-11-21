@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Header from './components/Header/Header';
 import MainMenu from './components/MainMenu/MainMenu';
 import { GlobalContext } from './utils/Context';
+import { PageContainer } from './components/GlobalStyles/GlobalStyles';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -31,17 +32,11 @@ function App() {
           <Router>
             <Header page={page} />
             <MainMenu />
-            <div className="page-container">
+            <PageContainer>
               <Routes>
-                {/* <Route path="/login" exact component={Auth} /> */}
-                {/* <Route path="/logout" exact render={(props) => {
-                  localStorage.removeItem('User')
-                  window.location.href = "/login"
-                  return null
-                }} /> */}
-                <Route path="/dashboard" exact component={Dashboard}></Route>
+                <Route exact path="/dashboard" element={<Dashboard />}></Route>
               </Routes>
-            </div>
+            </PageContainer>
           </Router>
         </div>
       </GlobalContext.Provider>

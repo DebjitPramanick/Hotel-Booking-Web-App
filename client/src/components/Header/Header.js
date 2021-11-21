@@ -1,7 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import "./header.css"
-import { Link } from 'react-router-dom'
 import { GlobalContext } from '../../utils/Context'
+import styled from 'styled-components'
+import { PageTitle } from '../GlobalStyles/GlobalStyles'
+
+const FixedHeader = styled.div`
+    padding: 12px 16px;
+    backdrop-filter: blur(42px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff
+`
+
+const Content = styled.div`
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+    justify-content: space-between
+`
 
 const Header = (props) => {
     const { setMenuOpen, menuOpen } = useContext(GlobalContext)
@@ -10,13 +27,11 @@ const Header = (props) => {
     const user = JSON.parse(localStorage.getItem('User'))
 
     return (
-        <div className="fixed-header"
+        <FixedHeader
             style={menuOpen ? { backgroundColor: '#262626f6', backdropFilter: 'blur(0px)' } : {}}>
-            <div className="header-content">
+            <Content>
                 <div className="brand">
-                    <div className="page-name">
-                        {pageName}
-                    </div>
+                    <PageTitle>{pageName}</PageTitle>
                 </div>
                 {user && (
                     <div className="collection">
@@ -27,9 +42,9 @@ const Header = (props) => {
                         </div>
                     </div>
                 )}
-            </div>
+            </Content>
 
-        </div>
+        </FixedHeader>
     )
 }
 
