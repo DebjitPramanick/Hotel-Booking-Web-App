@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import "./menu.css"
 import FadeIn from 'react-fade-in';
-import Avatar from '../Avatar';
-import IMG from "../../assets/avatar.jpeg"
 import { GlobalContext } from '../../utils/Context';
 
 const MainMenu = () => {
@@ -55,7 +53,6 @@ const MainMenu = () => {
                 <div className="menu-content">
                     <FadeIn delay={200}>
                         <div className="user-details">
-                            <Avatar img={IMG} size='medium' />
                             <div className="details">
                                 <p className="username">@{user.firstName}</p>
                                 <p className="wallet-address">{user.walletAddress}</p>

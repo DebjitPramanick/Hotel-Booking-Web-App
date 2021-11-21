@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Header from './components/Header/Header';
+import MainMenu from './components/MainMenu/MainMenu';
+import { GlobalContext } from './utils/Context';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -14,25 +17,34 @@ const client = new ApolloClient({
 });
 
 function App() {
+
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [user, setUser] = useState(null)
+  const [page, setPage] = useState('Home')
+
+
   return (
     <ApolloProvider client={client}>
+      <GlobalContext.Provider value={{ menuOpen, setMenuOpen, user, setPage, setUser }}>
+
         <div className="App">
           <Router>
             <Header page={page} />
             <MainMenu />
             <div className="page-container">
-              <Switch>
+              <Routes>
                 {/* <Route path="/login" exact component={Auth} /> */}
                 {/* <Route path="/logout" exact render={(props) => {
                   localStorage.removeItem('User')
                   window.location.href = "/login"
                   return null
                 }} /> */}
-                <PrivateRoute path="/dashboard" exact component={Dashboard}></PrivateRoute>
-              </Switch>
+                <Route path="/dashboard" exact component={Dashboard}></Route>
+              </Routes>
             </div>
           </Router>
         </div>
+      </GlobalContext.Provider>
     </ApolloProvider>
   );
 }

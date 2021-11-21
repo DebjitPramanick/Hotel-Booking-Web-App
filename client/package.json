@@ -10,6 +10,7 @@
     "graphql": "^16.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-fade-in": "^2.0.1",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.3"
