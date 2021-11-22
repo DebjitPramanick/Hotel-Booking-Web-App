@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,6 +13,7 @@ import { GlobalContext } from './utils/Context';
 import { PageContainer } from './components/GlobalStyles/GlobalStyles';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import { managerRoute, noUserRoute } from './utils/ConditionalRoutes';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -38,7 +39,10 @@ function App() {
               <Routes>
                 <Route exact path="/register" element={<Register />}></Route>
                 <Route exact path="/login" element={<Login />}></Route>
-                <Route exact path="/dashboard" element={<Dashboard />}></Route>
+                <Route exact path="/dashboard" element={
+                  managerRoute ? <Dashboard />
+                    : <Navigate to="/login" />
+                }></Route>
               </Routes>
             </PageContainer>
           </Router>
