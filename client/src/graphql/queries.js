@@ -3,7 +3,8 @@ import {gql} from "@apollo/client";
 export const LOGIN_USER = gql`
 query($email: String!, $password: String!){
   login(email: $email, password: $password){
-    userID
+    id
+    name
     username
     age
     email
@@ -11,6 +12,10 @@ query($email: String!, $password: String!){
     refreshToken
     accessTokenExp
     refreshTokenExp
+    isAdmin
+    isManager
+    isBlocked
+    joined
   }
 }
 `
@@ -18,7 +23,8 @@ query($email: String!, $password: String!){
 export const GET_USER = gql`
 query($id: ID){
   getUser(id: $id){
-    userID
+    id
+    name
     username
     age
     email
@@ -26,6 +32,10 @@ query($id: ID){
     refreshToken
     accessTokenExp
     refreshTokenExp
+    isAdmin
+    isManager
+    isBlocked
+    joined
   }
 }
 `

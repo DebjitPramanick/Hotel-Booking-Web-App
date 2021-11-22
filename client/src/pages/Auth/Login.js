@@ -16,7 +16,7 @@ const Login = () => {
         password: ''
     })
 
-    const userLogin = (e) => {
+    const userLogin = async(e) => {
         e.preventDefault()
         login({
             variables: {
@@ -37,7 +37,7 @@ const Login = () => {
                 type="password"
                 value={data.password}
                 onChange={(e) => setdata({...data, password: e.target.value})}></input>
-                <button>Log In</button>
+                <button type="submit">Log In</button>
             </form>
         </div>
     )
