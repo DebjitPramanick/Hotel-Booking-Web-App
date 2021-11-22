@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { GlobalContext } from '../../utils/Context'
 import RoomsList from './RoomsList'
@@ -6,6 +6,9 @@ import HotelIMG from "../../assets/hotel.jpeg"
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import "./dashboard.css"
+import { useQuery } from '@apollo/client'
+import { GET_HOTEL } from '../../graphql/queries'
+import { getDate } from '../../utils/utilFunctions'
 
 const QuickView = styled.div`
     display: grid;
@@ -79,6 +82,13 @@ const CardText = styled.div`
 
 const Dashboard = () => {
     const { setPage } = useContext(GlobalContext)
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    const { loading, data, error } = useQuery(GET_HOTEL, {
+        variables: { id: user.id },
+    })
+
+    console.log(data)
 
     useEffect(() => {
         setPage("Dashboard")
@@ -86,28 +96,26 @@ const Dashboard = () => {
 
     const controls = [
         { label: 'Create Room', icon: <AddIcon /> },
-        { label: 'Edit Room', icon: <EditIcon /> },
         { label: 'Edit Hotel', icon: <EditIcon /> }
     ]
+
+    if(loading) return <p>Loading...</p>
+
+    const hotel = data.getHotel
 
     return (
         <div>
             <QuickView>
                 <Info style={{ backgroundImage: `url(${HotelIMG})` }}>
                     <div className="card-details">
-                        <h1>Hotel Name</h1>
-                        <p>Location</p>
+                        <h1>{hotel.name}</h1>
+                        <p>{hotel.location}</p>
                         <p className="description">
-                            Lorem Ipsum is simply dummy text of the printing 
-                            and typesetting industry. Lorem Ipsum has been 
-                            the industry's standard dummy text ever since 
-                            the 1500s, when an unknown printer took a galley 
-                            of type and scrambled it to make a type specimen 
-                            book.
+                            {hotel.description}
                         </p>
-                        <CardText>Total Rooms : <span>56</span></CardText>
-                        <CardText>Added on : <span>21st November, 2021</span></CardText>
-                        <CardText>Manager: <span>Debjit Pramanick</span></CardText>
+                        <CardText>Total Rooms : <span>{hotel.totalRooms}</span></CardText>
+                        <CardText>Added on : <span>{getDate(hotel.addedOn, 'Do MMMM, YYYY')}</span></CardText>
+                        <CardText>Manager: <span>{hotel.manager.name}</span></CardText>
                     </div>
                     <Controls>
                         {controls.map(c => (
@@ -120,7 +128,7 @@ const Dashboard = () => {
                 </Info>
                 <Graph />
             </QuickView>
-            <RoomsList />
+            <RoomsList rooms={hotel.rooms}/>
         </div>
     )
 }

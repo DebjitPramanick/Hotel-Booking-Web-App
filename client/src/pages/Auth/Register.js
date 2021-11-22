@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { REGISTER_USER } from '../../graphql/mutations';
 import { GlobalContext } from '../../utils/Context';
 import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles';
-import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/GlobalStyles';
+import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/FormStyles';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {

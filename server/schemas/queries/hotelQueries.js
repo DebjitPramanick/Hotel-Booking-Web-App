@@ -27,7 +27,7 @@ const getHotel = { // For getting hotel details
         }
         else {
             let hotel = await Hotel.find({manager: args.id})
-            return hotel
+            return hotel[0]
         }
     }
 }

@@ -10,7 +10,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Header from './components/Header/Header';
 import MainMenu from './components/MainMenu/MainMenu';
 import { GlobalContext } from './utils/Context';
-import { PageContainer } from './components/GlobalStyles/GlobalStyles';
+import { PageContainer } from './components/GlobalStyles/PageStyles';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import { managerRoute, noUserRoute } from './utils/ConditionalRoutes';

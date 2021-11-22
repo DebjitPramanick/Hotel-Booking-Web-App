@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
 import React, { useContext, useState, useEffect } from 'react'
-import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/GlobalStyles'
+import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/FormStyles'
 import { LOGIN_USER } from '../../graphql/queries'
 import { GlobalContext } from '../../utils/Context'
 import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles'

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import "./header.css"
 import { GlobalContext } from '../../utils/Context'
 import styled from 'styled-components'
-import { PageTitle } from '../GlobalStyles/GlobalStyles'
+import { PageTitle } from '../GlobalStyles/PageStyles'
 
 const FixedHeader = styled.div`
     padding: 12px 16px;
