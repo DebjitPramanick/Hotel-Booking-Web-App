@@ -1,8 +1,10 @@
 import {gql} from "@apollo/client";
 
 export const REGISTER_USER = gql`
-mutation($email: String!, $age: Int, $password: String!){
-    createUser(email: $email, password: $password, age: $age){
+mutation($name: String!, $username: String!, $email: String!, $age: Int, $password: String!){
+    createUser(name: $name, username: $username, email: $email, password: $password, age: $age){
+      id
+      name
       username
       age
       email
@@ -10,6 +12,10 @@ mutation($email: String!, $age: Int, $password: String!){
       refreshToken
       accessTokenExp
       refreshTokenExp
+      isAdmin
+      isManager
+      isBlocked
+      joined
     }
   }
 `
@@ -17,7 +23,8 @@ mutation($email: String!, $age: Int, $password: String!){
 export const GENERATE_TOKEN = gql`
 mutation($refreshToken: String!){
   generateToken(refreshToken: $refreshToken){
-    userID
+    id
+    name
     username
     age
     email
@@ -25,6 +32,10 @@ mutation($refreshToken: String!){
     refreshToken
     accessTokenExp
     refreshTokenExp
+    isAdmin
+    isManager
+    isBlocked
+    joined
   }
 }
 `

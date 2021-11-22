@@ -11,6 +11,8 @@ import Header from './components/Header/Header';
 import MainMenu from './components/MainMenu/MainMenu';
 import { GlobalContext } from './utils/Context';
 import { PageContainer } from './components/GlobalStyles/GlobalStyles';
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -34,6 +36,8 @@ function App() {
             <MainMenu />
             <PageContainer>
               <Routes>
+                <Route exact path="/register" element={<Register />}></Route>
+                <Route exact path="/login" element={<Login />}></Route>
                 <Route exact path="/dashboard" element={<Dashboard />}></Route>
               </Routes>
             </PageContainer>
