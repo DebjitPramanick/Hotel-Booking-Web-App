@@ -1,7 +1,7 @@
 import { useLazyQuery } from '@apollo/client'
 import React, { useContext, useState, useEffect } from 'react'
 import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/FormStyles'
-import { LOGIN_USER } from '../../graphql/queries'
+import { LOGIN_USER } from '../../graphql/queries/userQueries'
 import { GlobalContext } from '../../utils/Context'
 import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles'
 import {useNavigate} from 'react-router-dom'
@@ -22,7 +22,9 @@ const Login = () => {
             let user = res.login
             localStorage.setItem('user', JSON.stringify(user))
             setTimeout(() => {
-                user.isManager ? navigate('/dashboard') : navigate('/')
+                user.isManager ? 
+                window.location.href = '/dashboard' : 
+                window.location.href = '/'
             }, 1000);
         },
         onError: err => {

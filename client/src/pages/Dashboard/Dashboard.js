@@ -7,8 +7,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import "./dashboard.css"
 import { useQuery } from '@apollo/client'
-import { GET_HOTEL } from '../../graphql/queries'
 import { getDate } from '../../utils/utilFunctions'
+import DashboardModal from '../../components/Modals/DashboardModal'
+import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 
 const QuickView = styled.div`
     display: grid;
@@ -88,23 +89,24 @@ const Dashboard = () => {
         variables: { id: user.id },
     })
 
-    console.log(data)
+    const [roomModal, setRoomModal] = useState(false)
 
     useEffect(() => {
         setPage("Dashboard")
     }, [])
 
     const controls = [
-        { label: 'Create Room', icon: <AddIcon /> },
+        { label: 'Create Room', icon: <AddIcon />, action: () => setRoomModal(true) },
         { label: 'Edit Hotel', icon: <EditIcon /> }
     ]
 
-    if(loading) return <p>Loading...</p>
+    if (loading) return <p>Loading...</p>
 
     const hotel = data.getHotel
 
     return (
         <div>
+            {roomModal && (<DashboardModal action="Add" title="Add Room" hotel={hotel} setRoomModal={setRoomModal} />)}
             <QuickView>
                 <Info style={{ backgroundImage: `url(${HotelIMG})` }}>
                     <div className="card-details">
@@ -119,7 +121,7 @@ const Dashboard = () => {
                     </div>
                     <Controls>
                         {controls.map(c => (
-                            <div className="card-option">
+                            <div className="card-option" onClick={c.action}>
                                 {c.icon}
                                 <p>{c.label}</p>
                             </div>
@@ -128,7 +130,7 @@ const Dashboard = () => {
                 </Info>
                 <Graph />
             </QuickView>
-            <RoomsList rooms={hotel.rooms}/>
+            <RoomsList rooms={hotel.rooms} />
         </div>
     )
 }

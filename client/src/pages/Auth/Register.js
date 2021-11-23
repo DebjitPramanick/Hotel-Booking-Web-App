@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client';
-import { REGISTER_USER } from '../../graphql/mutations';
+import { REGISTER_USER } from '../../graphql/mutations/userMutations';
 import { GlobalContext } from '../../utils/Context';
 import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles';
 import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/FormStyles';
@@ -41,7 +41,9 @@ const Register = () => {
                 const user = res.data.createUser
                 localStorage.setItem('user', JSON.stringify(user))
                 setTimeout(() => {
-                    user.isManager ? navigate('/dashboard') : navigate('/')
+                    user.isManager ?
+                        window.location.href = '/dashboard' :
+                        window.location.href = '/'
                 }, 1000);
             })
             .catch(err => {
