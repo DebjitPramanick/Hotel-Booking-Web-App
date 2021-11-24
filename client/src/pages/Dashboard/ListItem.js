@@ -21,7 +21,10 @@ const ListItem = (props) => {
                 <Text>{getDate(props.data.addedOn)}</Text>
             </Tippy>
             <ActionsContainer>
-                <Button><img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
+                <Button onClick={() => props.setRoomModal(
+                    {state: true, title: 'Update Room Details', param: props.data.id, action: 'update'})
+                }>
+                    <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
                 <Button><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png"/></Button>
                 <Button><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
             </ActionsContainer>

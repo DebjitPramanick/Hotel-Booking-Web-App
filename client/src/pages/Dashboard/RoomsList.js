@@ -21,7 +21,7 @@ const RoomsList = (props) => {
                 placeholder="Search rooms by names..." />
 
             <ListHeader list={listItems} />
-            {props.rooms.map(room => <ListItem data={room} />)}
+            {props.rooms.map(room => <ListItem key={room.id} data={room} setRoomModal={props.setRoomModal} />)}
         </Container>
     )
 }

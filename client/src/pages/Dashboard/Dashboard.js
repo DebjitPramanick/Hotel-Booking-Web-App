@@ -90,14 +90,20 @@ const Dashboard = () => {
         variables: { id: user.id },
     })
 
-    const [roomModal, setRoomModal] = useState(false)
+    const [roomModal, setRoomModal] = useState({
+        state: false,
+        title: '',
+        param: null,
+        action: ''
+    })
 
     useEffect(() => {
         setPage("Dashboard")
     }, [])
 
     const controls = [
-        { label: 'Create Room', icon: <AddIcon />, action: () => setRoomModal(true) },
+        { label: 'Create Room', icon: <AddIcon />, action: () => 
+        setRoomModal({state: true, title: 'Add New Room', params: null, action: 'add'}) },
         { label: 'Edit Hotel', icon: <EditIcon /> }
     ]
 
@@ -107,7 +113,8 @@ const Dashboard = () => {
 
     return (
         <PageContainer>
-            {roomModal && (<RoomModal action="Add" title="Add Room" hotel={hotel} setRoomModal={setRoomModal} />)}
+            {roomModal.state && (<RoomModal action={roomModal.action} title={roomModal.title} hotel={hotel} 
+            setRoomModal={setRoomModal} />)}
             <QuickView>
                 <Info style={{ backgroundImage: `url(${HotelIMG})` }}>
                     <div className="card-details">
@@ -131,7 +138,7 @@ const Dashboard = () => {
                 </Info>
                 <Graph />
             </QuickView>
-            <RoomsList rooms={hotel.rooms} />
+            <RoomsList rooms={hotel.rooms} setRoomModal={setRoomModal} />
         </PageContainer>
     )
 }
