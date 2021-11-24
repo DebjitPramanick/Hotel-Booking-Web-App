@@ -6,10 +6,17 @@ import { ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../Globa
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
+import "./animation.css"
+import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 
-const DashboardModal = (props) => {
+const RoomModal = (props) => {
 
-    const [addRoom] = useMutation(ADD_ROOM)
+    const [addRoom] = useMutation(ADD_ROOM, {
+        refetchQueries: [
+          GET_HOTEL,
+          {variables: {id: props.hotel.id}}
+        ],
+      })
 
     const [room, setRoom] = useState({
         name: '',
@@ -37,7 +44,6 @@ const DashboardModal = (props) => {
             }
         })
             .then(res => {
-                const room = res.data.addRoom
                 toast.success("New room added", {
                     autoClose: 5500,
                     pauseOnHover: true
@@ -51,34 +57,32 @@ const DashboardModal = (props) => {
             })
     }
 
-    const roomSlots = Array.from({length: props.hotel.totalRooms}, (x, i) => {
+    const roomSlots = Array.from({ length: props.hotel.totalRooms }, (x, i) => {
         const s = {
-            number: i+1,
-            assigned: props.hotel.roomsMap[`${i+1}`]
+            number: i + 1,
+            assigned: props.hotel.roomsMap[`${i + 1}`]
         }
         return s
     })
 
     const addNumber = (n, assigned) => {
-        if(room.roomNumbers.includes(n) && !assigned){
-            let ns = room.roomNumbers.filter(s => s!==n)
-            setRoom({...room, roomNumbers: ns})
+        if (room.roomNumbers.includes(n) && !assigned) {
+            let ns = room.roomNumbers.filter(s => s !== n)
+            setRoom({ ...room, roomNumbers: ns })
         }
-        else if(!assigned){
+        else if (!assigned) {
             let ns = room.roomNumbers
             ns.push(n)
-            setRoom({...room, roomNumbers: ns})
+            setRoom({ ...room, roomNumbers: ns })
         }
         else return
     }
 
-    console.log(room)
-
 
     return (
         <ModalContainer>
-            <ModalBox>
-                <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)}/>
+            <ModalBox className="modal-box">
+                <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
                 <ToastContainer />
                 <ModalTitle>{props.title}</ModalTitle>
                 <form onSubmit={addNewRoom}>
@@ -90,14 +94,14 @@ const DashboardModal = (props) => {
                     <TextArea required="true" style={{ marginBottom: '16px' }}
                         value={room.description} onChange={(e) => setRoom({ ...room, description: e.target.value })}
                         placeholder="Room description"></TextArea>
-                    
+
                     <Input required="true" style={{ marginBottom: '16px' }}
                         type="number"
                         value={room.occupancy} onChange={(e) => setRoom({ ...room, occupancy: Number(e.target.value) })}
                         placeholder="Occupancy"></Input>
 
                     <TextArea required="true" style={{ marginBottom: '16px' }}
-                        value={room.others} 
+                        value={room.others}
                         onChange={(e) => setRoom({ ...room, others: e.target.value.split(',') })}
                         placeholder="Room specifications (Add using ',')"></TextArea>
 
@@ -108,9 +112,9 @@ const DashboardModal = (props) => {
 
                     <RoomSelectionBox>
                         {roomSlots.map(t => (
-                            <div className={`${t.assigned ? 'assigned' : 
-                            room.roomNumbers.includes(t.number) ? 'selected' : ''}`}
-                            onClick={() => addNumber(t.number, t.assigned)}
+                            <div className={`${t.assigned ? 'assigned' :
+                                room.roomNumbers.includes(t.number) ? 'selected' : ''}`}
+                                onClick={() => addNumber(t.number, t.assigned)}
                             >{t.number}</div>
                         ))}
                     </RoomSelectionBox>
@@ -125,4 +129,4 @@ const DashboardModal = (props) => {
     )
 }
 
-export default DashboardModal
+export default RoomModal

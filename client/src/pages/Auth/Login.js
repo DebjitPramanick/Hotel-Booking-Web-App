@@ -62,7 +62,7 @@ const Login = () => {
                         value={data.password}
                         onChange={(e) => setdata({ ...data, password: e.target.value })}></Input>
                     <ButtonsContainer>
-                        <FormButton style={{border: '2px solid #ff6899', background: "#fff", color: "#ff6899"}}
+                        <FormButton style={{border: '2px solid #ff6e29', background: "#fff", color: "#ff6e29"}}
                         onClick={() => navigate('/register')}
                         >Register</FormButton>
                         <FormButton type="submit">Log In</FormButton>

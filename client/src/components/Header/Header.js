@@ -28,7 +28,7 @@ const Header = (props) => {
 
     return (
         <FixedHeader
-            style={menuOpen ? { backgroundColor: '#262626f6', backdropFilter: 'blur(0px)' } : {}}>
+            style={menuOpen ? { backgroundColor: '#fff', backdropFilter: 'blur(0px)' } : {}}>
             <Content>
                 <div className="brand">
                     <PageTitle>{pageName}</PageTitle>

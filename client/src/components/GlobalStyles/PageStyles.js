@@ -4,9 +4,9 @@ export const PageTitle = styled.div`
     text-transform: capitalize;
     padding: 8px 12px 6px 12px;
     border-radius: 27px;
-    border: 2px solid #ff6899;
+    border: 2px solid #ff6e29;
     font-weight: 700;
-    color: #ff6899
+    color: #ff6e29
 `
 
 export const PageContainer = styled.div`
@@ -38,7 +38,7 @@ export const FormButton = styled.button`
     outline: 0;
     border: 0;
     border-radius: 40px;
-    background: #ff6899;
+    background: #ff6e29;
     cursor: pointer;
     display: block
 `

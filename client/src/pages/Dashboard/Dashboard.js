@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import "./dashboard.css"
 import { useQuery } from '@apollo/client'
 import { getDate } from '../../utils/utilFunctions'
-import DashboardModal from '../../components/Modals/DashboardModal'
+import RoomModal from '../../components/Modals/RoomModal'
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 
 const QuickView = styled.div`
@@ -106,7 +106,7 @@ const Dashboard = () => {
 
     return (
         <div>
-            {roomModal && (<DashboardModal action="Add" title="Add Room" hotel={hotel} setRoomModal={setRoomModal} />)}
+            {roomModal && (<RoomModal action="Add" title="Add Room" hotel={hotel} setRoomModal={setRoomModal} />)}
             <QuickView>
                 <Info style={{ backgroundImage: `url(${HotelIMG})` }}>
                     <div className="card-details">

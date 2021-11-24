@@ -4,7 +4,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #262626f6;
+    background-color: #ffffff;
     opacity: 0;
     transition: 0.5s;
     z-index: -1;
@@ -13,12 +13,6 @@
 .main-menu-container.open{
     opacity: 1;
     z-index: 9999999;
-}
-
-.main-menu-container .menu-content{
-    display: block;
-    max-width: 576px;
-    margin: auto;
 }
 
 .main-menu-container .list-items{
@@ -39,6 +33,7 @@
     display: block;
     transition: 0.5s;
     width: 100%;
+    color: #ff296d;
 }
 
 .list-items li:hover a{
@@ -50,14 +45,6 @@
 
 .list-items li:hover a{
     color: #262626;
-}
-
-.main-menu-container .wallet-address{
-    color: #8b77ff;
-    font-weight: 600;
-    margin-top: 10px;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 @media (max-width: 576px) {
@@ -73,9 +60,6 @@
 }
 
 @media (max-width: 600px) {
-    .main-menu-container .menu-content{
-        width: calc(100vw - 32px);
-    }
 
     .main-menu-container .list-items li{
         font-size: 20px;
