@@ -12,6 +12,9 @@ export const PageTitle = styled.div`
 export const PageContainer = styled.div`
     margin-top: 65px;
     padding: 16px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat
 `
 
 export const Input = styled.input`

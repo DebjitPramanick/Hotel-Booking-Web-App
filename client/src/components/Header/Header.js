@@ -10,7 +10,6 @@ const FixedHeader = styled.div`
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #fff
 `
 
 const Content = styled.div`
@@ -26,9 +25,15 @@ const Header = (props) => {
 
     const user = JSON.parse(localStorage.getItem('User'))
 
+    const homeStyles = {
+        backgroundColor: 'transparent', 
+        backdropFilter: 'none'
+    }
+
     return (
         <FixedHeader
-            style={menuOpen ? { backgroundColor: '#fff', backdropFilter: 'blur(0px)' } : {}}>
+            style={menuOpen ? { backgroundColor: '#fff', 
+            backdropFilter: 'blur(0px)' } : pageName==='Home' ? homeStyles : {}}>
             <Content>
                 <div className="brand">
                     <PageTitle>{pageName}</PageTitle>

@@ -70,12 +70,8 @@ const MainMenu = () => {
             path: '/'
         },
         {
-            name: 'Shop',
-            path: '/shop'
-        },
-        {
-            name: 'Orders',
-            path: '/orders'
+            name: 'Bookings',
+            path: '/bookings'
         },
         {
             name: 'Edit Account',
@@ -87,7 +83,7 @@ const MainMenu = () => {
         }
     ]
 
-    if(user && !user.isAdmin) {
+    if(user && user.isManager) {
         let lOpt = menuOptions.slice(3, 5)
         menuOptions = menuOptions.slice(0, 3)
         menuOptions.push({name: 'Dashboard', path: '/dashboard'})

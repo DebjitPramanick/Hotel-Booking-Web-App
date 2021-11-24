@@ -13,7 +13,9 @@ import { GlobalContext } from './utils/Context';
 import { PageContainer } from './components/GlobalStyles/PageStyles';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-import { managerRoute, noUserRoute } from './utils/ConditionalRoutes';
+import { managerRoute } from './utils/ConditionalRoutes';
+import Logout from './pages/Auth/Logout';
+import Home from './pages/Home/Home';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -35,16 +37,19 @@ function App() {
           <Router>
             <Header page={page} />
             <MainMenu />
-            <PageContainer>
-              <Routes>
-                <Route exact path="/register" element={<Register />}></Route>
-                <Route exact path="/login" element={<Login />}></Route>
-                <Route exact path="/dashboard" element={
-                  managerRoute ? <Dashboard />
-                    : <Navigate to="/login" />
-                }></Route>
-              </Routes>
-            </PageContainer>
+            <Routes>
+              <Route exact path="/register" element={<Register />}></Route>
+              <Route exact path="/login" element={<Login />}></Route>
+              <Route exact path="/logout" element={<Logout />}></Route>
+              <Route exact path="/dashboard" element={
+                managerRoute ? <Dashboard />
+                  : <Navigate to="/login" />
+              }></Route>
+              <Route exact path="/" element={
+                managerRoute ? <Home />
+                  : <Navigate to="/login" />
+              }></Route>
+            </Routes>
           </Router>
         </div>
       </GlobalContext.Provider>

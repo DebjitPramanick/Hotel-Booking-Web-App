@@ -4,7 +4,8 @@ import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/Form
 import { LOGIN_USER } from '../../graphql/queries/userQueries'
 import { GlobalContext } from '../../utils/Context'
 import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 
 const Login = () => {
 
@@ -22,9 +23,9 @@ const Login = () => {
             let user = res.login
             localStorage.setItem('user', JSON.stringify(user))
             setTimeout(() => {
-                user.isManager ? 
-                window.location.href = '/dashboard' : 
-                window.location.href = '/'
+                user.isManager ?
+                    window.location.href = '/dashboard' :
+                    window.location.href = '/'
             }, 1000);
         },
         onError: err => {
@@ -48,28 +49,30 @@ const Login = () => {
     }
 
     return (
-        <AuthContainer>
-            <FormContainer>
-                <form className="form-box" onSubmit={userLogin}>
-                    <FormTitle style={{ marginBottom: '20px' }}>Log In</FormTitle>
-                    <Input style={{ margin: '10px 0' }}
-                        placeholder="Email"
-                        value={data.email}
-                        onChange={(e) => setdata({ ...data, email: e.target.value })}></Input>
-                    <Input style={{ margin: '10px 0' }}
-                        placeholder="Password"
-                        type="password"
-                        value={data.password}
-                        onChange={(e) => setdata({ ...data, password: e.target.value })}></Input>
-                    <ButtonsContainer>
-                        <FormButton style={{border: '2px solid #ff6e29', background: "#fff", color: "#ff6e29"}}
-                        onClick={() => navigate('/register')}
-                        >Register</FormButton>
-                        <FormButton type="submit">Log In</FormButton>
-                    </ButtonsContainer>
-                </form>
-            </FormContainer>
-        </AuthContainer>
+        <PageContainer>
+            <AuthContainer>
+                <FormContainer>
+                    <form className="form-box" onSubmit={userLogin}>
+                        <FormTitle style={{ marginBottom: '20px' }}>Log In</FormTitle>
+                        <Input style={{ margin: '10px 0' }}
+                            placeholder="Email"
+                            value={data.email}
+                            onChange={(e) => setdata({ ...data, email: e.target.value })}></Input>
+                        <Input style={{ margin: '10px 0' }}
+                            placeholder="Password"
+                            type="password"
+                            value={data.password}
+                            onChange={(e) => setdata({ ...data, password: e.target.value })}></Input>
+                        <ButtonsContainer>
+                            <FormButton style={{ border: '2px solid #ff6e29', background: "#fff", color: "#ff6e29" }}
+                                onClick={() => navigate('/register')}
+                            >Register</FormButton>
+                            <FormButton type="submit">Log In</FormButton>
+                        </ButtonsContainer>
+                    </form>
+                </FormContainer>
+            </AuthContainer>
+        </PageContainer>
     )
 }
 

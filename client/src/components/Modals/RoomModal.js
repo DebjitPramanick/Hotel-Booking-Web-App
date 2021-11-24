@@ -13,10 +13,12 @@ const RoomModal = (props) => {
 
     const [addRoom] = useMutation(ADD_ROOM, {
         refetchQueries: [
-          GET_HOTEL,
-          {variables: {id: props.hotel.id}}
+            GET_HOTEL,
+            { variables: { id: props.hotel.id } }
         ],
-      })
+    })
+
+    const [hide, setHide] = useState(false)
 
     const [room, setRoom] = useState({
         name: '',
@@ -46,8 +48,10 @@ const RoomModal = (props) => {
             .then(res => {
                 toast.success("New room added", {
                     autoClose: 5500,
-                    pauseOnHover: true
+                    pauseOnHover: true,
+                    onClose: props.setRoomModal(false)
                 })
+                setHide(true)
             })
             .catch(err => {
                 toast.error(err, {
@@ -119,10 +123,12 @@ const RoomModal = (props) => {
                         ))}
                     </RoomSelectionBox>
 
-                    <FormButton type="submit"
-                        style={{ marginLeft: 'auto', marginTop: '40px' }}>
-                        {props.title}
-                    </FormButton>
+                    {!hide && (
+                        <FormButton type="submit"
+                            style={{ marginLeft: 'auto', marginTop: '40px' }}>
+                            {props.title}
+                        </FormButton>
+                    )}
                 </form>
             </ModalBox>
         </ModalContainer>

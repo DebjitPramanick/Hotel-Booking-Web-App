@@ -10,6 +10,7 @@ import { useQuery } from '@apollo/client'
 import { getDate } from '../../utils/utilFunctions'
 import RoomModal from '../../components/Modals/RoomModal'
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
+import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 
 const QuickView = styled.div`
     display: grid;
@@ -105,7 +106,7 @@ const Dashboard = () => {
     const hotel = data.getHotel
 
     return (
-        <div>
+        <PageContainer>
             {roomModal && (<RoomModal action="Add" title="Add Room" hotel={hotel} setRoomModal={setRoomModal} />)}
             <QuickView>
                 <Info style={{ backgroundImage: `url(${HotelIMG})` }}>
@@ -131,7 +132,7 @@ const Dashboard = () => {
                 <Graph />
             </QuickView>
             <RoomsList rooms={hotel.rooms} />
-        </div>
+        </PageContainer>
     )
 }
 
