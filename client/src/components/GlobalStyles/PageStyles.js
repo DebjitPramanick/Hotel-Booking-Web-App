@@ -17,6 +17,17 @@ export const PageContainer = styled.div`
     background-repeat: no-repeat
 `
 
+export const SplitContainer = styled.div`
+    display: flex;
+    .first-child{
+        margin-right: 16px
+        flex-basis: 20%;
+    }
+    .second-child{
+        flex-basis: 80%
+    }
+`
+
 export const Input = styled.input`
     border: 1px solid #b6b6b6;
     outline: 0;
@@ -44,4 +55,17 @@ export const FormButton = styled.button`
     background: #ff6e29;
     cursor: pointer;
     display: block
+`
+
+export const Image = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center
+    overflow: hidden;
+    border-radius: 4px;
+    min-width: 160px;
+    min-height: 160px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat
 `

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./box.css"
+import { useNavigate } from 'react-router-dom';
 
 const Box = styled.div`
     width: 800px;
@@ -43,8 +44,10 @@ const SearchBox = () => {
     const [checkIn, setCheckIn] = useState(new Date());
     const [checkOut, setCheckOut] = useState(new Date());
 
+    const navigate = useNavigate()
+
     const handleSearch = () => {
-        
+        navigate("/explore")
     }
 
     return (
@@ -55,13 +58,13 @@ const SearchBox = () => {
                     required={true}></Input>
                 <Extras>
                     <InputContainer style={{marginRight: '16px'}}>
-                        <label>Chec-In</label>
+                        <label>Check-In</label>
                         <DatePicker selected={checkIn}
                             onChange={(date) => setCheckIn(date)} />
                     </InputContainer>
 
                     <InputContainer style={{marginRight: '16px'}}>
-                        <label>Chec-Out</label>
+                        <label>Check-Out</label>
                         <DatePicker selected={checkOut}
                             onChange={(date) => setCheckOut(date)} />
                     </InputContainer>

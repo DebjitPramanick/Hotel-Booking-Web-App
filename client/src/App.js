@@ -13,9 +13,10 @@ import { GlobalContext } from './utils/Context';
 import { PageContainer } from './components/GlobalStyles/PageStyles';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-import { managerRoute } from './utils/ConditionalRoutes';
+import { managerRoute, userRoute } from './utils/ConditionalRoutes';
 import Logout from './pages/Auth/Logout';
 import Home from './pages/Home/Home';
+import Explore from './pages/Explore/Explore';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -46,9 +47,19 @@ function App() {
                   : <Navigate to="/login" />
               }></Route>
               <Route exact path="/" element={
-                managerRoute ? <Home />
+                (managerRoute || userRoute) ? <Home />
                   : <Navigate to="/login" />
               }></Route>
+              <Route path="/explore">
+                <Route path=":location/:checkIn/:checkOut/:people" element={
+                  (managerRoute || userRoute) ? <Explore />
+                    : <Navigate to="/login" />
+                } />
+                <Route path="" element={
+                  (managerRoute || userRoute) ? <Explore />
+                    : <Navigate to="/login" />
+                } />
+              </Route>
             </Routes>
           </Router>
         </div>
