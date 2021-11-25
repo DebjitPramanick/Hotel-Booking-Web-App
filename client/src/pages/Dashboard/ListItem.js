@@ -1,6 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
-import moment from 'moment'
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { getDate, getEasyDate } from '../../utils/utilFunctions';

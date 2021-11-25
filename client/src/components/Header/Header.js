@@ -10,6 +10,7 @@ const FixedHeader = styled.div`
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 9999;
 `
 
 const Content = styled.div`
@@ -23,7 +24,7 @@ const Header = (props) => {
     const { setMenuOpen, menuOpen } = useContext(GlobalContext)
     let pageName = props.page
 
-    const user = JSON.parse(localStorage.getItem('User'))
+    const user = JSON.parse(localStorage.getItem('user'))
 
     const homeStyles = {
         backgroundColor: 'transparent', 

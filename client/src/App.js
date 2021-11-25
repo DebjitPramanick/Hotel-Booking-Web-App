@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate  } from 'react-router-dom'
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,7 +10,6 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Header from './components/Header/Header';
 import MainMenu from './components/MainMenu/MainMenu';
 import { GlobalContext } from './utils/Context';
-import { PageContainer } from './components/GlobalStyles/PageStyles';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import { managerRoute, userRoute } from './utils/ConditionalRoutes';

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import HotelIMG from "../../assets/hotel.jpeg"
-import { FormButton, Image } from '../../components/GlobalStyles/PageStyles'
+import { Image } from '../../components/GlobalStyles/PageStyles'
 import "./card.css"
 import {useNavigate} from 'react-router-dom'
 
@@ -63,9 +63,10 @@ const Text = styled.p`
 `
 
 const Card = (props) => {
-
-
     const navigate = useNavigate()
+    const {data} = props
+
+    const hotel = data.hotel
 
     return (
         <CardContainer>
@@ -74,23 +75,12 @@ const Card = (props) => {
             </div>
             <Image style={{ backgroundImage: `url(${HotelIMG})`, minWidth: '260px', height: '260px' }} />
             <HotelDetails className="details">
-                <Text className="clip">Hotel Name</Text>
-                <Text className="small">Location</Text>
-                <Text className="small clamp">
-                    Lorem Ipsum is simply dummy text of the printing
-                    and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and
-                    scrambled it to make a type specimen book. It has survived
-                    not only five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged. It was popularised
-                    in the 1960s with the release of Letraset sheets containing Lorem
-                    Ipsum passages, and more recently with desktop publishing software 
-                    like Aldus PageMaker including versions of Lorem Ipsum
-                </Text>
+                <Text className="clip">{hotel.name}</Text>
+                <Text className="small">{hotel.location}</Text>
+                <Text className="small clamp">{hotel.description}</Text>
                 <Text className="small"> <span>5.0</span> Ratings</Text>
                 <Text className="small">Starting from Rs. 1151</Text>
-                <Text className="small">10 Rooms Available</Text>
+                <Text className="small">{data.rooms} Rooms Available</Text>
             </HotelDetails>
         </CardContainer>
     )

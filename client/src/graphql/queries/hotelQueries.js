@@ -31,3 +31,38 @@ query($id: ID!){
   }
 }
 `
+
+export const SEARCH_HOTELS = gql`
+query($location: String!, $from: Date!, $to: Date!, $occupancy: Int!){
+  searchHotels(location: $location, from: $from, to: $to, occupancy: $occupancy){
+    hotel{
+      id
+      image
+      name
+      description
+      manager{
+        name
+        email
+        age
+        username
+      }
+      rooms{
+        id
+        images
+        name
+        description
+        occupancy
+        price
+        addedOn
+        ratings
+      }
+      addedOn
+      location
+      ratings
+      totalRooms
+      roomsMap
+    }
+    rooms
+  }
+}
+`

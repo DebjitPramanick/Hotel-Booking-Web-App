@@ -43,11 +43,14 @@ const SearchBox = () => {
 
     const [checkIn, setCheckIn] = useState(new Date());
     const [checkOut, setCheckOut] = useState(new Date());
+    const [query, setQuery] = useState('')
 
     const navigate = useNavigate()
 
     const handleSearch = () => {
-        navigate("/explore")
+        const from = checkIn.toISOString()
+        const to = checkOut.toISOString()
+        navigate(`/explore/${query}/${from}/${to}/2`)
     }
 
     return (
@@ -55,6 +58,8 @@ const SearchBox = () => {
             <FormTitle style={{color: '#fff', marginBottom: '20px'}}>Search Hotels</FormTitle>
             <form onSubmit={handleSearch}>
                 <Input placeholder="Enter hotel name or location"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     required={true}></Input>
                 <Extras>
                     <InputContainer style={{marginRight: '16px'}}>

@@ -43,7 +43,7 @@ const getAllHotels = { // For getting hotel details
 const searchHotels = { // For searching available hotels
     type: new GraphQLList(AvailableHotelType),
     args: {
-        location: { type: new GraphQLNonNull(GraphQLID) },
+        location: { type: new GraphQLNonNull(GraphQLString) },
         from: { type: new GraphQLNonNull(GraphQLDate) },
         to: { type: new GraphQLNonNull(GraphQLDate) },
         occupancy: { type: new GraphQLNonNull(GraphQLInt) },
