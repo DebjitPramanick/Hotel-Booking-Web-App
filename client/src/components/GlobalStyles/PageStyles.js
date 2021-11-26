@@ -69,3 +69,9 @@ export const Image = styled.div`
     background-position: center;
     background-repeat: no-repeat
 `
+
+export const SearchBoxContainer = styled.div`
+    padding: 20px;
+    background: #00000063;
+    border-radius: 6px;
+`

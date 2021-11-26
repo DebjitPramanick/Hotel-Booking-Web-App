@@ -17,7 +17,7 @@ const Explore = (props) => {
 
     const { setPage } = useContext(GlobalContext)
     const params = useParams()
-    console.log(params)
+
     const {data, loading, error} = useQuery(SEARCH_HOTELS, {
         variables: {
             location: params.location,
@@ -35,7 +35,7 @@ const Explore = (props) => {
 
     return (
         <PageContainer>
-            <LeftSidebar />
+            <LeftSidebar data={params}/>
             <ResultContainer>
                 {data.searchHotels.map(s => (<Card data={s}/>))}
             </ResultContainer>

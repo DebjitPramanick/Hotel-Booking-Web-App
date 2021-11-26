@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import HomeBG from "../../assets/home.jpg"
 import styled from "styled-components"
 import { GlobalContext } from '../../utils/Context'
-import { PageContainer } from '../../components/GlobalStyles/PageStyles'
+import { PageContainer, SearchBoxContainer } from '../../components/GlobalStyles/PageStyles'
 import SearchBox from '../../components/SearchBox/SearchBox'
 
 const HomeContainer = styled.div`
@@ -22,7 +22,9 @@ const Home = () => {
     return (
         <PageContainer style={{ backgroundImage: `url(${HomeBG})`, minHeight: '100vh', marginTop: '0px' }}>
             <HomeContainer>
-                <SearchBox />
+                <SearchBoxContainer>
+                    <SearchBox />
+                </SearchBoxContainer>
             </HomeContainer>
         </PageContainer>
     )

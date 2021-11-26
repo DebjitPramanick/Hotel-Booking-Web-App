@@ -6,13 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./box.css"
 import { useNavigate } from 'react-router-dom';
 
-const Box = styled.div`
-    width: 800px;
-    padding: 20px;
-    background: #00000063;
-    border-radius: 6px;
-`
-
 const Extras = styled.div`
     margin-top: 20px;
     display: flex;
@@ -39,10 +32,12 @@ const OcpBox = styled.div`
     border-radius: 4px
 `
 
-const SearchBox = () => {
+const SearchBox = (props) => {
 
-    const [checkIn, setCheckIn] = useState(new Date());
-    const [checkOut, setCheckOut] = useState(new Date());
+    const data = props.params
+
+    const [checkIn, setCheckIn] = useState(data ? new Date(data.from) : new Date());
+    const [checkOut, setCheckOut] = useState(data ? new Date(data.to) : new Date());
     const [query, setQuery] = useState('')
 
     const navigate = useNavigate()
@@ -54,21 +49,21 @@ const SearchBox = () => {
     }
 
     return (
-        <Box>
-            <FormTitle style={{color: '#fff', marginBottom: '20px'}}>Search Hotels</FormTitle>
+        <>
+            <FormTitle style={{ color: '#fff', marginBottom: '20px' }}>Search Hotels</FormTitle>
             <form onSubmit={handleSearch}>
                 <Input placeholder="Enter hotel name or location"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     required={true}></Input>
                 <Extras>
-                    <InputContainer style={{marginRight: '16px'}}>
+                    <InputContainer style={{ marginRight: '16px' }}>
                         <label>Check-In</label>
                         <DatePicker selected={checkIn}
                             onChange={(date) => setCheckIn(date)} />
                     </InputContainer>
 
-                    <InputContainer style={{marginRight: '16px'}}>
+                    <InputContainer style={{ marginRight: '16px' }}>
                         <label>Check-Out</label>
                         <DatePicker selected={checkOut}
                             onChange={(date) => setCheckOut(date)} />
@@ -84,12 +79,12 @@ const SearchBox = () => {
                 </Extras>
 
                 <FormButton type="submit"
-                style={{margin: '18px 0 0 auto', fontSize: '16px', width: '140px'}}>
+                    style={{ margin: '18px 0 0 auto', fontSize: '16px', width: '140px' }}>
                     Search
                 </FormButton>
 
             </form>
-        </Box>
+        </>
     )
 }
 
