@@ -75,3 +75,33 @@ export const SearchBoxContainer = styled.div`
     background: #00000063;
     border-radius: 6px;
 `
+
+export const Text = styled.p`
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 18px;
+    &.small{
+        font-size: 16px;
+        font-weight: normal;
+    }
+    &.clip{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    &.clamp{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        color: grey
+    }
+    span{
+        background: #019a01;
+        border-radius: 18px;
+        padding: 4px 10px;
+        color: white
+    }
+`

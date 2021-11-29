@@ -1,6 +1,6 @@
 const graphql = require('graphql')
 const { getBooking, getAllBookings } = require('./queries/bookingQueries.js')
-const { getHotel, getAllHotels, searchHotels } = require('./queries/hotelQueries.js')
+const { getHotel, getAllHotels, searchHotels, getHotelByID } = require('./queries/hotelQueries.js')
 const { getRoom, getAllRooms } = require('./queries/roomQueries.js')
 const { login, getUser, getAllUsers } = require('./queries/userQueries.js')
 
@@ -13,6 +13,7 @@ const Query = new GraphQLObjectType({
         getUser,
         getAllUsers,
         getHotel,
+        getHotelByID,
         searchHotels,
         getAllHotels,
         getRoom,

@@ -36,8 +36,10 @@ const SearchBox = (props) => {
 
     const data = props.params
 
-    const [checkIn, setCheckIn] = useState(data ? new Date(data.from) : new Date());
-    const [checkOut, setCheckOut] = useState(data ? new Date(data.to) : new Date());
+    console.log(data)
+
+    const [checkIn, setCheckIn] = useState(data ? new Date(data.checkIn) : new Date());
+    const [checkOut, setCheckOut] = useState(data ? new Date(data.checkOut) : new Date());
     const [query, setQuery] = useState('')
 
     const navigate = useNavigate()

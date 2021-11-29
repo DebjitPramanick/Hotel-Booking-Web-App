@@ -32,6 +32,22 @@ const getHotel = { // For getting hotel details
     }
 }
 
+const getHotelByID = { // For getting hotel details by ID
+    type: HotelType,
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+    },
+    async resolve(parent, args, req) {
+        if (!args.id) {
+            throw new Error("Hotel ID is required.")
+        }
+        else {
+            let hotel = await Hotel.findById(args.id)
+            return hotel
+        }
+    }
+}
+
 const getAllHotels = { // For getting hotel details
     type: new GraphQLList(HotelType),
     async resolve(parent, args, req) {
@@ -93,5 +109,6 @@ const searchHotels = { // For searching available hotels
 module.exports = {
     getHotel,
     getAllHotels,
-    searchHotels
+    searchHotels,
+    getHotelByID
 }
