@@ -99,9 +99,15 @@ export const Text = styled.p`
         color: grey
     }
     span{
-        background: #019a01;
-        border-radius: 18px;
-        padding: 4px 10px;
-        color: white
+        font-weight: bold;
+        &.highlight{
+            display: inline-block;
+            text-align: center;
+            min-width: 60px;
+            color: white;
+            background: #019a01;
+            border-radius: 18px;
+            padding: 4px 10px;
+        }
     }
 `

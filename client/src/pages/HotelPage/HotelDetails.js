@@ -1,28 +1,47 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { Image, Text } from '../../components/GlobalStyles/PageStyles'
 import HotelIMG from "../../assets/hotel.jpeg";
+import RoomDetails from './RoomDetails';
+import { GlobalContext } from '../../utils/Context';
 
-const SmallDetails = styled.div`
+const Details = styled.div`
     border: 0.5px solid #d8d8d8;
     padding: 16px
 `
 
 const HotelDetails = (props) => {
-    const {hotel} = props
+
+    const { hotel } = props
+    const ratings = !hotel.ratings ? 0.00 : hotel.ratings
+
     return (
         <div>
             <div style={{ display: 'flex', width: '100%' }}>
                 <Image style={{ backgroundImage: `url(${HotelIMG})`, height: "300px", width: "60%", }} />
-                <SmallDetails style={{width: '40%', marginLeft: '20px'}}>
+                <Details style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="small">Location: <span>{hotel.location}</span></Text>
-                    {/* <Text className="small">Manager: <span>{hotel.manager.user.name}</span></Text> */}
-                    <Text className="small">Ratings: <span>{hotel.ratings}</span></Text>
-                    <Text className="small">Price: <spn>1500-5960/-</spn></Text>
-                </SmallDetails>
+                    <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>
+                    <Text className="small">Price: <span>1500-5960/-</span></Text>
+                </Details>
             </div>
-            <Text className="clip" style={{marginTop: '20px'}}>{hotel.name}</Text>
-            <Text className="clamp small" style={{marginTop: '12px'}}>{hotel.description}</Text>
+            <Details style={{marginTop: '20px'}}>
+                <Text className="clip">{hotel.name}</Text>
+                <Text className="clamp small" style={{ marginTop: '12px' }}>{hotel.description}</Text>
+            </Details>
+            <Details style={{marginTop: '20px'}}>
+                <Text className="clip">Manager Details</Text>
+                <Text className="clamp small" style={{ marginTop: '12px' }}>{hotel.manager.name}</Text>
+                <Text className="clamp small" style={{ marginTop: '12px' }}>
+                    Contact: <span>{hotel.manager.email}</span>
+                </Text>
+            </Details>
+            <Text style={{marginTop: '20px'}}>Rooms</Text>
+            <div style={{marginTop: '20px'}}>
+                {hotel.rooms.map(r => (
+                    <RoomDetails room={r}/>
+                ))}
+            </div>
         </div>
     )
 }

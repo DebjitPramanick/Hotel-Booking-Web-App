@@ -54,6 +54,7 @@ query($id: ID!){
       price
       addedOn
       ratings
+      others
     }
     addedOn
     location

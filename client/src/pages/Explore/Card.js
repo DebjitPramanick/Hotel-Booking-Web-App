@@ -50,7 +50,7 @@ const Card = (props) => {
                 <Text className="clip">{hotel.name}</Text>
                 <Text className="small">{hotel.location}</Text>
                 <Text className="small clamp">{hotel.description}</Text>
-                <Text className="small"> <span>5.0</span> Ratings</Text>
+                <Text className="small"> <span className="highlight">5.0</span> Ratings</Text>
                 <Text className="small">Starting from Rs. 1151</Text>
                 <Text className="small">{data.rooms} Rooms Available</Text>
             </HotelDetails>
