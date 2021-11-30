@@ -27,7 +27,7 @@ const Hotel = () => {
     console.log(hotel);
 
     return (
-        <PageContainer style={{maxWidth: "1000px", marginLeft: "auto", marginRight: "auto"}}>
+        <PageContainer style={{maxWidth: "1200px", marginLeft: "auto", marginRight: "auto"}}>
             <HotelDetails hotel={hotel}/>
         </PageContainer>
     );

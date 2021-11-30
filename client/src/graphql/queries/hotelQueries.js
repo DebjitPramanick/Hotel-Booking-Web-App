@@ -55,6 +55,10 @@ query($id: ID!){
       addedOn
       ratings
       others
+      hotel{
+        id
+        name
+      }
     }
     addedOn
     location

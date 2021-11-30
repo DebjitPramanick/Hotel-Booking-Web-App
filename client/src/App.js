@@ -18,6 +18,7 @@ import Logout from "./pages/Auth/Logout";
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Hotel from "./pages/HotelPage/Hotel";
+import Payment from "./pages/Payment/Payment";
 
 const client = new ApolloClient({
   uri: "http://localhost:8000/graphql",
@@ -104,7 +105,7 @@ function App() {
                 path="/payment/:hotelId"
                 element={
                   managerRoute || userRoute ? (
-                    <Home />
+                    <Payment />
                   ) : (
                     <Navigate to="/login" />
                   )
