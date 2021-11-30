@@ -6,6 +6,7 @@ import CustomerInfo from './CustomerInfo'
 import { useQuery } from '@apollo/client'
 import { GET_ROOM } from '../../graphql/queries/roomQueries'
 import {useParams} from 'react-router-dom'
+import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 
 
 const Payment = () => {
@@ -19,6 +20,7 @@ const Payment = () => {
     const {hotelId, roomId} = useParams()
 
     const {data, loading, error} = useQuery(GET_ROOM, {variables: {id: roomId}})
+    // const {hotel, loadingHotel, errorHotel} = useQuery(GET_HOTEL, {variables: {id: hotelId}})
 
     if(loading) return <p>Loading...</p>
 

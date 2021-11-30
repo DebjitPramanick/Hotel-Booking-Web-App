@@ -38,7 +38,7 @@ const Layout = styled.div`
 `
 
 const CustomerInfo = (props) => {
-    const { user, room } = props
+    const { user, room, hotel } = props
     return (
         <>
             <Layout>
@@ -59,6 +59,9 @@ const CustomerInfo = (props) => {
                 </div>
                 <div className="section">
                     <Text>Booking Info</Text>
+                    {/* <Text className="small">
+                        Hotel: <span>{hotel.name}</span>
+                    </Text> */}
                     <Text className="small">
                         Room: <span>{room.name}</span>
                     </Text>
