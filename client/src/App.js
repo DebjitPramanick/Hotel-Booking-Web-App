@@ -102,7 +102,7 @@ function App() {
 
               <Route
                 exact
-                path="/payment/:hotelId"
+                path="/payment/:hotelId/:roomId"
                 element={
                   managerRoute || userRoute ? (
                     <Payment />

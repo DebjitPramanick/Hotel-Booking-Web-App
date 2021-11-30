@@ -5,8 +5,11 @@ import { Text } from '../../components/GlobalStyles/PageStyles'
 const Bar = styled.div`
     display: flex;
     justify-content: space-between;
-    max-width: 800px;
-    margin: auto
+    max-width: 600px;
+    margin: auto;
+    @media(max-width: 700px){
+        max-width: calc(100vw - 140px)
+    }
 `
 
 const Steps = styled.div`
@@ -19,7 +22,7 @@ const Steps = styled.div`
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background: red;
+        background: #00d892;
         margin-bottom: 18px;
         display: flex;
         align-items: center;
@@ -38,7 +41,7 @@ const Line = styled.div`
     margin-top: 13px;
     height: 4px;
     width: 100%;
-    background: red;
+    background: #00d892;
 `
 
 const ProgressBar = () => {
