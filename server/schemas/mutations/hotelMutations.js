@@ -50,8 +50,32 @@ const addHotel = { // For adding new hotel
     }
 }
 
-const updateProfile = { // For updating hotel
-    
+const updateHotel = { // For updating hotel
+    type: HotelType,
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        image: { type: GraphQLString },
+        location: { type: new GraphQLNonNull(GraphQLString) },
+        ratings: { type: GraphQLInt },
+        totalRooms: { type: new GraphQLNonNull(GraphQLInt) },
+    },
+    async resolve(parent, args) {
+        if (!args.id) throw new Error("ID is not given.");
+
+        let hotel = await Hotel.findByIdAndUpdate(args.id, {
+            id: args.id,
+            name: args.name,
+            description: args.description,
+            image: args.image,
+            location: args.location,
+            ratings: args.ratings,
+            totalRooms: args.totalRooms,
+        },{ new: true })
+
+        return hotel
+    }
 }
 
 const deleteHotel = { // For deleting hotel
@@ -82,5 +106,6 @@ const deleteHotel = { // For deleting hotel
 
 module.exports = {
     addHotel,
+    updateHotel,
     deleteHotel
 }
