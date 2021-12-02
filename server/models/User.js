@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     username: String,
     email: String,
     password: String, 
-    age: Number,
+    dob: Date,
     accessToken: String,
     refreshToken: String,
     accessTokenExp: String,

@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const User = require("../../models/User.js")
 const verifyToken = require('../../middlewares/verifyToken.js')
 const jwt = require('jsonwebtoken')
-
+const GraphQLDate = require('graphql-date')
 
 const { GraphQLID,
     GraphQLInt,
@@ -20,7 +20,7 @@ const createUser = { // For creating new user
     args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         username: { type: new GraphQLNonNull(GraphQLString) },
-        age: { type: GraphQLInt },
+        dob: { type: new GraphQLNonNull(GraphQLDate) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) }
     },
@@ -44,7 +44,7 @@ const createUser = { // For creating new user
                 name: args.name,
                 email: args.email,
                 password: passHash,
-                age: args.age,
+                dob: args.dob,
                 accessToken: accessToken,
                 refreshToken: refreshToken,
                 accessTokenExp: '4h',
@@ -77,7 +77,7 @@ const generateToken = { // For generating new access token
             return {
                 username: user.username,
                 email: user.email,
-                age: user.age,
+                dob: user.dob,
                 name: user.name,
                 id: user._id,
                 accessToken: accessToken,
@@ -98,7 +98,8 @@ const updateProfile = { // For updating user profile
     args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         name: { type: new GraphQLNonNull(GraphQLString) },
-        email: { type: new GraphQLNonNull(GraphQLString) }
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        dob: { type: new GraphQLNonNull(GraphQLDate) }
     },
     async resolve(parent, args) {
         if (!args.id) throw new Error("ID is not given.");
@@ -107,6 +108,7 @@ const updateProfile = { // For updating user profile
             id: args.id,
             name: args.name,
             email: args.email,
+            dob: args.dob
         },{ new: true })
 
         return user

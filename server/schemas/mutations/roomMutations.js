@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
 const Hotel = require('../../models/Hotel.js')
 const Booking = require("../../models/Booking.js")
 
-const { 
+const {
     GraphQLID,
     GraphQLInt,
     GraphQLString,
@@ -23,27 +23,27 @@ const {
 const addRoom = { // For adding new room
     type: RoomType,
     args: {
-        hotel: { type: new GraphQLNonNull(GraphQLID)},
+        hotel: { type: new GraphQLNonNull(GraphQLID) },
         images: { type: new GraphQLList(GraphQLString) },
         name: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: new GraphQLNonNull(GraphQLString) },
         occupancy: { type: new GraphQLNonNull(GraphQLInt) },
         others: { type: new GraphQLList(GraphQLString) },
-        price: {type: new GraphQLNonNull(GraphQLInt)},
-        roomNumbers: {type: new GraphQLNonNull(new GraphQLList(GraphQLInt))},
+        price: { type: new GraphQLNonNull(GraphQLInt) },
+        roomNumbers: { type: new GraphQLNonNull(new GraphQLList(GraphQLInt)) },
     },
     async resolve(parent, args) {
         let hotelData = await Hotel.findById(args.hotel)
-        if(!hotelData) throw new Error('Hotel ID is wrong.')
+        if (!hotelData) throw new Error('Hotel ID is wrong.')
         let query = await Room.findOne({ name: args.name, hotel: args.hotel })
         if (query) {
             throw new Error('Cannot add multiple rooms with same name.')
         }
         let ass = []
         args.roomNumbers.forEach(n => {
-            if(hotelData.roomsMap.get(n.toString())) ass.push(n)
+            if (hotelData.roomsMap.get(n.toString())) ass.push(n)
         })
-        if(ass.length > 0){
+        if (ass.length > 0) {
             throw new Error('Some room numbers are already assigned. Please try different room numbers.')
         }
         else {
@@ -63,7 +63,7 @@ const addRoom = { // For adding new room
             room.roomNumbers.forEach(n => {
                 hotelData.roomsMap.set(n.toString(), room.name)
             })
-            
+
             await hotelData.save()
             return res
         }
@@ -71,7 +71,43 @@ const addRoom = { // For adding new room
 }
 
 const updateRoom = { // For updating room
-    
+    type: RoomType,
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        images: { type: new GraphQLList(GraphQLString) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        occupancy: { type: new GraphQLNonNull(GraphQLInt) },
+        others: { type: new GraphQLList(GraphQLString) },
+        price: { type: new GraphQLNonNull(GraphQLInt) },
+        roomNumbers: { type: new GraphQLNonNull(new GraphQLList(GraphQLInt)) },
+    },
+    async resolve(parent, args) {
+        if (!args.id) throw new Error("ID is not given.");
+
+        let room = await Room.findByIdAndUpdate(args.id, {
+            id: args.id,
+            images: args.images,
+            name: args.name,
+            description: args.description,
+            occupancy: args.occupancy,
+            others: args.others,
+            price: args.price,
+            roomNumbers: args.roomNumbers,
+        }, { new: true })
+
+        let hotelData = await Hotel.findById(room.hotel)
+
+        hotelData.rooms.push(args.id)
+        room.roomNumbers.forEach(n => {
+            if(!hotelData.roomsMap.get(n.toString())){
+                hotelData.roomsMap.set(n.toString(), room.name)
+            }
+        })
+
+        await hotelData.save()
+        return room
+    }
 }
 
 const deleteRoom = { // For deleting room

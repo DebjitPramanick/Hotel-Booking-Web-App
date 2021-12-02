@@ -43,7 +43,7 @@ const login = { // For login existing user
                     username: query.username,
                     email: query.email,
                     name: query.name,
-                    age: query.age,
+                    dob: query.dob,
                     id: query._id,
                     accessToken: accessToken,
                     refreshToken: refreshToken,

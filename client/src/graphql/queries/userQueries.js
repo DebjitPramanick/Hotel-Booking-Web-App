@@ -6,7 +6,7 @@ query($email: String!, $password: String!){
     id
     name
     username
-    age
+    dob
     email
     accessToken
     refreshToken
@@ -26,7 +26,7 @@ query($id: ID){
     id
     name
     username
-    age
+    dob
     email
     accessToken
     refreshToken

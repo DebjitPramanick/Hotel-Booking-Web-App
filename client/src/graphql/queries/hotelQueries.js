@@ -10,7 +10,7 @@ query($id: ID!){
     manager{
       name
       email
-      age
+      dob
       username
     }
     rooms{
@@ -42,7 +42,7 @@ query($id: ID!){
     manager{
       name
       email
-      age
+      dob
       username
     }
     rooms{
@@ -80,7 +80,7 @@ query($location: String!, $from: Date!, $to: Date!, $occupancy: Int!){
       manager{
         name
         email
-        age
+        dob
         username
       }
       rooms{

@@ -1,12 +1,12 @@
 import {gql} from "@apollo/client";
 
 export const REGISTER_USER = gql`
-mutation($name: String!, $username: String!, $email: String!, $age: Int, $password: String!){
-    createUser(name: $name, username: $username, email: $email, password: $password, age: $age){
+mutation($name: String!, $username: String!, $email: String!, $dob: date!, $password: String!){
+    createUser(name: $name, username: $username, email: $email, password: $password, dob: $dob){
       id
       name
       username
-      age
+      dob
       email
       accessToken
       refreshToken
@@ -26,7 +26,7 @@ mutation($refreshToken: String!){
     id
     name
     username
-    age
+    dob
     email
     accessToken
     refreshToken
