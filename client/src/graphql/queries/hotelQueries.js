@@ -18,10 +18,12 @@ query($id: ID!){
       images
       name
       description
+      others
       occupancy
       price
       addedOn
       ratings
+      roomNumbers
     }
     addedOn
     location
@@ -89,6 +91,7 @@ query($location: String!, $from: Date!, $to: Date!, $occupancy: Int!){
         name
         description
         occupancy
+        others
         price
         addedOn
         ratings

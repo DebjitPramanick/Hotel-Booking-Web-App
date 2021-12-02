@@ -113,7 +113,8 @@ const Dashboard = () => {
 
     return (
         <PageContainer>
-            {roomModal.state && (<RoomModal action={roomModal.action} title={roomModal.title} hotel={hotel} 
+            {roomModal.state && (<RoomModal 
+            action={roomModal.action} title={roomModal.title} hotel={hotel} room={roomModal.param}
             setRoomModal={setRoomModal} />)}
             <QuickView>
                 <Info style={{ backgroundImage: `url(${HotelIMG})` }}>

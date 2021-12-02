@@ -6,7 +6,7 @@ import { ActionsContainer, Button, Item, Text } from '../../components/GlobalSty
 
 const ListItem = (props) => {
     let keys = Object.keys(props.data)
-    keys = keys.slice(1, keys.length)
+    keys = keys.filter(k => k!=='others' && k!=='id' && k!=='roomNumbers')
     return (
         <Item style={{ gridTemplateColumns: `repeat(${keys.length}, 1fr)` }}>
             <Text><Tippy interactive={true} content={'Room Image'} placement="bottom"><p>{props.data.name}</p></Tippy></Text>
@@ -20,7 +20,7 @@ const ListItem = (props) => {
             </Tippy>
             <ActionsContainer>
                 <Button onClick={() => props.setRoomModal(
-                    {state: true, title: 'Update Room Details', param: props.data.id, action: 'update'})
+                    {state: true, title: 'Update Room Details', param: props.data, action: 'update'})
                 }>
                     <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
                 <Button><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png"/></Button>

@@ -8,6 +8,7 @@ query($id: ID!){
     name
     description
     occupancy
+    others
     price
     addedOn
     ratings

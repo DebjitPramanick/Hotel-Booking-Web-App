@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { ADD_ROOM } from '../../graphql/mutations/roomMutations'
+import { ADD_ROOM, UPDATE_ROOM } from '../../graphql/mutations/roomMutations'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
 import { ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,7 +11,16 @@ import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 
 const RoomModal = (props) => {
 
+    const propsRoom = props.room
+
     const [addRoom] = useMutation(ADD_ROOM, {
+        refetchQueries: [
+            GET_HOTEL,
+            { variables: { id: props.hotel.id } }
+        ],
+    })
+
+    const [updateRoom] = useMutation(UPDATE_ROOM, {
         refetchQueries: [
             GET_HOTEL,
             { variables: { id: props.hotel.id } }
@@ -21,15 +30,17 @@ const RoomModal = (props) => {
     const [hide, setHide] = useState(false)
 
     const [room, setRoom] = useState({
-        name: '',
-        description: '',
+        name: propsRoom ? propsRoom.name : '',
+        description: propsRoom ? propsRoom.description : '',
         hotel: props.hotel.id,
-        images: [],
-        others: [],
-        occupancy: null,
-        price: null,
-        roomNumbers: []
+        images: propsRoom ? propsRoom.images : [],
+        others: propsRoom ? propsRoom.others : [],
+        occupancy: propsRoom ? propsRoom.occupancy : null,
+        price: propsRoom ? propsRoom.price : null,
+        roomNumbers: propsRoom ? propsRoom.roomNumbers : []
     })
+
+    console.log(room, props)
 
     const addNewRoom = (e) => {
         e.preventDefault()
@@ -61,10 +72,41 @@ const RoomModal = (props) => {
             })
     }
 
+    const updateHotelRoom = (e) => {
+        console.log(room)
+        e.preventDefault()
+        updateRoom({
+            variables: {
+                id: propsRoom.id,
+                name: room.name,
+                description: room.description,
+                images: room.images,
+                others: room.others,
+                occupancy: room.occupancy,
+                price: room.price,
+                roomNumbers: room.roomNumbers
+            }
+        })
+            .then(res => {
+                toast.success("Room updated", {
+                    autoClose: 5500,
+                    pauseOnHover: true,
+                    onClose: props.setRoomModal(false)
+                })
+                setHide(true)
+            })
+            .catch(err => {
+                toast.error(err, {
+                    autoClose: 5500,
+                    pauseOnHover: true
+                })
+            })
+    }
+
     const roomSlots = Array.from({ length: props.hotel.totalRooms }, (x, i) => {
         const s = {
             number: i + 1,
-            assigned: props.hotel.roomsMap[`${i + 1}`]
+            assigned: props.hotel.roomsMap[`${i + 1}`] && !room.roomNumbers.includes(i+1)
         }
         return s
     })
@@ -89,7 +131,7 @@ const RoomModal = (props) => {
                 <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
                 <ToastContainer />
                 <ModalTitle>{props.title}</ModalTitle>
-                <form onSubmit={addNewRoom}>
+                <form onSubmit={props.action === 'update' ? updateHotelRoom : addNewRoom}>
                     <Input required="true" style={{ marginBottom: '16px' }}
                         value={room.name} onChange={(e) => setRoom({ ...room, name: e.target.value })}
                         placeholder="Room name">

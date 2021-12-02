@@ -140,5 +140,6 @@ const deleteRoom = { // For deleting room
 
 module.exports = {
     addRoom,
+    updateRoom,
     deleteRoom
 }
