@@ -11,6 +11,7 @@ import { getDate } from '../../utils/utilFunctions'
 import RoomModal from '../../components/Modals/RoomModal'
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import { PageContainer } from '../../components/GlobalStyles/PageStyles'
+import HotelModal from '../../components/Modals/HotelModal'
 
 const QuickView = styled.div`
     display: grid;
@@ -97,14 +98,26 @@ const Dashboard = () => {
         action: ''
     })
 
+    const [hotelModal, setHotelModal] = useState({
+        state: false,
+        title: '',
+        param: null,
+        action: ''
+    })
+
     useEffect(() => {
         setPage("Dashboard")
     }, [])
 
     const controls = [
-        { label: 'Create Room', icon: <AddIcon />, action: () => 
-        setRoomModal({state: true, title: 'Add New Room', params: null, action: 'add'}) },
-        { label: 'Edit Hotel', icon: <EditIcon /> }
+        {
+            label: 'Create Room', icon: <AddIcon />, action: () =>
+                setRoomModal({ state: true, title: 'Add New Room', params: null, action: 'add' })
+        },
+        {
+            label: 'Edit Hotel', icon: <EditIcon />, action: () =>
+                setHotelModal({ state: true, title: 'Update Hotel Details', params: null, action: 'update' })
+        }
     ]
 
     if (loading) return <p>Loading...</p>
@@ -113,9 +126,14 @@ const Dashboard = () => {
 
     return (
         <PageContainer>
-            {roomModal.state && (<RoomModal 
-            action={roomModal.action} title={roomModal.title} hotel={hotel} room={roomModal.param}
-            setRoomModal={setRoomModal} />)}
+            {roomModal.state && (<RoomModal
+                action={roomModal.action} title={roomModal.title} hotel={hotel} room={roomModal.param}
+                setRoomModal={setRoomModal} />)}
+
+            {hotelModal.state && (<HotelModal
+                action={hotelModal.action} title={hotelModal.title} hotel={hotel}
+                setHotelModal={setHotelModal} />)}
+
             <QuickView>
                 <Info style={{ backgroundImage: `url(${HotelIMG})` }}>
                     <div className="card-details">

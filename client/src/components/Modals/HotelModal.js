@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { ADD_ROOM } from '../../graphql/mutations/roomMutations'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
 import { ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,10 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
+import { UPDATE_HOTEL } from '../../graphql/mutations/hotelMutations'
 
 const HotelModal = (props) => {
 
-    const [addRoom] = useMutation(ADD_ROOM, {
+    const propsHotel = props.hotel
+
+    const [updateHotel] = useMutation(UPDATE_HOTEL, {
         refetchQueries: [
             GET_HOTEL,
             { variables: { id: props.hotel.id } }
@@ -20,36 +22,42 @@ const HotelModal = (props) => {
 
     const [hide, setHide] = useState(false)
 
-    const [room, setRoom] = useState({
-        name: '',
-        description: '',
-        hotel: props.hotel.id,
-        images: [],
-        others: [],
-        occupancy: null,
-        price: null,
-        roomNumbers: []
+    const [hotel, setHotel] = useState({
+        name: propsHotel ? propsHotel.name : '',
+        description: propsHotel ? propsHotel.description : '',
+        id: props.hotel.id,
+        image: propsHotel ? propsHotel.image : '',
+        ratings: propsHotel ? propsHotel.ratings : null,
+        totalRooms: propsHotel ? propsHotel.totalRooms : null,
+        location: propsHotel ? propsHotel.location : ''
     })
 
-    const addNewRoom = (e) => {
+    const updateCurHotel = (e) => {
         e.preventDefault()
-        addRoom({
+        const assignedrooms = Object.keys(propsHotel.roomsMap).length
+        if(assignedrooms>hotel.totalRooms){
+            toast.warning(`You have already assigned ${assignedrooms} rooms. Unassign those rooms to decrease room numbers.`,{
+                autoClose: 5500,
+                pauseOnHover: true
+            })
+            return
+        }
+        updateHotel({
             variables: {
-                name: room.name,
-                description: room.description,
-                hotel: room.hotel,
-                images: room.images,
-                others: room.others,
-                occupancy: room.occupancy,
-                price: room.price,
-                roomNumbers: room.roomNumbers
+                name: hotel.name,
+                description: hotel.description,
+                id: hotel.id,
+                image: hotel.image,
+                ratings: hotel.ratings,
+                totalRooms: hotel.totalRooms,
+                location: hotel.location
             }
         })
             .then(res => {
-                toast.success("New room added", {
+                toast.success("Updated hotel.", {
                     autoClose: 5500,
                     pauseOnHover: true,
-                    onClose: props.setRoomModal(false)
+                    onClose: props.setHotelModal(false)
                 })
                 setHide(true)
             })
@@ -61,67 +69,30 @@ const HotelModal = (props) => {
             })
     }
 
-    const roomSlots = Array.from({ length: props.hotel.totalRooms }, (x, i) => {
-        const s = {
-            number: i + 1,
-            assigned: props.hotel.roomsMap[`${i + 1}`]
-        }
-        return s
-    })
-
-    const addNumber = (n, assigned) => {
-        if (room.roomNumbers.includes(n) && !assigned) {
-            let ns = room.roomNumbers.filter(s => s !== n)
-            setRoom({ ...room, roomNumbers: ns })
-        }
-        else if (!assigned) {
-            let ns = room.roomNumbers
-            ns.push(n)
-            setRoom({ ...room, roomNumbers: ns })
-        }
-        else return
-    }
-
 
     return (
         <ModalContainer>
             <ModalBox className="modal-box">
-                <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
+                <CloseIcon className="close-icon" onClick={() => props.setHotelModal(false)} />
                 <ToastContainer />
                 <ModalTitle>{props.title}</ModalTitle>
-                <form onSubmit={addNewRoom}>
+                <form onSubmit={props.action === 'update' ? updateCurHotel : null}>
                     <Input required="true" style={{ marginBottom: '16px' }}
-                        value={room.name} onChange={(e) => setRoom({ ...room, name: e.target.value })}
-                        placeholder="Room name">
+                        value={hotel.name} onChange={(e) => setHotel({ ...hotel, name: e.target.value })}
+                        placeholder="Hotel name">
                     </Input>
 
                     <TextArea required="true" style={{ marginBottom: '16px' }}
-                        value={room.description} onChange={(e) => setRoom({ ...room, description: e.target.value })}
-                        placeholder="Room description"></TextArea>
+                        value={hotel.description} onChange={(e) => setHotel({ ...hotel, description: e.target.value })}
+                        placeholder="Hotel description"></TextArea>
 
                     <Input required="true" style={{ marginBottom: '16px' }}
-                        type="number"
-                        value={room.occupancy} onChange={(e) => setRoom({ ...room, occupancy: Number(e.target.value) })}
-                        placeholder="Occupancy"></Input>
-
-                    <TextArea required="true" style={{ marginBottom: '16px' }}
-                        value={room.others}
-                        onChange={(e) => setRoom({ ...room, others: e.target.value.split(',') })}
-                        placeholder="Room specifications (Add using ',')"></TextArea>
+                        value={hotel.location} onChange={(e) => setHotel({ ...hotel, location: e.target.value })}
+                        placeholder="Location"></Input>
 
                     <Input required="true" style={{ marginBottom: '16px' }}
-                        type="number"
-                        value={room.price} onChange={(e) => setRoom({ ...room, price: Number(e.target.value) })}
-                        placeholder="Price"></Input>
-
-                    <RoomSelectionBox>
-                        {roomSlots.map(t => (
-                            <div className={`${t.assigned ? 'assigned' :
-                                room.roomNumbers.includes(t.number) ? 'selected' : ''}`}
-                                onClick={() => addNumber(t.number, t.assigned)}
-                            >{t.number}</div>
-                        ))}
-                    </RoomSelectionBox>
+                        value={hotel.totalRooms} onChange={(e) => setHotel({ ...hotel, totalRooms: Number(e.target.value) })}
+                        placeholder="Total Rooms"></Input>
 
                     {!hide && (
                         <FormButton type="submit"
