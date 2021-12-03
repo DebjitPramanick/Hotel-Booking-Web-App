@@ -19,6 +19,7 @@ import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Hotel from "./pages/HotelPage/Hotel";
 import Payment from "./pages/Payment/Payment";
+import { ToastContainer } from "react-toastify";
 
 const client = new ApolloClient({
   uri: "http://localhost:8000/graphql",
@@ -36,6 +37,7 @@ function App() {
         value={{ menuOpen, setMenuOpen, user, setPage, setUser }}
       >
         <div className="App">
+          <ToastContainer />
           <Router>
             <Header page={page} />
             <MainMenu />

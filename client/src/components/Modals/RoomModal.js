@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { ADD_ROOM, UPDATE_ROOM } from '../../graphql/mutations/roomMutations'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
 import { ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
@@ -129,7 +129,6 @@ const RoomModal = (props) => {
         <ModalContainer>
             <ModalBox className="modal-box">
                 <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
-                <ToastContainer />
                 <ModalTitle>{props.title}</ModalTitle>
                 <form onSubmit={props.action === 'update' ? updateHotelRoom : addNewRoom}>
                     <Input required="true" style={{ marginBottom: '16px' }}

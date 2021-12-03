@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FormButton, Image, Text } from '../../components/GlobalStyles/PageStyles'
-import RoomIMG from "../../assets/hotel.jpeg";
+import RoomIMG from "../../assets/hotel.png";
 import {useNavigate} from 'react-router-dom'
 
 const CardContainer = styled.div`

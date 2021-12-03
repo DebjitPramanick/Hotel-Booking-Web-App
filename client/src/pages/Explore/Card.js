@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import HotelIMG from "../../assets/hotel.jpeg"
+import HotelIMG from "../../assets/hotel.png"
 import { Image, Text } from '../../components/GlobalStyles/PageStyles'
 import "./card.css"
 import {useNavigate} from 'react-router-dom'
@@ -45,7 +45,7 @@ const Card = (props) => {
             <div className="slider" onClick={() => navigate(`/hotel/${hotel.id}`)}>
                 Book Room
             </div>
-            <Image style={{ backgroundImage: `url(${HotelIMG})`, minWidth: '260px', height: '260px' }} />
+            <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : hotel.png})`, minWidth: '260px', height: '260px' }} />
             <HotelDetails className="details">
                 <Text className="clip">{hotel.name}</Text>
                 <Text className="small">{hotel.location}</Text>

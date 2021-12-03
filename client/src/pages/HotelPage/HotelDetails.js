@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { Image, Text } from '../../components/GlobalStyles/PageStyles'
-import HotelIMG from "../../assets/hotel.jpeg";
+import HotelIMG from "../../assets/hotel.png";
 import RoomDetails from './RoomDetails';
 import { GlobalContext } from '../../utils/Context';
 
@@ -18,7 +18,7 @@ const HotelDetails = (props) => {
     return (
         <div>
             <div style={{ display: 'flex', width: '100%' }}>
-                <Image style={{ backgroundImage: `url(${HotelIMG})`, height: "300px", width: "60%", }} />
+                <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : hotel.png})`, height: "300px", width: "60%", }} />
                 <Details style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="small">Location: <span>{hotel.location}</span></Text>
                     <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { GlobalContext } from '../../utils/Context'
 import RoomsList from './RoomsList'
-import HotelIMG from "../../assets/hotel.jpeg"
+import HotelIMG from "../../assets/hotel.png"
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import "./dashboard.css"
@@ -126,6 +126,7 @@ const Dashboard = () => {
 
     return (
         <PageContainer>
+
             {roomModal.state && (<RoomModal
                 action={roomModal.action} title={roomModal.title} hotel={hotel} room={roomModal.param}
                 setRoomModal={setRoomModal} />)}
@@ -135,7 +136,7 @@ const Dashboard = () => {
                 setHotelModal={setHotelModal} />)}
 
             <QuickView>
-                <Info style={{ backgroundImage: `url(${HotelIMG})` }}>
+                <Info style={{ backgroundImage: `url(${hotel.image ? hotel.image : hotel.png})` }}>
                     <div className="card-details">
                         <h1>{hotel.name}</h1>
                         <p>{hotel.location}</p>

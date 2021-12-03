@@ -15,6 +15,8 @@ export const ModalContainer = styled.div`
 
 export const ModalBox = styled.div`;
     width: 700px;
+    max-height: 80vh;
+    overflow-y: scroll;
     background: #fff;
     padding: 20px;
     border-radius: 6px;

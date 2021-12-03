@@ -2,12 +2,13 @@ import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
 import { ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import { UPDATE_HOTEL } from '../../graphql/mutations/hotelMutations'
+import ImageUpload from '../ImageUpload/ImageUpload';
 
 const HotelModal = (props) => {
 
@@ -35,8 +36,8 @@ const HotelModal = (props) => {
     const updateCurHotel = (e) => {
         e.preventDefault()
         const assignedrooms = Object.keys(propsHotel.roomsMap).length
-        if(assignedrooms>hotel.totalRooms){
-            toast.warning(`You have already assigned ${assignedrooms} rooms. Unassign those rooms to decrease room numbers.`,{
+        if (assignedrooms > hotel.totalRooms) {
+            toast.warning(`You have already assigned ${assignedrooms} rooms. Unassign those rooms to decrease room numbers.`, {
                 autoClose: 5500,
                 pauseOnHover: true
             })
@@ -74,8 +75,10 @@ const HotelModal = (props) => {
         <ModalContainer>
             <ModalBox className="modal-box">
                 <CloseIcon className="close-icon" onClick={() => props.setHotelModal(false)} />
-                <ToastContainer />
                 <ModalTitle>{props.title}</ModalTitle>
+                <ImageUpload imageUrl={hotel.image} hotel={hotel} 
+                setImageURL={(val) => setHotel({...hotel, image: val})}/>
+
                 <form onSubmit={props.action === 'update' ? updateCurHotel : null}>
                     <Input required="true" style={{ marginBottom: '16px' }}
                         value={hotel.name} onChange={(e) => setHotel({ ...hotel, name: e.target.value })}

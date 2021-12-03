@@ -52,3 +52,7 @@ input[type=number] {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.Toastify__toast-container{
+  z-index: 99999999 !important;
+}
