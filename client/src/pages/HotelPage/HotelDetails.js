@@ -18,7 +18,7 @@ const HotelDetails = (props) => {
     return (
         <div>
             <div style={{ display: 'flex', width: '100%' }}>
-                <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : hotel.png})`, height: "300px", width: "60%", }} />
+                <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, height: "300px", width: "60%", }} />
                 <Details style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="small">Location: <span>{hotel.location}</span></Text>
                     <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>

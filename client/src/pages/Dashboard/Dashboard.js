@@ -136,7 +136,7 @@ const Dashboard = () => {
                 setHotelModal={setHotelModal} />)}
 
             <QuickView>
-                <Info style={{ backgroundImage: `url(${hotel.image ? hotel.image : hotel.png})` }}>
+                <Info style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})` }}>
                     <div className="card-details">
                         <h1>{hotel.name}</h1>
                         <p>{hotel.location}</p>

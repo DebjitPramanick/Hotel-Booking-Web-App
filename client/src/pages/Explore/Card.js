@@ -15,7 +15,7 @@ const CardContainer = styled.div`
     display: flex;
     position: relative;
     cursor: pointer;
-    :hover .slider{
+    :hover .action-slider{
         width: 280px;
         padding: 10px;
         border-radius: 6px;
@@ -42,10 +42,10 @@ const Card = (props) => {
 
     return (
         <CardContainer>
-            <div className="slider" onClick={() => navigate(`/hotel/${hotel.id}`)}>
+            <div className="action-slider" onClick={() => navigate(`/hotel/${hotel.id}`)}>
                 Book Room
             </div>
-            <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : hotel.png})`, minWidth: '260px', height: '260px' }} />
+            <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, minWidth: '260px', height: '260px' }} />
             <HotelDetails className="details">
                 <Text className="clip">{hotel.name}</Text>
                 <Text className="small">{hotel.location}</Text>

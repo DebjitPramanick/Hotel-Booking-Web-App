@@ -3,13 +3,13 @@ import { FormButton, Input } from '../GlobalStyles/FormStyles'
 import styled from 'styled-components'
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import CloseIcon from '@mui/icons-material/Close';
 import { ModalBox, ModalContainer } from '../GlobalStyles/ModalStyles';
 import { ButtonsContainer } from '../../pages/Auth/ModuleStyles';
 import { storage } from "../../utils/Firebase"
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import BlankImg from "../../assets/hotel.png"
 
 const UploadContainer = styled.div`
     margin-bottom: 20px
@@ -18,26 +18,22 @@ const UploadContainer = styled.div`
 const ImageContainer = styled.div`
     overflow: hidden;
     cursor: pointer;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     img{
         max-width: 100%;
-        width: 100%;
         max-height: 100%;
-    }
-`
-
-const CropContainer = styled.div`
-    position: relative;
-    .close-btn{
-        position: absolute;
     }
 `
 
 const ImageUpload = (props) => {
 
-    const { setImageURL, imageUrl, hotel } = props
+    const { setImageURL, imageUrl, refPath, styles } = props
     const fileInput = useRef(null)
 
-    const [src, setSrc] = useState(imageUrl);
+    const [src, setSrc] = useState(imageUrl ? imageUrl : BlankImg);
 
     const [popup, setPopup] = useState(false); //For popup box
     const [image, setImage] = useState(null); //For setting crop image
@@ -100,14 +96,14 @@ const ImageUpload = (props) => {
             crop.height,
         );
         const base64Image = canvas.toDataURL('image/jpeg');
-        var file = dataURLtoFile(base64Image, "profilepic.jpg");
+        var file = dataURLtoFile(base64Image, "file.jpg");
         setPreview(base64Image);
         imageUpload(file);
     }
 
     const imageUpload = (file) => {
         if (!file) alert("No file found.")
-        const reference = ref(storage, `images/hotels/${hotel.id}/hotelImage`)
+        const reference = ref(storage, refPath)
         const uploadTask = uploadBytesResumable(reference, file)
         uploadTask.on(
             "state_changed",
@@ -171,7 +167,7 @@ const ImageUpload = (props) => {
                 </ModalContainer>
             )}
 
-            <ImageContainer onClick={() => fileInput.current.click()}>
+            <ImageContainer onClick={() => fileInput.current.click()} style={styles}>
                 {preview ? <img src={preview} alt="" /> : <img src={src} alt="" />}
             </ImageContainer>
 

@@ -1,13 +1,15 @@
 import { useMutation } from '@apollo/client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ADD_ROOM, UPDATE_ROOM } from '../../graphql/mutations/roomMutations'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
-import { ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
+import { GridContainer, ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
+import ImageUpload from '../ImageUpload/ImageUpload'
+import { height } from '@mui/system'
 
 const RoomModal = (props) => {
 
@@ -40,7 +42,14 @@ const RoomModal = (props) => {
         roomNumbers: propsRoom ? propsRoom.roomNumbers : []
     })
 
-    console.log(room, props)
+    const [roomImages, setRoomImages] = useState(
+        room.images.length !== 0 ? 
+        room.image : ['']
+    )
+
+    useEffect(() => {
+        setRoomImages((f) => [...roomImages, f])
+    }, [roomImages])
 
     const addNewRoom = (e) => {
         e.preventDefault()
@@ -49,7 +58,7 @@ const RoomModal = (props) => {
                 name: room.name,
                 description: room.description,
                 hotel: room.hotel,
-                images: room.images,
+                images: roomImages[0]==='' ? room.images : roomImages,
                 others: room.others,
                 occupancy: room.occupancy,
                 price: room.price,
@@ -71,6 +80,8 @@ const RoomModal = (props) => {
                 })
             })
     }
+
+    console.log(roomImages, room)
 
     const updateHotelRoom = (e) => {
         console.log(room)
@@ -106,7 +117,7 @@ const RoomModal = (props) => {
     const roomSlots = Array.from({ length: props.hotel.totalRooms }, (x, i) => {
         const s = {
             number: i + 1,
-            assigned: props.hotel.roomsMap[`${i + 1}`] && !room.roomNumbers.includes(i+1)
+            assigned: props.hotel.roomsMap[`${i + 1}`] && !room.roomNumbers.includes(i + 1)
         }
         return s
     })
@@ -130,6 +141,16 @@ const RoomModal = (props) => {
             <ModalBox className="modal-box">
                 <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
                 <ModalTitle>{props.title}</ModalTitle>
+
+                <GridContainer>
+                    {roomImages.map((image, idx) => (
+                        <ImageUpload imageUrl={image==='' ? null : image} styles={{ height: 'fit-content' }}
+                            refPath={`images/rooms/${propsRoom.id}/roomImage${idx}`}
+                            setImageURL={(val) => setRoomImages([...roomImages, val]) } />
+                    ))}
+                </GridContainer>
+
+
                 <form onSubmit={props.action === 'update' ? updateHotelRoom : addNewRoom}>
                     <Input required="true" style={{ marginBottom: '16px' }}
                         value={room.name} onChange={(e) => setRoom({ ...room, name: e.target.value })}

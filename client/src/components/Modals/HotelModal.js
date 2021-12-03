@@ -76,7 +76,7 @@ const HotelModal = (props) => {
             <ModalBox className="modal-box">
                 <CloseIcon className="close-icon" onClick={() => props.setHotelModal(false)} />
                 <ModalTitle>{props.title}</ModalTitle>
-                <ImageUpload imageUrl={hotel.image} hotel={hotel} 
+                <ImageUpload imageUrl={hotel.image} refPath={`images/hotels/${hotel.id}/hotelImage`} 
                 setImageURL={(val) => setHotel({...hotel, image: val})}/>
 
                 <form onSubmit={props.action === 'update' ? updateCurHotel : null}>
