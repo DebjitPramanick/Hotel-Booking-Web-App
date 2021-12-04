@@ -9,6 +9,7 @@ import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import { UPDATE_HOTEL } from '../../graphql/mutations/hotelMutations'
 import ImageUpload from '../ImageUpload/ImageUpload';
+import { imageUpload } from '../../utils/utilFunctions';
 
 const HotelModal = (props) => {
 
@@ -33,7 +34,9 @@ const HotelModal = (props) => {
         location: propsHotel ? propsHotel.location : ''
     })
 
-    const updateCurHotel = (e) => {
+    console.log(hotel)
+
+    const updateCurHotel = async(e) => {
         e.preventDefault()
         const assignedrooms = Object.keys(propsHotel.roomsMap).length
         if (assignedrooms > hotel.totalRooms) {
@@ -43,12 +46,16 @@ const HotelModal = (props) => {
             })
             return
         }
+
+        const refPath = `images/hotels/${hotel.id}/hotelImage`
+        let imageUrl = await imageUpload(hotel.image, refPath, 'hotel')
+
         updateHotel({
             variables: {
                 name: hotel.name,
                 description: hotel.description,
                 id: hotel.id,
-                image: hotel.image,
+                image: imageUrl,
                 ratings: hotel.ratings,
                 totalRooms: hotel.totalRooms,
                 location: hotel.location

@@ -98,41 +98,9 @@ const ImageUpload = (props) => {
         const base64Image = canvas.toDataURL('image/jpeg');
         var file = dataURLtoFile(base64Image, "file.jpg");
         setPreview(base64Image);
-        imageUpload(file);
+        setImageURL(file)
+        setPopup(false)
     }
-
-    const imageUpload = (file) => {
-        if (!file) alert("No file found.")
-        const reference = ref(storage, refPath)
-        const uploadTask = uploadBytesResumable(reference, file)
-        uploadTask.on(
-            "state_changed",
-            snapshot => {
-                const prog = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                )
-                setProgress(prog)
-            },
-            error => {
-                toast.error(error, {
-                    autoClose: 5500,
-                    pauseOnHover: true
-                })
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref)
-                    .then(url => {
-                        toast.success("Image uploaded successfully.", {
-                            autoClose: 5500,
-                            pauseOnHover: true
-                        })
-                        setPopup(false);
-                        setImageURL(url)
-                    })
-            }
-        )
-    }
-
 
     const closeCrop = () => {
         setSrc(imageUrl);
