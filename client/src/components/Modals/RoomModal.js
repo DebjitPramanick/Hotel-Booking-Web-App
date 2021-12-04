@@ -2,14 +2,15 @@ import { useMutation } from '@apollo/client'
 import React, { useState, useEffect } from 'react'
 import { ADD_ROOM, UPDATE_ROOM } from '../../graphql/mutations/roomMutations'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
-import { GridContainer, ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
+import { AddField, GridContainer, ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import ImageUpload from '../ImageUpload/ImageUpload'
-import { height } from '@mui/system'
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { bulkImageUpload, imageUpload } from '../../utils/utilFunctions'
 
 const RoomModal = (props) => {
 
@@ -43,13 +44,13 @@ const RoomModal = (props) => {
     })
 
     const [roomImages, setRoomImages] = useState(
-        room.images.length !== 0 ? 
-        room.image : ['']
+        room.images.length !== 0 ?
+            room.image : []
     )
 
-    useEffect(() => {
-        setRoomImages((f) => [...roomImages, f])
-    }, [roomImages])
+    const addField = () => {
+        setRoomImages([...roomImages, null])
+    }
 
     const addNewRoom = (e) => {
         e.preventDefault()
@@ -58,7 +59,7 @@ const RoomModal = (props) => {
                 name: room.name,
                 description: room.description,
                 hotel: room.hotel,
-                images: roomImages[0]==='' ? room.images : roomImages,
+                images: roomImages[0] === '' ? room.images : roomImages,
                 others: room.others,
                 occupancy: room.occupancy,
                 price: room.price,
@@ -81,17 +82,18 @@ const RoomModal = (props) => {
             })
     }
 
-    console.log(roomImages, room)
-
-    const updateHotelRoom = (e) => {
-        console.log(room)
+    const updateHotelRoom = async(e) => {
         e.preventDefault()
-        updateRoom({
+
+        let images = await bulkImageUpload(roomImages, propsRoom)
+        console.log(images)
+
+        await updateRoom({
             variables: {
                 id: propsRoom.id,
                 name: room.name,
                 description: room.description,
-                images: room.images,
+                images: images,
                 others: room.others,
                 occupancy: room.occupancy,
                 price: room.price,
@@ -135,6 +137,12 @@ const RoomModal = (props) => {
         else return
     }
 
+    const changeImage = (val, idx) => {
+        let temp = roomImages
+        temp[idx] = val
+        setRoomImages(temp)
+    }
+
 
     return (
         <ModalContainer>
@@ -144,10 +152,13 @@ const RoomModal = (props) => {
 
                 <GridContainer>
                     {roomImages.map((image, idx) => (
-                        <ImageUpload imageUrl={image==='' ? null : image} styles={{ height: 'fit-content' }}
+                        <ImageUpload imageUrl={image} styles={{ height: '160px' }}
                             refPath={`images/rooms/${propsRoom.id}/roomImage${idx}`}
-                            setImageURL={(val) => setRoomImages([...roomImages, val]) } />
+                            setImageURL={(val) => changeImage(val, idx)} />
                     ))}
+                    <AddField onClick={() => addField()}>
+                        <AddCircleIcon className="plus-icon"/>
+                    </AddField>
                 </GridContainer>
 
 

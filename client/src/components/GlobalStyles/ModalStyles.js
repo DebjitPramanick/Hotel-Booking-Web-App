@@ -69,3 +69,17 @@ export const GridContainer = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 16px;
 `
+
+export const AddField = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    background: #ffcdb8;
+    height: 160px;
+    .plus-icon{
+        color: #9a9a9a !important;
+        font-size: 40px !important;
+    }
+`

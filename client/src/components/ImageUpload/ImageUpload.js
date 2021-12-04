@@ -12,7 +12,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import BlankImg from "../../assets/hotel.png"
 
 const UploadContainer = styled.div`
-    margin-bottom: 20px
+    margin-bottom: 20px;
+    background: #e2e2e2;
+    border-radius: 4px;
+    overflow: hidden;
 `
 
 const ImageContainer = styled.div`
@@ -44,14 +47,11 @@ const ImageUpload = (props) => {
         y: 50,
         width: 160,
         height: 90,
-        aspect: 16/9
+        aspect: 16 / 9
     }); //Fro setting crop value
 
     const [preview, setPreview] = useState(''); //For showing the preview to users
     const [imageFile, setImageFile] = useState({}); //For setting the imagefile after upload
-    const [progress, setProgress] = useState(null)
-
-
 
     const displayChange = e => {
         e.preventDefault();
@@ -117,18 +117,16 @@ const ImageUpload = (props) => {
                             <>
                                 <ReactCrop src={src} onImageLoaded={setImage}
                                     crop={crop} onChange={setCrop} />
-                                {progress === null && (
-                                    <ButtonsContainer>
-                                        <FormButton className="crop-btn"
-                                            onClick={() => closeCrop()}>
-                                            Cancel
-                                        </FormButton>
-                                        <FormButton className="crop-btn"
-                                            onClick={(e) => getCroppedImg(e)}>
-                                            Crop & Upload Image
-                                        </FormButton>
-                                    </ButtonsContainer>
-                                )}
+                                <ButtonsContainer>
+                                    <FormButton className="crop-btn"
+                                        onClick={() => closeCrop()}>
+                                        Cancel
+                                    </FormButton>
+                                    <FormButton className="crop-btn"
+                                        onClick={(e) => getCroppedImg(e)}>
+                                        Crop & Upload Image
+                                    </FormButton>
+                                </ButtonsContainer>
                             </>
                         )}
                     </ModalBox>

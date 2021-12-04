@@ -48,7 +48,7 @@ const HotelModal = (props) => {
         }
 
         const refPath = `images/hotels/${hotel.id}/hotelImage`
-        let imageUrl = await imageUpload(hotel.image, refPath, 'hotel')
+        let imageUrl = await imageUpload(hotel.image, refPath)
 
         updateHotel({
             variables: {
