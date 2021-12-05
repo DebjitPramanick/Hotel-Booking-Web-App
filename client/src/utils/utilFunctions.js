@@ -24,22 +24,26 @@ export const imageUpload = async (file, refPath) => {
     }
     const reference = ref(storage, refPath)
     const uploadTask = uploadBytesResumable(reference, file)
+    let promise
+
     uploadTask.on(
         "state_changed",
-        snapshot => {
-            const prog = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            )
-        },
+        snapshot => {},
         error => {
             toast.error(error, {
                 autoClose: 5500,
                 pauseOnHover: true
             })
         },
+        () => {
+            promise = getDownloadURL(uploadTask.snapshot.ref)
+        }
     )
-    let res = await getDownloadURL(reference).then(url => url)
-    return res;
+    return await Promise.resolve(uploadTask)
+    .then(async res => 
+        await Promise.resolve(promise)
+        .then(url => url)
+    )
 }
 
 export const bulkImageUpload = async (images, room) => {
@@ -47,39 +51,13 @@ export const bulkImageUpload = async (images, room) => {
         alert("No file found.")
         return
     }
-
-    console.log(images)
-    const promises = []
     const result = []
 
-    images.map((image, idx) => {
+    await Promise.all(images.map(async (image, idx) => {
         let refPath = `images/rooms/${room.id}/roomImage${idx+1}`
-        let reference = ref(storage, refPath)
-        let uploadTask = uploadBytesResumable(reference, image)
-        promises.push(uploadTask)
-        uploadTask.on(
-            "state_changed",
-            snapshot => {
-                const prog = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                )
-            },
-            error => {
-                toast.error(error, {
-                    autoClose: 5500,
-                    pauseOnHover: true
-                })
-            },
-            async () => getDownloadURL(uploadTask.snapshot.ref).
-            then(url => result.push(url))
-        )
-    })
-    
-    console.log(result)
+        let url = await imageUpload(image, refPath)
+        result.push(url)
+    }));
 
-    return Promise.all(promises)
-    .then((res) => {
-        console.log(res)
-        return result
-    })
+    return result
 }

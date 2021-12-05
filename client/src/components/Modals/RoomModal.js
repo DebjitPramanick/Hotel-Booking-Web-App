@@ -44,8 +44,8 @@ const RoomModal = (props) => {
     })
 
     const [roomImages, setRoomImages] = useState(
-        room.images.length !== 0 ?
-            room.image : []
+        propsRoom.images.length !== 0 ?
+            propsRoom.images : []
     )
 
     const addField = () => {
@@ -82,13 +82,12 @@ const RoomModal = (props) => {
             })
     }
 
-    const updateHotelRoom = async(e) => {
+    const updateHotelRoom = async (e) => {
         e.preventDefault()
 
         let images = await bulkImageUpload(roomImages, propsRoom)
-        console.log(images)
 
-        await updateRoom({
+        updateRoom({
             variables: {
                 id: propsRoom.id,
                 name: room.name,
@@ -157,7 +156,7 @@ const RoomModal = (props) => {
                             setImageURL={(val) => changeImage(val, idx)} />
                     ))}
                     <AddField onClick={() => addField()}>
-                        <AddCircleIcon className="plus-icon"/>
+                        <AddCircleIcon className="plus-icon" />
                     </AddField>
                 </GridContainer>
 
