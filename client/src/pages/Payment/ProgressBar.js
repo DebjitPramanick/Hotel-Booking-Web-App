@@ -18,11 +18,16 @@ const Steps = styled.div`
     align-items: center;
     position: relative;
     margin: 0 4px;
+    &.cur{
+        div{
+            background: #00d892;
+        }
+    }
     div{
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background: #00d892;
+        background: #b0b0b0;
         margin-bottom: 18px;
         display: flex;
         align-items: center;
@@ -41,23 +46,29 @@ const Line = styled.div`
     margin-top: 13px;
     height: 4px;
     width: 100%;
-    background: #00d892;
+    background: #b0b0b0;
+    &.cur{
+        background: #00d892;
+    }
 `
 
-const ProgressBar = () => {
+const ProgressBar = (props) => {
+    const {step} = props
     return (
         <Bar>
-            <Steps>
+            <Steps className={`${step>=1 ? 'cur' : ''}`}>
                 <div>1</div>
                 <Text className="small">Curtomer Info</Text>
             </Steps>
-            <Line />
-            <Steps>
+
+            <Line className={`${step>=2 ? 'cur' : ''}`}/>
+            <Steps className={`${step>=2 ? 'cur' : ''}`}>
                 <div>2</div>
                 <Text className="small">Payment</Text>
             </Steps>
-            <Line />
-            <Steps>
+
+            <Line className={`${step>=3 ? 'cur' : ''}`}/>
+            <Steps className={`${step>=3 ? 'cur' : ''}`}>
                 <div>3</div>
                 <Text className="small">Booking Confirmed</Text>
             </Steps>

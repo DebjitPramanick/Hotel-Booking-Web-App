@@ -12,6 +12,14 @@ export const getEasyDate = (d) => {
     return dT
 }
 
+export const getAge = (d) => {
+    let cur = moment()
+    let dob = moment(d).format('YYYY')
+    var diff = cur.diff(dob, 'years')
+    return diff
+}
+
+
 export const isDate = (d) => {
     let dT = moment(d).isValid()
     return dT

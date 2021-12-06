@@ -12,6 +12,16 @@ query($id: ID!){
     price
     addedOn
     ratings
+    hotel{
+      id
+      name
+      location
+      manager{
+        id
+        name
+        email
+      }
+    }
   }
 }
 `

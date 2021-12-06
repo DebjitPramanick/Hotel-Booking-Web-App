@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import { Layout } from './CommonStyles'
 
 
-const CustomerInfo = (props) => {
+const PaymentScreen = (props) => {
     const { user, room, hotel } = props
     const navigate = useNavigate()
-
     return (
         <>
             <Layout>
@@ -27,9 +26,7 @@ const CustomerInfo = (props) => {
                     <Text className="small">
                         Total: <span>5 People</span>
                     </Text>
-                </div>
-                <div className="section">
-                    <Text>Booking Info</Text>
+                    <Text style={{marginTop: '20px'}}>Booking Info</Text>
                     <Text className="small">
                         Hotel: <span>{room.hotel.name}</span>
                     </Text>
@@ -48,17 +45,35 @@ const CustomerInfo = (props) => {
                         Total Cost: <span>Rs. {room.price * 3}</span>
                     </Text>
                 </div>
+                <div className="section">
+                    <Text>Payment Info</Text>
+                    <Text className="small">
+                        Room(s) Cost: <span>Rs. {room.price * 3}</span>
+                    </Text>
+                    <Text className="small">
+                        Tax: <span>Rs. {20}</span>
+                    </Text>
+                    <Text className="small">
+                        Total Cost: <span>Rs. {room.price * 3 + 20}</span>
+                    </Text>
+                    <FormButton style={{width: '100%', borderRadius: '4px'}}>
+                        Pay Now
+                    </FormButton>
+                    <Text className="small" style={{marginTop: '16px', color: 'grey'}}>
+                        *You can also pay later
+                    </Text>
+                </div>
             </Layout>
             <Layout className="buttons">
                 <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`)}>
                     Go Back
                 </FormButton>
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`)}>
-                    Confirm
+                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/3`)}>
+                    Pay Later
                 </FormButton>
             </Layout>
         </>
     )
 }
 
-export default CustomerInfo
+export default PaymentScreen

@@ -3,16 +3,20 @@ import { FormButton, Text } from '../../components/GlobalStyles/PageStyles'
 import styled from 'styled-components'
 import { getAge } from '../../utils/utilFunctions'
 import { useNavigate } from 'react-router-dom'
-import { Layout } from './CommonStyles'
+import { Confirmation, Layout } from './CommonStyles'
 
-
-const CustomerInfo = (props) => {
+const BookingConfirmed = (props) => {
     const { user, room, hotel } = props
     const navigate = useNavigate()
 
     return (
         <>
-            <Layout>
+            <Confirmation>
+                <img src="https://img.icons8.com/fluency/48/000000/ok.png" alt="/"
+                    style={{ marginRight: '10px' }} />
+                <Text style={{ margin: '0' }}>Booking Confirmed</Text>
+            </Confirmation>
+            <Layout style={{ marginTop: '20px' }}>
                 <div className="section">
                     <Text>Customer Info</Text>
                     <Text className="small">
@@ -27,9 +31,7 @@ const CustomerInfo = (props) => {
                     <Text className="small">
                         Total: <span>5 People</span>
                     </Text>
-                </div>
-                <div className="section">
-                    <Text>Booking Info</Text>
+                    <Text style={{ marginTop: '20px' }}>Booking Info</Text>
                     <Text className="small">
                         Hotel: <span>{room.hotel.name}</span>
                     </Text>
@@ -48,17 +50,32 @@ const CustomerInfo = (props) => {
                         Total Cost: <span>Rs. {room.price * 3}</span>
                     </Text>
                 </div>
+                <div className="section">
+                    <Text>Payment Info</Text>
+                    <Text className="small">
+                        Room(s) Cost: <span>Rs. {room.price * 3}</span>
+                    </Text>
+                    <Text className="small">
+                        Tax: <span>Rs. {20}</span>
+                    </Text>
+                    <Text className="small">
+                        Total Cost: <span>Rs. {room.price * 3 + 20}</span>
+                    </Text>
+                    <Text className="small">
+                        Payment Status: <span>Not Paid</span>
+                    </Text>
+                </div>
             </Layout>
             <Layout className="buttons">
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`)}>
+                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`)}>
                     Go Back
                 </FormButton>
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`)}>
-                    Confirm
+                <FormButton onClick={() => navigate(`/bookings`)}>
+                    Your Bookings
                 </FormButton>
             </Layout>
         </>
     )
 }
 
-export default CustomerInfo
+export default BookingConfirmed

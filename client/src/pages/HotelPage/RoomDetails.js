@@ -39,7 +39,7 @@ const RoomDetails = (props) => {
     const navigate = useNavigate()
 
     const handleBook = () => {
-        navigate(`/payment/${room.hotel.id}/${room.id}`)
+        navigate(`/payment/${room.hotel.id}/${room.id}/1`)
     }
 
     return (
