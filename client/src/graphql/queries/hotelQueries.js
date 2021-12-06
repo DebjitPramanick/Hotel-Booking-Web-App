@@ -24,6 +24,16 @@ query($id: ID!){
       addedOn
       ratings
       roomNumbers
+      hotel{
+        id
+        name
+        location
+        manager{
+          id
+          name
+          email
+        }
+      }
     }
     addedOn
     location
@@ -95,6 +105,16 @@ query($location: String!, $from: Date!, $to: Date!, $occupancy: Int!){
         price
         addedOn
         ratings
+        hotel{
+          id
+          name
+          location
+          manager{
+            id
+            name
+            email
+          }
+        }
       }
       addedOn
       location

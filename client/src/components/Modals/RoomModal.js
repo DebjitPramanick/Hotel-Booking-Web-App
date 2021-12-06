@@ -89,7 +89,7 @@ const RoomModal = (props) => {
 
     const updateHotelRoom = async (e) => {
         e.preventDefault()
-
+        setLoading(true)
         let images = await bulkImageUpload(roomImages, propsRoom)
 
         updateRoom({
@@ -111,7 +111,7 @@ const RoomModal = (props) => {
                     onClose: props.setRoomModal(false)
                 })
                 setHide(true)
-                setLoading(true)
+                setLoading(false)
             })
             .catch(err => {
                 toast.error(err, {
