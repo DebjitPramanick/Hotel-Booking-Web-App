@@ -11,6 +11,7 @@ import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import ImageUpload from '../ImageUpload/ImageUpload'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { bulkImageUpload, imageUpload } from '../../utils/utilFunctions'
+import Loader from '../Loaders/Loader'
 
 const RoomModal = (props) => {
 
@@ -31,6 +32,7 @@ const RoomModal = (props) => {
     })
 
     const [hide, setHide] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const [room, setRoom] = useState({
         name: propsRoom ? propsRoom.name : '',
@@ -44,8 +46,8 @@ const RoomModal = (props) => {
     })
 
     const [roomImages, setRoomImages] = useState(
-        propsRoom.images.length !== 0 ?
-            propsRoom.images : []
+        room.images.length !== 0 ?
+            room.images : []
     )
 
     const addField = () => {
@@ -54,6 +56,7 @@ const RoomModal = (props) => {
 
     const addNewRoom = (e) => {
         e.preventDefault()
+        setLoading(true)
         addRoom({
             variables: {
                 name: room.name,
@@ -73,12 +76,14 @@ const RoomModal = (props) => {
                     onClose: props.setRoomModal(false)
                 })
                 setHide(true)
+                setLoading(false)
             })
             .catch(err => {
                 toast.error(err, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })
+                setLoading(true)
             })
     }
 
@@ -106,12 +111,14 @@ const RoomModal = (props) => {
                     onClose: props.setRoomModal(false)
                 })
                 setHide(true)
+                setLoading(true)
             })
             .catch(err => {
                 toast.error(err, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })
+                setLoading(false)
             })
     }
 
@@ -146,62 +153,67 @@ const RoomModal = (props) => {
     return (
         <ModalContainer>
             <ModalBox className="modal-box">
-                <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
-                <ModalTitle>{props.title}</ModalTitle>
+                {!loading ? (
+                    <>
 
-                <GridContainer>
-                    {roomImages.map((image, idx) => (
-                        <ImageUpload imageUrl={image} styles={{ height: '160px' }}
-                            refPath={`images/rooms/${propsRoom.id}/roomImage${idx}`}
-                            setImageURL={(val) => changeImage(val, idx)} />
-                    ))}
-                    <AddField onClick={() => addField()}>
-                        <AddCircleIcon className="plus-icon" />
-                    </AddField>
-                </GridContainer>
+                        <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
+                        <ModalTitle>{props.title}</ModalTitle>
+
+                        <GridContainer>
+                            {roomImages.map((image, idx) => (
+                                <ImageUpload imageUrl={image} styles={{ height: '160px' }}
+                                    refPath={`images/rooms/${propsRoom.id}/roomImage${idx}`}
+                                    setImageURL={(val) => changeImage(val, idx)} />
+                            ))}
+                            <AddField onClick={() => addField()}>
+                                <AddCircleIcon className="plus-icon" />
+                            </AddField>
+                        </GridContainer>
 
 
-                <form onSubmit={props.action === 'update' ? updateHotelRoom : addNewRoom}>
-                    <Input required="true" style={{ marginBottom: '16px' }}
-                        value={room.name} onChange={(e) => setRoom({ ...room, name: e.target.value })}
-                        placeholder="Room name">
-                    </Input>
+                        <form onSubmit={props.action === 'update' ? updateHotelRoom : addNewRoom}>
+                            <Input required="true" style={{ marginBottom: '16px' }}
+                                value={room.name} onChange={(e) => setRoom({ ...room, name: e.target.value })}
+                                placeholder="Room name">
+                            </Input>
 
-                    <TextArea required="true" style={{ marginBottom: '16px' }}
-                        value={room.description} onChange={(e) => setRoom({ ...room, description: e.target.value })}
-                        placeholder="Room description"></TextArea>
+                            <TextArea required="true" style={{ marginBottom: '16px' }}
+                                value={room.description} onChange={(e) => setRoom({ ...room, description: e.target.value })}
+                                placeholder="Room description"></TextArea>
 
-                    <Input required="true" style={{ marginBottom: '16px' }}
-                        type="number"
-                        value={room.occupancy} onChange={(e) => setRoom({ ...room, occupancy: Number(e.target.value) })}
-                        placeholder="Occupancy"></Input>
+                            <Input required="true" style={{ marginBottom: '16px' }}
+                                type="number"
+                                value={room.occupancy} onChange={(e) => setRoom({ ...room, occupancy: Number(e.target.value) })}
+                                placeholder="Occupancy"></Input>
 
-                    <TextArea required="true" style={{ marginBottom: '16px' }}
-                        value={room.others}
-                        onChange={(e) => setRoom({ ...room, others: e.target.value.split(',') })}
-                        placeholder="Room specifications (Add using ',')"></TextArea>
+                            <TextArea required="true" style={{ marginBottom: '16px' }}
+                                value={room.others}
+                                onChange={(e) => setRoom({ ...room, others: e.target.value.split(',') })}
+                                placeholder="Room specifications (Add using ',')"></TextArea>
 
-                    <Input required="true" style={{ marginBottom: '16px' }}
-                        type="number"
-                        value={room.price} onChange={(e) => setRoom({ ...room, price: Number(e.target.value) })}
-                        placeholder="Price"></Input>
+                            <Input required="true" style={{ marginBottom: '16px' }}
+                                type="number"
+                                value={room.price} onChange={(e) => setRoom({ ...room, price: Number(e.target.value) })}
+                                placeholder="Price"></Input>
 
-                    <RoomSelectionBox>
-                        {roomSlots.map(t => (
-                            <div className={`${t.assigned ? 'assigned' :
-                                room.roomNumbers.includes(t.number) ? 'selected' : ''}`}
-                                onClick={() => addNumber(t.number, t.assigned)}
-                            >{t.number}</div>
-                        ))}
-                    </RoomSelectionBox>
+                            <RoomSelectionBox>
+                                {roomSlots.map(t => (
+                                    <div className={`${t.assigned ? 'assigned' :
+                                        room.roomNumbers.includes(t.number) ? 'selected' : ''}`}
+                                        onClick={() => addNumber(t.number, t.assigned)}
+                                    >{t.number}</div>
+                                ))}
+                            </RoomSelectionBox>
 
-                    {!hide && (
-                        <FormButton type="submit"
-                            style={{ marginLeft: 'auto', marginTop: '40px' }}>
-                            {props.title}
-                        </FormButton>
-                    )}
-                </form>
+                            {!hide && (
+                                <FormButton type="submit"
+                                    style={{ marginLeft: 'auto', marginTop: '40px' }}>
+                                    {props.title}
+                                </FormButton>
+                            )}
+                        </form>
+                    </>
+                ) : <Loader />}
             </ModalBox>
         </ModalContainer>
     )

@@ -7,6 +7,7 @@ import Card from "./Card"
 import { useParams } from 'react-router'
 import { useQuery } from '@apollo/client'
 import { SEARCH_HOTELS } from '../../graphql/queries/hotelQueries'
+import PageLoader from '../../components/Loaders/PageLoader'
 
 const ResultContainer = styled.div`
     width: calc(100vw - 510px);
@@ -31,7 +32,7 @@ const Explore = (props) => {
         setPage("Explore")
     }, [])
 
-    if(loading) return <p>Loading...</p>
+    if(loading) return <PageLoader />
 
     return (
         <PageContainer>

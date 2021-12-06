@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import { Image, PageContainer } from "../../components/GlobalStyles/PageStyles";
+import PageLoader from "../../components/Loaders/PageLoader";
 import { GET_HOTEL_BY_ID } from "../../graphql/queries/hotelQueries";
 import { GlobalContext } from "../../utils/Context";
 import HotelDetails from "./HotelDetails";
@@ -21,7 +22,7 @@ const Hotel = () => {
         
     }, [loading])
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <PageLoader />
 
     const hotel = data.getHotelByID;
     console.log(hotel);

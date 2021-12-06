@@ -12,6 +12,7 @@ import RoomModal from '../../components/Modals/RoomModal'
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 import HotelModal from '../../components/Modals/HotelModal'
+import PageLoader from '../../components/Loaders/PageLoader'
 
 const QuickView = styled.div`
     display: grid;
@@ -120,7 +121,7 @@ const Dashboard = () => {
         }
     ]
 
-    if (loading) return <p>Loading...</p>
+    if (loading) return <PageLoader />
 
     const hotel = data.getHotel
 
