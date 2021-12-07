@@ -6,6 +6,7 @@ import { GlobalContext } from '../../utils/Context'
 import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles'
 import { useNavigate } from 'react-router-dom'
 import { PageContainer } from '../../components/GlobalStyles/PageStyles'
+import Loader from "../../components/Loaders/Loader.js"
 
 const Login = () => {
 
@@ -20,6 +21,7 @@ const Login = () => {
     const [login] = useLazyQuery(LOGIN_USER, {
         fetchPolicy: 'network-only',
         onCompleted: res => {
+            setLoading(false)
             let user = res.login
             localStorage.setItem('user', JSON.stringify(user))
             setTimeout(() => {
@@ -29,6 +31,7 @@ const Login = () => {
             }, 1000);
         },
         onError: err => {
+            setLoading(false)
             alert(err.message)
         }
     })
@@ -38,8 +41,11 @@ const Login = () => {
         password: ''
     })
 
+    const [loading, setLoading] = useState(false)
+
     const userLogin = async (e) => {
         e.preventDefault()
+        setLoading(true)
         login({
             variables: {
                 email: data.email,
@@ -51,26 +57,28 @@ const Login = () => {
     return (
         <PageContainer>
             <AuthContainer>
-                <FormContainer>
-                    <form className="form-box" onSubmit={userLogin}>
-                        <FormTitle style={{ marginBottom: '20px' }}>Log In</FormTitle>
-                        <Input style={{ margin: '10px 0' }}
-                            placeholder="Email"
-                            value={data.email}
-                            onChange={(e) => setdata({ ...data, email: e.target.value })}></Input>
-                        <Input style={{ margin: '10px 0' }}
-                            placeholder="Password"
-                            type="password"
-                            value={data.password}
-                            onChange={(e) => setdata({ ...data, password: e.target.value })}></Input>
-                        <ButtonsContainer>
-                            <FormButton style={{ border: '2px solid #ff6e29', background: "#fff", color: "#ff6e29" }}
-                                onClick={() => navigate('/register')}
-                            >Register</FormButton>
-                            <FormButton type="submit">Log In</FormButton>
-                        </ButtonsContainer>
-                    </form>
-                </FormContainer>
+                {!loading ? (
+                    <FormContainer>
+                        <form className="form-box" onSubmit={userLogin}>
+                            <FormTitle style={{ marginBottom: '20px' }}>Log In</FormTitle>
+                            <Input style={{ margin: '10px 0' }}
+                                placeholder="Email"
+                                value={data.email}
+                                onChange={(e) => setdata({ ...data, email: e.target.value })}></Input>
+                            <Input style={{ margin: '10px 0' }}
+                                placeholder="Password"
+                                type="password"
+                                value={data.password}
+                                onChange={(e) => setdata({ ...data, password: e.target.value })}></Input>
+                            <ButtonsContainer>
+                                <FormButton style={{ border: '2px solid #ff6e29', background: "#fff", color: "#ff6e29" }}
+                                    onClick={() => navigate('/register')}
+                                >Register</FormButton>
+                                <FormButton type="submit">Log In</FormButton>
+                            </ButtonsContainer>
+                        </form>
+                    </FormContainer>
+                ) : <Loader />}
             </AuthContainer>
         </PageContainer>
     )

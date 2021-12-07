@@ -76,7 +76,8 @@ const searchHotels = { // For searching available hotels
                 ],
                 location: args.location,
                 numOfPeople: { $gte: args.occupancy }
-            })
+            }).collation( { locale: 'en', strength: 2 } )
+            console.log(bookings)
             let map = new Map()
             bookings.forEach(b => {
                 let k = b.hotel.toString()

@@ -6,6 +6,7 @@ import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles';
 import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/FormStyles';
 import { useNavigate } from 'react-router-dom';
 import { PageContainer } from '../../components/GlobalStyles/PageStyles';
+import Loader from "../../components/Loaders/Loader.js"
 
 const Register = () => {
 
@@ -23,24 +24,28 @@ const Register = () => {
         name: '',
         username: '',
         email: '',
-        age: '',
+        dob: '',
         password: ''
     })
 
+    const [loading, setLoading] = useState(false)
+
     const register = (e) => {
         e.preventDefault()
+        setLoading(true)
         createUser({
             variables: {
                 name: info.name,
                 username: info.username,
                 email: info.email,
                 password: info.password,
-                age: info.age
+                dob: info.dob
             }
         })
             .then(res => {
                 const user = res.data.createUser
                 localStorage.setItem('user', JSON.stringify(user))
+                setLoading(false)
                 setTimeout(() => {
                     user.isManager ?
                         window.location.href = '/dashboard' :
@@ -48,6 +53,7 @@ const Register = () => {
                 }, 1000);
             })
             .catch(err => {
+                setLoading(false)
                 alert(err)
             })
     }
@@ -55,7 +61,8 @@ const Register = () => {
     return (
         <PageContainer>
             <AuthContainer>
-                <FormContainer>
+                {!loading ? (
+                    <FormContainer>
                     <form className="form-box" onSubmit={register}>
                         <FormTitle style={{ marginBottom: '20px' }}>Register</FormTitle>
                         <Input style={{ margin: '10px 0' }}
@@ -71,10 +78,9 @@ const Register = () => {
                             value={info.email}
                             onChange={(e) => setInfo({ ...info, email: e.target.value })}></Input>
                         <Input style={{ margin: '10px 0' }}
-                            type="number"
                             placeholder="Age"
                             value={info.age}
-                            onChange={(e) => setInfo({ ...info, age: Number(e.target.value) })}></Input>
+                            onChange={(e) => setInfo({ ...info, dob: e.target.value })}></Input>
                         <Input style={{ margin: '10px 0' }}
                             placeholder="Password"
                             type="password"
@@ -88,6 +94,7 @@ const Register = () => {
                         </ButtonsContainer>
                     </form>
                 </FormContainer>
+                ) : <Loader />}
             </AuthContainer>
         </PageContainer>
     )
