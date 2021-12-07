@@ -39,3 +39,14 @@ export const FormButton = styled.button`
     cursor: pointer;
     display: block
 `
+
+export const InputContainer = styled.div`
+    width: 100%;
+    label{
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px
+    }
+`

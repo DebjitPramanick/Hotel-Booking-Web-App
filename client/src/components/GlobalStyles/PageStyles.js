@@ -14,7 +14,17 @@ export const PageContainer = styled.div`
     padding: 16px;
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
+    .overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        height: 100vh;
+        right: 0;
+        background: #0000004d;
+        z-index: 1;
+    }
 `
 
 export const SplitContainer = styled.div`

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./box.css"
 import { useNavigate } from 'react-router-dom';
+import SelectOccupancy from './SelectOccupancy';
 
 const Extras = styled.div`
     margin-top: 20px;
@@ -23,15 +24,6 @@ const InputContainer = styled.div`
     }
 `
 
-const OcpBox = styled.div`
-    display: flex;
-    align-items: center;
-    background: #fff;
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 4px
-`
-
 const SearchBox = (props) => {
 
     const data = props.params
@@ -40,14 +32,18 @@ const SearchBox = (props) => {
 
     const [checkIn, setCheckIn] = useState(data ? new Date(data.checkIn) : new Date());
     const [checkOut, setCheckOut] = useState(data ? new Date(data.checkOut) : new Date());
-    const [query, setQuery] = useState('')
+    const [query, setQuery] = useState(data ? data.location : '')
+    const [count, setCount] = useState({
+        children: 0,
+        adults: 0
+    })
 
     const navigate = useNavigate()
 
     const handleSearch = () => {
         const from = checkIn.toISOString()
         const to = checkOut.toISOString()
-        navigate(`/explore/${query}/${from}/${to}/2`)
+        navigate(`/explore/${query}/${from}/${to}/${count.adults+count.children}`)
     }
 
     return (
@@ -73,9 +69,7 @@ const SearchBox = (props) => {
 
                     <InputContainer>
                         <label>People</label>
-                        <OcpBox >
-                            5 People
-                        </OcpBox>
+                        <SelectOccupancy count={count} setCount={setCount}/>
                     </InputContainer>
 
                 </Extras>

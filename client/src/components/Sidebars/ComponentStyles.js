@@ -8,5 +8,5 @@ export const SidebarContainer = styled.div`
     height: calc(100vh - 100px);
     overflow-y: scroll;
     padding: 20px;
-    border: 2px solid grey
+    border: 1px solid #d8d8d8
 `

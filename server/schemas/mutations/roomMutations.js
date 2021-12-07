@@ -97,8 +97,7 @@ const updateRoom = { // For updating room
         }, { new: true })
 
         let hotelData = await Hotel.findById(room.hotel)
-
-        hotelData.rooms.push(args.id)
+        
         room.roomNumbers.forEach(n => {
             if(!hotelData.roomsMap.get(n.toString())){
                 hotelData.roomsMap.set(n.toString(), room.name)

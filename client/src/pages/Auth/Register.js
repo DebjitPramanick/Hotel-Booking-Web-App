@@ -3,10 +3,11 @@ import { useMutation } from '@apollo/client';
 import { REGISTER_USER } from '../../graphql/mutations/userMutations';
 import { GlobalContext } from '../../utils/Context';
 import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles';
-import { FormButton, FormTitle, Input } from '../../components/GlobalStyles/FormStyles';
+import { FormButton, FormTitle, Input, InputContainer } from '../../components/GlobalStyles/FormStyles';
 import { useNavigate } from 'react-router-dom';
 import { PageContainer } from '../../components/GlobalStyles/PageStyles';
 import Loader from "../../components/Loaders/Loader.js"
+import DatePicker from "react-datepicker";
 
 const Register = () => {
 
@@ -24,7 +25,7 @@ const Register = () => {
         name: '',
         username: '',
         email: '',
-        dob: '',
+        dob: new Date(),
         password: ''
     })
 
@@ -63,37 +64,37 @@ const Register = () => {
             <AuthContainer>
                 {!loading ? (
                     <FormContainer>
-                    <form className="form-box" onSubmit={register}>
-                        <FormTitle style={{ marginBottom: '20px' }}>Register</FormTitle>
-                        <Input style={{ margin: '10px 0' }}
-                            placeholder="Name"
-                            value={info.name}
-                            onChange={(e) => setInfo({ ...info, name: e.target.value })}></Input>
-                        <Input style={{ margin: '10px 0' }}
-                            placeholder="Username"
-                            value={info.username}
-                            onChange={(e) => setInfo({ ...info, username: e.target.value })}></Input>
-                        <Input style={{ margin: '10px 0' }}
-                            placeholder="Email"
-                            value={info.email}
-                            onChange={(e) => setInfo({ ...info, email: e.target.value })}></Input>
-                        <Input style={{ margin: '10px 0' }}
-                            placeholder="Age"
-                            value={info.age}
-                            onChange={(e) => setInfo({ ...info, dob: e.target.value })}></Input>
-                        <Input style={{ margin: '10px 0' }}
-                            placeholder="Password"
-                            type="password"
-                            value={info.password}
-                            onChange={(e) => setInfo({ ...info, password: e.target.value })}></Input>
-                        <ButtonsContainer>
-                            <FormButton style={{ border: '2px solid #ff6e29', background: "#fff", color: "#ff6e29" }}
-                                onClick={() => navigate('/login')}
-                            >Log In</FormButton>
-                            <FormButton type="submit">Register</FormButton>
-                        </ButtonsContainer>
-                    </form>
-                </FormContainer>
+                        <form className="form-box" onSubmit={register}>
+                            <FormTitle style={{ marginBottom: '20px' }}>Register</FormTitle>
+                            <Input style={{ margin: '10px 0' }}
+                                placeholder="Name"
+                                value={info.name}
+                                onChange={(e) => setInfo({ ...info, name: e.target.value })}></Input>
+                            <Input style={{ margin: '10px 0' }}
+                                placeholder="Username"
+                                value={info.username}
+                                onChange={(e) => setInfo({ ...info, username: e.target.value })}></Input>
+                            <Input style={{ margin: '10px 0' }}
+                                placeholder="Email"
+                                value={info.email}
+                                onChange={(e) => setInfo({ ...info, email: e.target.value })}></Input>
+                            <InputContainer style={{ marginRight: '16px' }}>
+                                <DatePicker selected={info.dob}
+                                    onChange={(date) => setInfo({ ...info, dob: date })} />
+                            </InputContainer>
+                            <Input style={{ margin: '10px 0' }}
+                                placeholder="Password"
+                                type="password"
+                                value={info.password}
+                                onChange={(e) => setInfo({ ...info, password: e.target.value })}></Input>
+                            <ButtonsContainer>
+                                <FormButton style={{ border: '2px solid #ff6e29', background: "#fff", color: "#ff6e29" }}
+                                    onClick={() => navigate('/login')}
+                                >Log In</FormButton>
+                                <FormButton type="submit">Register</FormButton>
+                            </ButtonsContainer>
+                        </form>
+                    </FormContainer>
                 ) : <Loader />}
             </AuthContainer>
         </PageContainer>
