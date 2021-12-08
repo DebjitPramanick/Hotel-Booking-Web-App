@@ -10,8 +10,10 @@ const Container = styled.div`
 `
 
 const BookingsList = (props) => {
+
+    console.log(props)
     const [query, setQuery] = useState('')
-    const listItems = ['Hotel Name', 'Room Name', 'From', 'To', 'Price', 'Booked On', 'Amount', 'Paid', 'Actions']
+    const listItems = ['Hotel Name', 'Room Name', 'From', 'To', 'Booked On', 'Amount', 'Paid', 'Actions']
 
     return (
         <Container>
@@ -21,8 +23,8 @@ const BookingsList = (props) => {
                 placeholder="Search bookings by hotel names..." />
 
             <ListHeader list={listItems} />
-            {props.bookings.map(room => 
-            <ListItem key={room.id} data={room} />)}
+            {props.bookings.map(booking => 
+            <ListItem key={booking.id} data={booking} />)}
         </Container>
     )
 }

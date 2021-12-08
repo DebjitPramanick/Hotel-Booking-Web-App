@@ -29,6 +29,22 @@ const getBooking = { // For getting booking details
     }
 }
 
+const getUserBookings = { // For getting user's booking details
+    type: new GraphQLList(BookingType),
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+    },
+    async resolve(parent, args, req) {
+        if (!args.id) {
+            throw new Error("User ID is required.")
+        }
+        else {
+            let booking = await Booking.find({bookedBy: args.id})
+            return booking
+        }
+    }
+}
+
 const getAllBookings = { // For getting booking details
     type: new GraphQLList(BookingType),
     args: {
@@ -47,5 +63,6 @@ const getAllBookings = { // For getting booking details
 
 module.exports = {
     getBooking,
-    getAllBookings
+    getAllBookings,
+    getUserBookings
 }
