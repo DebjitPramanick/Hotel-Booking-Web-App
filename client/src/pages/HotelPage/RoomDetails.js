@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FormButton, Image, Text } from '../../components/GlobalStyles/PageStyles'
+import { FormButton, Image, SelectBox, Text } from '../../components/GlobalStyles/PageStyles'
 import RoomIMG from "../../assets/hotel.png";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const CardContainer = styled.div`
     margin-top: 20px;
@@ -35,6 +35,7 @@ const Features = styled.div`
 const RoomDetails = (props) => {
 
     const { room } = props
+    console.log(room)
     const ratings = !room.ratings ? 0.00 : room.ratings
     const navigate = useNavigate()
 
@@ -51,7 +52,15 @@ const RoomDetails = (props) => {
                     <Text className="clamp small" style={{ marginTop: '12px' }}>{room.description}</Text>
                     <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>
                     <Text className="small">Price: <span>{room.price}/-</span></Text>
-                    <FormButton onClick={handleBook}>Book Room</FormButton>
+                    <FormButton onClick={handleBook}
+                    style={{display: 'initial', marginRight: '16px'}}>
+                        Book Room
+                    </FormButton>
+                    <SelectBox name="cars" id="cars">
+                        {room.roomNumbers.map((r,i) => (
+                            <option value={i+1}>{`${i === 0 ? '1 Room' : `${i+1} Rooms`} `}</option>
+                        ))}
+                    </SelectBox>
                 </Details>
             </div>
             <Features>

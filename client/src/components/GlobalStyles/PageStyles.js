@@ -47,6 +47,15 @@ export const Input = styled.input`
     width: 100%;
 `
 
+export const SelectBox = styled.select`
+    border: 1px solid #b6b6b6;
+    outline: 0;
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    cursor: pointer
+`
+
 export const FormTitle = styled.h3`
     font-size: 26px;
     font-weight: 600;

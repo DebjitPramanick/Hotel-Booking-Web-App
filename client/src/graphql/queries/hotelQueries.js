@@ -67,6 +67,7 @@ query($id: ID!){
       addedOn
       ratings
       others
+      roomNumbers
       hotel{
         id
         name
