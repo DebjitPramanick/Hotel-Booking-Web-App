@@ -67,10 +67,8 @@ const BookingConfirmed = (props) => {
                 </div>
             </Layout>
             <Layout className="buttons">
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`, {state: booking})}>
-                    Go Back
-                </FormButton>
-                <FormButton onClick={() => navigate(`/bookings`)}>
+                <FormButton onClick={() => navigate(`/bookings`)} 
+                style={{marginLeft: 'auto'}}>
                     Your Bookings
                 </FormButton>
             </Layout>

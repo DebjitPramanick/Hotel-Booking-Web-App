@@ -51,6 +51,7 @@ const RoomDetails = (props) => {
             room: room.id,
             hotel: room.hotel.id
         }
+        console.log(bookingData)
         navigate(`/payment/${room.hotel.id}/${room.id}/1`, {state: bookingData})
     }
 
