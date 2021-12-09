@@ -34,13 +34,24 @@ const Features = styled.div`
 
 const RoomDetails = (props) => {
 
-    const { room } = props
-    console.log(room)
+    const { room, params } = props
     const ratings = !room.ratings ? 0.00 : room.ratings
     const navigate = useNavigate()
+    const user = JSON.parse(localStorage.getItem('user'))
 
     const handleBook = () => {
-        navigate(`/payment/${room.hotel.id}/${room.id}/1`)
+        const bookingData = {
+            from: params.from,
+            to: params.to,
+            roomNumber: 103,
+            bookedBy: user.id,
+            paid: false,
+            amount: room.price,
+            people: params.people,
+            room: room.id,
+            hotel: room.hotel.id
+        }
+        navigate(`/payment/${room.hotel.id}/${room.id}/1`, {state: bookingData})
     }
 
     return (

@@ -12,7 +12,7 @@ const Details = styled.div`
 
 const HotelDetails = (props) => {
 
-    const { hotel } = props
+    const { hotel, params } = props
     const ratings = !hotel.ratings ? 0.00 : hotel.ratings
 
     return (
@@ -39,7 +39,7 @@ const HotelDetails = (props) => {
             <Text style={{marginTop: '20px'}}>Rooms</Text>
             <div style={{marginTop: '20px'}}>
                 {hotel.rooms.map(r => (
-                    <RoomDetails room={r}/>
+                    <RoomDetails room={r} params={params}/>
                 ))}
             </div>
         </div>

@@ -7,7 +7,7 @@ import { Layout } from './CommonStyles'
 
 
 const CustomerInfo = (props) => {
-    const { user, room, hotel } = props
+    const { user, room, booking } = props
     const navigate = useNavigate()
 
     return (
@@ -37,23 +37,24 @@ const CustomerInfo = (props) => {
                         Room: <span>{room.name}</span>
                     </Text>
                     <Text className="small" style={{ margin: '-10px 0 10px 0' }}>
-                        Room Number(s): {[1, 2, 3].map(r =>
+                        Room Number(s): <span className="highlight" style={{ margin: '4px 2px' }}>{booking.roomNumber}</span>
+                        {/* {[1, 2, 3].map(r =>
                             (<span className="highlight" style={{ margin: '4px 2px' }}>{r}</span>)
-                        )}
+                        )} */}
                     </Text>
                     <Text className="small">
-                        Price (Each room): <span>Rs. {room.price}</span>
+                        Price (Each room): <span>Rs. {booking.amount}</span>
                     </Text>
                     <Text className="small">
-                        Total Cost: <span>Rs. {room.price * 3}</span>
+                        Total Cost: <span>Rs. {booking.amount * 1}</span>
                     </Text>
                 </div>
             </Layout>
             <Layout className="buttons">
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`)}>
+                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`, {state: booking})}>
                     Go Back
                 </FormButton>
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`)}>
+                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`, {state: booking})}>
                     Confirm
                 </FormButton>
             </Layout>

@@ -4,7 +4,7 @@ import { GlobalContext } from '../../utils/Context'
 import styled from "styled-components"
 import LeftSidebar from '../../components/Sidebars/LeftSidebar'
 import Card from "./Card"
-import { useParams } from 'react-router'
+import { useParams, useLocation } from 'react-router'
 import { useQuery } from '@apollo/client'
 import { SEARCH_HOTELS } from '../../graphql/queries/hotelQueries'
 import PageLoader from '../../components/Loaders/PageLoader'
@@ -18,8 +18,9 @@ const Explore = (props) => {
 
     const { setPage } = useContext(GlobalContext)
     const params = useParams()
+    const location = useLocation()
 
-    const {data, loading, error} = useQuery(SEARCH_HOTELS, {
+    const { data, loading, error } = useQuery(SEARCH_HOTELS, {
         variables: {
             location: params.location,
             from: params.checkIn,
@@ -32,13 +33,15 @@ const Explore = (props) => {
         setPage("Explore")
     }, [])
 
-    if(loading) return <PageLoader />
+    if (loading) return <PageLoader />
 
     return (
         <PageContainer>
-            <LeftSidebar data={params}/>
+            <LeftSidebar data={params} />
             <ResultContainer>
-                {data.searchHotels.map(s => (<Card data={s}/>))}
+                {data.searchHotels.map(s =>
+                    <Card data={s} params={location.state}/>
+                )}
             </ResultContainer>
         </PageContainer>
     )

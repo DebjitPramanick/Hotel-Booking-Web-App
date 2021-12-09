@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Confirmation, Layout } from './CommonStyles'
 
 const BookingConfirmed = (props) => {
-    const { user, room, hotel } = props
+    const { user, room, booking } = props
     const navigate = useNavigate()
 
     return (
@@ -67,7 +67,7 @@ const BookingConfirmed = (props) => {
                 </div>
             </Layout>
             <Layout className="buttons">
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`)}>
+                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`, {state: booking})}>
                     Go Back
                 </FormButton>
                 <FormButton onClick={() => navigate(`/bookings`)}>

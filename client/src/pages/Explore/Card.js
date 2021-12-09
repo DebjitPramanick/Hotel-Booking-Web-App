@@ -34,15 +34,18 @@ const HotelDetails = styled.div`
 
 const Card = (props) => {
     const navigate = useNavigate()
-    const {data} = props
-
+    const {data, params} = props
     const hotel = data.hotel
 
-    console.log(hotel)
+    const searchData = {
+        from: params.from,
+        to: params.to,
+        people: params.people,
+    }
 
     return (
         <CardContainer>
-            <div className="action-slider" onClick={() => navigate(`/hotel/${hotel.id}`)}>
+            <div className="action-slider" onClick={() => navigate(`/hotel/${hotel.id}`, {state: searchData})}>
                 Book Room
             </div>
             <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, minWidth: '260px', height: '260px' }} />

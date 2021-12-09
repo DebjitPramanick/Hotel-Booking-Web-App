@@ -7,7 +7,7 @@ import { Layout } from './CommonStyles'
 
 
 const PaymentScreen = (props) => {
-    const { user, room, hotel } = props
+    const { user, room, booking } = props
     const navigate = useNavigate()
     return (
         <>
@@ -65,10 +65,10 @@ const PaymentScreen = (props) => {
                 </div>
             </Layout>
             <Layout className="buttons">
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`)}>
+                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`, {state: booking})}>
                     Go Back
                 </FormButton>
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/3`)}>
+                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/3`, {state: booking})}>
                     Pay Later
                 </FormButton>
             </Layout>

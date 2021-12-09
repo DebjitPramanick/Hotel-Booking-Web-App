@@ -43,7 +43,13 @@ const SearchBox = (props) => {
     const handleSearch = () => {
         const from = checkIn.toISOString()
         const to = checkOut.toISOString()
-        navigate(`/explore/${query}/${from}/${to}/${count.adults+count.children}`)
+        const searchData = {
+            from: from,
+            to: to,
+            people: count,
+        }
+        navigate(`/explore/${query}/${from}/${to}/${count.adults+count.children}`, 
+        {state: searchData})
     }
 
     return (
