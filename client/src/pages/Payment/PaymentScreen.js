@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client'
 import { ADD_BOOKING } from '../../graphql/mutations/bookingMutation'
 import { toast } from 'react-toastify'
 import Loader from "../../components/Loaders/Loader"
-
+import StripeForm from '../../components/Stripe/StripeForm'
 
 const PaymentScreen = (props) => {
     const { user, room, booking } = props
@@ -93,9 +93,7 @@ const PaymentScreen = (props) => {
                             <Text className="small">
                                 Total Cost: <span>Rs. {room.price * 3 + 20}</span>
                             </Text>
-                            <FormButton style={{ width: '100%', borderRadius: '4px' }}>
-                                Pay Now
-                            </FormButton>
+                            <StripeForm />
                             <Text className="small" style={{ marginTop: '16px', color: 'grey' }}>
                                 *You can also pay later
                             </Text>
