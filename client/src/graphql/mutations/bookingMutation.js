@@ -14,3 +14,16 @@ mutation($from: Date!, $to: Date!, $roomNumber: Int!, $paid: Boolean!, $amount: 
     }
   }
 `
+
+export const CANCEL_BOOKING = gql`
+mutation($id: ID!){
+    cancelBooking(id: $id){
+      id
+      from
+      to
+      bookedBy{
+          name
+      }
+    }
+  }
+`

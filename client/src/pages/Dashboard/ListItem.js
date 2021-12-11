@@ -18,6 +18,7 @@ const ListItem = (props) => {
     const navigate = useNavigate()
 
     const handleDelete = () => {
+        props.setLoading(true)
         deleteRoom({
             variables: {
                 id: props.data.id
@@ -27,7 +28,14 @@ const ListItem = (props) => {
                 { variables: { id: props.data.hotel.id } }
             ]
         }).then(res => {
+            props.setLoading(false)
             toast.success('Room deleted successfully',{
+                autoClose: 5500,
+                pauseOnHover: true
+            })
+        }).catch(err => {
+            props.setLoading(false)
+            toast.error(err, {
                 autoClose: 5500,
                 pauseOnHover: true
             })

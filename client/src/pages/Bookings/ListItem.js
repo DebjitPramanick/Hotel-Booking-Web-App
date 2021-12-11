@@ -3,11 +3,42 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { getDate, getEasyDate } from '../../utils/utilFunctions';
 import { ActionsContainer, Button, Item, Text } from '../../components/GlobalStyles/TableStyles';
+import { useMutation } from '@apollo/client';
+import { CANCEL_BOOKING } from '../../graphql/mutations/bookingMutation';
+import { GET_USER_BOOKINGS } from '../../graphql/queries/bookingQueries';
+import { toast } from 'react-toastify';
 
 const ListItem = (props) => {
+    const [cancelBooking] = useMutation(CANCEL_BOOKING)
+
     let keys = Object.keys(props.data)
     console.log(keys)
     keys = keys.filter(k => k!=='id' && k!=='bookedBy')
+
+    const handleCancel = () => {
+        props.setLoading(true)
+        cancelBooking({
+            variables: {
+                id: props.data.id
+            },
+            refetchQueries: [
+                GET_USER_BOOKINGS,
+                {variables: {id: props.data.bookedBy.id}}
+            ]
+        }).then(res => {
+            props.setLoading(false)
+            toast.success("Canceled booking.",{
+                autoClose: 5500,
+                pauseOnHover: true
+            })
+        }).catch(err => {
+            props.setLoading(false)
+            toast.error(err, {
+                autoClose: 5500,
+                pauseOnHover: true
+            })
+        })
+    }
     return (
         <Item style={{ gridTemplateColumns: `repeat(${keys.length}, 1fr)` }}>
             <Text><Tippy interactive={true} content={props.data.hotel.name} placement="bottom"><p>{props.data.hotel.name}</p></Tippy></Text>
@@ -23,7 +54,7 @@ const ListItem = (props) => {
                 <Button>
                     <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
                 <Button><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png"/></Button>
-                <Button><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
+                <Button onClick={handleCancel}><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
             </ActionsContainer>
         </Item>
     )
