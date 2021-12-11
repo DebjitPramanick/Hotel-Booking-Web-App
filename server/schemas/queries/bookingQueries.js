@@ -69,7 +69,6 @@ const getHotelBookings = { // For getting booking details
             throw new Error("Hotel ID is required.")
         }
         let bookings = await await Booking.find({hotel: args.id})
-        console.log(bookings)
         return bookings
     }
 }

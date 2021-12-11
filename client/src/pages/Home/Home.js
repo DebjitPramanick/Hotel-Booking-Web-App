@@ -4,6 +4,10 @@ import styled from "styled-components"
 import { GlobalContext } from '../../utils/Context'
 import { PageContainer, SearchBoxContainer, Text } from '../../components/GlobalStyles/PageStyles'
 import SearchBox from '../../components/SearchBox/SearchBox'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { settings, urls } from '../../utils/carouselSettings'
 
 const HomeContainer = styled.div`
     display: flex;
@@ -12,7 +16,35 @@ const HomeContainer = styled.div`
     justify-content: center;
     height: 100vh;
     z-index: 999;
-    background-image: linear-gradient(#000000d6, #ffffff00)
+    background-image: url(${HomeBG});
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 50vh;
+    position: relative;
+    border-radius: 0 0 40px 40px
+`
+
+const SliderContainer = styled.div`
+    margin: 160px auto;
+    max-width: 1000px;
+    .banners{
+        height: 200px;
+        padding: 10px
+    }
+    .banners img{
+        width: 100%;
+        height: 100%;
+        border-radius: 16px
+    }
+
+    .slick-arrow{
+        background: grey;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        z-index: 99
+    }
 `
 
 const Home = () => {
@@ -23,20 +55,33 @@ const Home = () => {
     }, [])
 
     return (
-        <PageContainer style={{ 
-            backgroundImage: `url(${HomeBG})`, 
-            minHeight: '100vh', 
+        <PageContainer style={{
+            minHeight: '100vh',
             marginTop: '0px',
             padding: '0px'
-         }}>
+        }}>
             <HomeContainer>
-                <Text style={{color: "#fff", marginBottom: '60px', fontSize: '40px'}}>
+                <Text style={{ color: "#fff", marginBottom: '10px', fontSize: '40px' }}>
                     We Will Serve You The Best
                 </Text>
-                <SearchBoxContainer>
+                <SearchBoxContainer style={{
+                    position: 'absolute',
+                    bottom: '-150px',
+                    background: '#373848'
+                }}>
                     <SearchBox />
                 </SearchBoxContainer>
             </HomeContainer>
+
+            <SliderContainer>
+                <Slider {...settings}>
+                    {urls.map(u => (
+                        <div className="banners">
+                            <img src={u} alt="" />
+                        </div>
+                    ))}
+                </Slider>
+            </SliderContainer>
         </PageContainer>
     )
 }
