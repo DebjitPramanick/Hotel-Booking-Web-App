@@ -45,24 +45,38 @@ const getUserBookings = { // For getting user's booking details
     }
 }
 
-const getAllBookings = { // For getting booking details
+const getRoomBookings = { // For getting booking details
     type: new GraphQLList(BookingType),
     args: {
         id: { type: new GraphQLNonNull(GraphQLID) }
     },
     async resolve(parent, args, req) {
-        let room = await Room.findById(args.id)
         if (!args.id) {
             throw new Error("Room ID is required.")
         }
-        let res= []
-        res = room.bookings.map(async b => await Booking.findById(b))
-        return res
+        let bookings = await Booking.find({room: args.id})
+        return bookings
+    }
+}
+
+const getHotelBookings = { // For getting booking details
+    type: new GraphQLList(BookingType),
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+    },
+    async resolve(parent, args, req) {
+        if (!args.id) {
+            throw new Error("Hotel ID is required.")
+        }
+        let bookings = await await Booking.find({hotel: args.id})
+        console.log(bookings)
+        return bookings
     }
 }
 
 module.exports = {
     getBooking,
-    getAllBookings,
-    getUserBookings
+    getRoomBookings,
+    getUserBookings,
+    getHotelBookings
 }

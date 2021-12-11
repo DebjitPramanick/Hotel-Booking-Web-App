@@ -13,6 +13,7 @@ import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 import HotelModal from '../../components/Modals/HotelModal'
 import PageLoader from '../../components/Loaders/PageLoader'
+import Stat from './Stats/Stat'
 
 const QuickView = styled.div`
     display: grid;
@@ -64,11 +65,11 @@ const Controls = styled.div`
     }
 `
 
-const Graph = styled.div`
+const StatContainer = styled.div`
     width: 100%;
     padding: 20px;
     border-radius: 20px;
-    background: grey;
+    border: 1px solid orange;
     margin-left: 10px;
     max-width: -webkit-fill-available;
 `
@@ -157,7 +158,9 @@ const Dashboard = () => {
                         ))}
                     </Controls>
                 </Info>
-                <Graph />
+                <StatContainer>
+                    <Stat hotel={hotel}/>
+                </StatContainer>
             </QuickView>
             <RoomsList rooms={hotel.rooms} setRoomModal={setRoomModal} />
         </PageContainer>
