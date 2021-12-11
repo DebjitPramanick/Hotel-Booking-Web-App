@@ -6,13 +6,14 @@ const Hotel = require('../models/Hotel.js')
 const Booking = require('../models/Booking.js')
 
 const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
-const  {
-    GraphQLID, 
-    GraphQLInt, 
-    GraphQLString, 
+const {
+    GraphQLID,
+    GraphQLInt,
+    GraphQLString,
     GraphQLBoolean,
     GraphQLObjectType,
-    GraphQLList
+    GraphQLList,
+    GraphQLInputObjectType
 } = graphql
 
 
@@ -21,7 +22,7 @@ const UserType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         username: { type: GraphQLString },
-        name: {type: GraphQLString},
+        name: { type: GraphQLString },
         email: { type: GraphQLString },
         password: { type: GraphQLString },
         dob: { type: GraphQLDate },
@@ -32,7 +33,7 @@ const UserType = new GraphQLObjectType({
         isManager: { type: GraphQLBoolean },
         isAdmin: { type: GraphQLBoolean },
         isBlocked: { type: GraphQLBoolean },
-        joined: {type: GraphQLDate}
+        joined: { type: GraphQLDate }
     })
 })
 
@@ -52,23 +53,23 @@ const HotelType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         image: { type: GraphQLString },
-        name: {type: GraphQLString},
+        name: { type: GraphQLString },
         description: { type: GraphQLString },
         totalRooms: { type: GraphQLInt },
-        roomsMap: {type: GraphQLJSONObject},
-        addedOn: {type: GraphQLDate},
-        location: {type: GraphQLString},
-        ratings: {type: GraphQLInt},
-        manager: { 
-            type : UserType,
-            resolve(parent, args){
+        roomsMap: { type: GraphQLJSONObject },
+        addedOn: { type: GraphQLDate },
+        location: { type: GraphQLString },
+        ratings: { type: GraphQLInt },
+        manager: {
+            type: UserType,
+            resolve(parent, args) {
                 return User.findById(parent.manager)
             }
         },
         rooms: {
-            type : new GraphQLList(RoomType),
-            resolve(parent, args){
-                return Room.find({hotel: parent._id})
+            type: new GraphQLList(RoomType),
+            resolve(parent, args) {
+                return Room.find({ hotel: parent._id })
             }
         }
     })
@@ -79,24 +80,24 @@ const RoomType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         images: { type: new GraphQLList(GraphQLString) },
-        name: {type: GraphQLString},
+        name: { type: GraphQLString },
         description: { type: GraphQLString },
-        addedOn: {type: GraphQLDate},
-        ratings: {type: GraphQLInt},
-        others: {type: new graphql.GraphQLList(GraphQLString)},
-        price: {type: GraphQLInt},
-        roomNumbers: {type: new GraphQLList(GraphQLInt)},
-        occupancy: {type: GraphQLInt},
-        hotel: { 
-            type : HotelType,
-            resolve(parent, args){
+        addedOn: { type: GraphQLDate },
+        ratings: { type: GraphQLInt },
+        others: { type: new graphql.GraphQLList(GraphQLString) },
+        price: { type: GraphQLInt },
+        roomNumbers: { type: new GraphQLList(GraphQLInt) },
+        occupancy: { type: GraphQLInt },
+        hotel: {
+            type: HotelType,
+            resolve(parent, args) {
                 return Hotel.findById(parent.hotel)
             }
         },
         bookings: {
-            type : new GraphQLList(BookingType),
-            resolve(parent, args){
-                return Booking.find({room: parent._id})
+            type: new GraphQLList(BookingType),
+            resolve(parent, args) {
+                return Booking.find({ room: parent._id })
             }
         }
     })
@@ -106,47 +107,60 @@ const BookingType = new GraphQLObjectType({
     name: "Booking",
     fields: () => ({
         id: { type: GraphQLID },
-        from: {type: GraphQLDate},
+        from: { type: GraphQLDate },
         to: { type: GraphQLDate },
-        days: {type: GraphQLInt},
-        bookedOn: {type: GraphQLDate},
-        people: {type: new GraphQLObjectType({
-            name: "People",
-            fields: () => ({
-                children: {type: GraphQLInt},
-                adults: {type: GraphQLInt},
+        days: { type: GraphQLInt },
+        bookedOn: { type: GraphQLDate },
+        people: {
+            type: new GraphQLObjectType({
+                name: "People",
+                fields: () => ({
+                    children: { type: GraphQLInt },
+                    adults: { type: GraphQLInt },
+                })
             })
-        })},
-        roomNumber: {type: GraphQLInt},
-        amount: {type: GraphQLInt},
-        paid: {type: GraphQLBoolean},
-        numOfPeople: {type: GraphQLInt},
-        location: {type: GraphQLString},
-        bookedBy: { 
-            type : UserType,
-            resolve(parent, args){
+        },
+        roomNumber: { type: GraphQLInt },
+        amount: { type: GraphQLInt },
+        paid: { type: GraphQLBoolean },
+        numOfPeople: { type: GraphQLInt },
+        location: { type: GraphQLString },
+        bookedBy: {
+            type: UserType,
+            resolve(parent, args) {
                 return User.findById(parent.bookedBy)
             }
         },
-        room: { 
-            type : RoomType,
-            resolve(parent, args){
+        room: {
+            type: RoomType,
+            resolve(parent, args) {
                 return Room.findById(parent.room)
             }
         },
-        hotel: { 
-            type : HotelType,
-            resolve(parent, args){
+        hotel: {
+            type: HotelType,
+            resolve(parent, args) {
                 return Hotel.findById(parent.hotel)
             }
         }
     })
 })
 
+
+const PeopleType = new GraphQLInputObjectType({
+    name: 'people',
+    fields: {
+        children: { type: GraphQLInt },
+        adults: { type: GraphQLInt },
+    }
+})
+
+
 module.exports = {
     AuthType,
     UserType,
     HotelType,
     RoomType,
-    BookingType
+    BookingType,
+    PeopleType
 }
