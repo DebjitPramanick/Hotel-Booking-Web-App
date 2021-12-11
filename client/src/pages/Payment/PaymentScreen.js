@@ -7,12 +7,16 @@ import { useMutation } from '@apollo/client'
 import { ADD_BOOKING } from '../../graphql/mutations/bookingMutation'
 import { toast } from 'react-toastify'
 import Loader from "../../components/Loaders/Loader"
-import StripeForm from '../../components/Stripe/StripeForm'
+import StripeCheckout from 'react-stripe-checkout';
+import { MAKE_PAYMENT } from '../../graphql/mutations/paymentMutation'
 
 const PaymentScreen = (props) => {
     const { user, room, booking } = props
     const navigate = useNavigate()
     const [addBooking] = useMutation(ADD_BOOKING)
+    const [payAmount] = useMutation(MAKE_PAYMENT)
+
+    console.log(booking)
 
     const [loading, setLoading] = useState(false)
 
@@ -41,6 +45,45 @@ const PaymentScreen = (props) => {
                     })
                 })
         }
+    }
+
+    const onToken = (token) => {
+        console.log(token)
+        addBooking({
+            variables: {
+                from: booking.from,
+                to: booking.to,
+                roomNumber: booking.roomNumber,
+                bookedBy: booking.bookedBy,
+                paid: booking.paid,
+                amount: booking.amount,
+                people: booking.people,
+                room: booking.room,
+                hotel: booking.hotel
+            }
+        }).then(res => {
+            console.log(res)
+            payAmount({
+                variables: {
+                    tokenId: token.id,
+                    bookingId: res.data.addBooking.id,
+                    bookedBy: booking.bookedBy
+                }
+            }).then(res => {
+                navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: booking })
+            }).catch(err => {
+                toast.error(err, {
+                    autoClose: 5500,
+                    pauseOnHover: true
+                })
+            })
+        })
+            .catch(err => {
+                toast.error(err, {
+                    autoClose: 5500,
+                    pauseOnHover: true
+                })
+            })
     }
 
 
@@ -93,7 +136,13 @@ const PaymentScreen = (props) => {
                             <Text className="small">
                                 Total Cost: <span>Rs. {room.price * 3 + 20}</span>
                             </Text>
-                            <StripeForm />
+                            <StripeCheckout
+                                token={onToken}
+                                stripeKey="pk_test_51Hr13fE7BvSkBO4prE35EeVzyGVKfQCPfpfcOZZkSLfa4jfONQeEOrd9A4wFIERlRXuVpBu3NYVm1YwCrFfY0gs400dAaCrTp0"
+                                name=""
+                                currency='USD'
+                                amount={room.price * 100}
+                            />
                             <Text className="small" style={{ marginTop: '16px', color: 'grey' }}>
                                 *You can also pay later
                             </Text>

@@ -21,8 +21,6 @@ import Hotel from "./pages/HotelPage/Hotel";
 import Payment from "./pages/Payment/Payment";
 import { ToastContainer } from "react-toastify";
 import Bookings from "./pages/Bookings/Bookings";
-import { Elements } from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
 
 const client = new ApolloClient({
   uri: "http://localhost:8000/graphql",
@@ -33,110 +31,107 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [page, setPage] = useState("Home");
-  const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
 
   return (
-    <Elements stripe={stripePromise}>
-      <ApolloProvider client={client}>
-        <GlobalContext.Provider
-          value={{ menuOpen, setMenuOpen, user, setPage, setUser }}
-        >
-          <div className="App">
-            <ToastContainer />
-            <Router>
-              <Header page={page} />
-              <MainMenu />
-              <Routes>
-                <Route exact path="/register" element={<Register />}></Route>
-                <Route exact path="/login" element={<Login />}></Route>
-                <Route exact path="/logout" element={<Logout />}></Route>
+    <ApolloProvider client={client}>
+      <GlobalContext.Provider
+        value={{ menuOpen, setMenuOpen, user, setPage, setUser }}
+      >
+        <div className="App">
+          <ToastContainer />
+          <Router>
+            <Header page={page} />
+            <MainMenu />
+            <Routes>
+              <Route exact path="/register" element={<Register />}></Route>
+              <Route exact path="/login" element={<Login />}></Route>
+              <Route exact path="/logout" element={<Logout />}></Route>
 
-                <Route
-                  exact
-                  path="/dashboard"
-                  element={
-                    managerRoute ? <Dashboard /> : <Navigate to="/login" />
-                  }
-                ></Route>
+              <Route
+                exact
+                path="/dashboard"
+                element={
+                  managerRoute ? <Dashboard /> : <Navigate to="/login" />
+                }
+              ></Route>
 
+              <Route
+                exact
+                path="/"
+                element={
+                  managerRoute || userRoute ? (
+                    <Home />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              ></Route>
+
+              <Route path="/explore">
                 <Route
-                  exact
-                  path="/"
+                  path=":location/:checkIn/:checkOut/:people"
                   element={
                     managerRoute || userRoute ? (
-                      <Home />
+                      <Explore />
                     ) : (
                       <Navigate to="/login" />
                     )
                   }
-                ></Route>
-
-                <Route path="/explore">
-                  <Route
-                    path=":location/:checkIn/:checkOut/:people"
-                    element={
-                      managerRoute || userRoute ? (
-                        <Explore />
-                      ) : (
-                        <Navigate to="/login" />
-                      )
-                    }
-                  />
-
-                  <Route
-                    path=""
-                    element={
-                      managerRoute || userRoute ? (
-                        <Explore />
-                      ) : (
-                        <Navigate to="/login" />
-                      )
-                    }
-                  />
-                </Route>
+                />
 
                 <Route
-                  exact
-                  path="/hotel/:id"
+                  path=""
                   element={
                     managerRoute || userRoute ? (
-                      <Hotel />
+                      <Explore />
                     ) : (
                       <Navigate to="/login" />
                     )
                   }
-                ></Route>
+                />
+              </Route>
 
-                <Route
-                  exact
-                  path="/payment/:hotelId/:roomId/:step"
-                  element={
-                    managerRoute || userRoute ? (
-                      <Payment />
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                ></Route>
+              <Route
+                exact
+                path="/hotel/:id"
+                element={
+                  managerRoute || userRoute ? (
+                    <Hotel />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              ></Route>
 
-                <Route
-                  exact
-                  path="/bookings"
-                  element={
-                    managerRoute || userRoute ? (
-                      <Bookings />
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                ></Route>
+              <Route
+                exact
+                path="/payment/:hotelId/:roomId/:step"
+                element={
+                  managerRoute || userRoute ? (
+                    <Payment />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              ></Route>
 
-              </Routes>
-            </Router>
-          </div>
-        </GlobalContext.Provider>
-      </ApolloProvider>
-    </Elements>
+              <Route
+                exact
+                path="/bookings"
+                element={
+                  managerRoute || userRoute ? (
+                    <Bookings />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              ></Route>
+
+            </Routes>
+          </Router>
+        </div>
+      </GlobalContext.Provider>
+    </ApolloProvider>
   );
 }
 

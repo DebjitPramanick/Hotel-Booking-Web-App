@@ -74,86 +74,6 @@ const addBooking = { // For adding new booking
 }
 
 
-const addBookingWithPayment = { // For adding new booking with payment
-    type: BookingType,
-    args: {
-        from: { type: new GraphQLNonNull(GraphQLDate) },
-        to: { type: new GraphQLNonNull(GraphQLDate) },
-        roomNumber: { type: new GraphQLNonNull(GraphQLInt) },
-        paid: { type: new GraphQLNonNull(GraphQLBoolean) },
-        amount: { type: new GraphQLNonNull(GraphQLInt) },
-        bookedBy: { type: new GraphQLNonNull(GraphQLID) },
-        people: { type: PeopleType },
-        room: { type: new GraphQLNonNull(GraphQLID) },
-        hotel: { type: new GraphQLNonNull(GraphQLID) },
-        token: {type: new GraphQLNonNull(GraphQLString)}
-    },
-    async resolve(parent, args) {
-        let hotelData = await Hotel.findById(args.hotel)
-
-        let user = await User.findById(args.bookedBy)
-        if (!hotelData) throw new Error('Hotel ID is wrong.')
-        let roomData = await Room.findById(args.room)
-        if (!roomData) throw new Error('Room ID is wrong.')
-
-        let query = await Booking.findOne({ from: args.from, to: args.to, room: args.room, roomNumber: args.roomNumber })
-        if (query) {
-            throw new Error('Cannot book room(s) on same date.')
-        }
-        else {
-            let customer = await stripe.customers.create({
-                email: token.email,
-                source: token.id
-            })
-            let cntDays = Math.abs(new Date(args.to).getDate() - new Date(args.from).getDate()) + 1
-            const total = args.people.children + args.people.adults
-
-            const metadata = {
-                from: args.from,
-                to: args.to,
-                days: cntDays,
-                roomNumber: args.roomNumber,
-                numOfPeople: total,
-                location: hotelData.location,
-                bookedBy: args.bookedBy,
-                people: args.people,
-                room: args.room,
-                hotel: args.hotel
-            }
-
-            const charges = await stripe.charges.create({
-                amount: args.amount,
-                currency: 'usd',
-                customer: customer.id,
-                receipt_email: user.email,
-                description: `${user.name} booked room(s) in ${hotelData.name}.`,
-                metadata: metadata,
-            })
-
-            console.log(charges)
-
-            let booking = new Booking({
-                from: args.from,
-                to: args.to,
-                days: cntDays,
-                roomNumber: args.roomNumber,
-                paid: args.paid,
-                amount: args.amount,
-                numOfPeople: total,
-                location: hotelData.location,
-                bookedBy: args.bookedBy,
-                people: args.people,
-                room: args.room,
-                hotel: args.hotel
-            })
-            let res = await booking.save()
-            roomData.bookings.push(res._id)
-            await roomData.save()
-            return res
-        }
-    }
-}
-
 const updateBooking = { // For updating hotel
 
 }
@@ -181,6 +101,5 @@ const cancelBooking = { // For cancelling hotel
 
 module.exports = {
     addBooking,
-    addBookingWithPayment,
     cancelBooking
 }
