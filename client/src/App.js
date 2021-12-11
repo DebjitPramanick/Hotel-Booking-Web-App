@@ -21,6 +21,7 @@ import Hotel from "./pages/HotelPage/Hotel";
 import Payment from "./pages/Payment/Payment";
 import { ToastContainer } from "react-toastify";
 import Bookings from "./pages/Bookings/Bookings";
+import Profile from "./pages/Profile/Profile";
 
 const client = new ApolloClient({
   uri: "http://localhost:8000/graphql",
@@ -121,6 +122,18 @@ function App() {
                 element={
                   managerRoute || userRoute ? (
                     <Bookings />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              ></Route>
+
+              <Route
+                exact
+                path="/profile"
+                element={
+                  managerRoute || userRoute ? (
+                    <Profile />
                   ) : (
                     <Navigate to="/login" />
                   )

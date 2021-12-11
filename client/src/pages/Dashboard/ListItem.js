@@ -3,14 +3,36 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { getDate, getEasyDate } from '../../utils/utilFunctions';
 import { ActionsContainer, Button, Item, Text } from '../../components/GlobalStyles/TableStyles';
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useMutation } from '@apollo/client';
+import { DELETE_ROOM } from '../../graphql/mutations/roomMutations';
+import { GET_HOTEL } from '../../graphql/queries/hotelQueries';
+import { toast } from 'react-toastify';
 
 const ListItem = (props) => {
+
+    const [deleteRoom] = useMutation(DELETE_ROOM)
+
     let keys = Object.keys(props.data)
-    keys = keys.filter(k => k!=='others' && k!=='id' && k!=='roomNumbers' && k!=='hotel')
+    keys = keys.filter(k => k !== 'others' && k !== 'id' && k !== 'roomNumbers' && k !== 'hotel')
     const navigate = useNavigate()
 
-    console.log(props.data)
+    const handleDelete = () => {
+        deleteRoom({
+            variables: {
+                id: props.data.id
+            },
+            refetchQueries: [
+                GET_HOTEL,
+                { variables: { id: props.data.hotel.id } }
+            ]
+        }).then(res => {
+            toast.success('Room deleted successfully',{
+                autoClose: 5500,
+                pauseOnHover: true
+            })
+        })
+    }
 
     return (
         <Item style={{ gridTemplateColumns: `repeat(${keys.length}, 1fr)` }}>
@@ -25,12 +47,12 @@ const ListItem = (props) => {
             </Tippy>
             <ActionsContainer>
                 <Button onClick={() => props.setRoomModal(
-                    {state: true, title: 'Update Room Details', param: props.data, action: 'update'})
+                    { state: true, title: 'Update Room Details', param: props.data, action: 'update' })
                 }>
                     <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
                 <Button onClick={() => navigate(`/hotel/${props.data.hotel.id}`)}
-                ><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png"/></Button>
-                <Button><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
+                ><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png" /></Button>
+                <Button onClick={handleDelete}><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
             </ActionsContainer>
         </Item>
     )

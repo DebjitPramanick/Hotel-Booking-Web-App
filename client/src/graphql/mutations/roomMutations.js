@@ -27,3 +27,17 @@ mutation($id: ID!, $images: [String]!, $name: String!, $description: String!, $o
     }
   }
 `
+
+export const DELETE_ROOM = gql`
+mutation($id: ID!){
+    deleteRoom(id: $id){
+      id
+      name
+      description
+      images
+      price
+      others
+      occupancy
+    }
+  }
+`

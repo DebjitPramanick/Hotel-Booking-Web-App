@@ -28,6 +28,15 @@
   column-gap: 16px;
 }
 
+.collection .user-name{
+    display: block;
+    padding: 6px 10px;
+    border-radius: 40px;
+    color: #fff;
+    border: 2px solid #ff6e29;
+    margin-right: 16px;
+}
+
 .menu-icon{
     position: relative;
     width: 36px;

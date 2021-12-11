@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import "./header.css"
 import { GlobalContext } from '../../utils/Context'
 import styled from 'styled-components'
-import { PageTitle } from '../GlobalStyles/PageStyles'
+import { PageTitle, Text } from '../GlobalStyles/PageStyles'
 
 const FixedHeader = styled.div`
     padding: 12px 16px;
@@ -40,7 +40,11 @@ const Header = (props) => {
                     <PageTitle>{pageName}</PageTitle>
                 </div>
                 {user && (
-                    <div className="collection">
+                    <div className="collection" style={{display: 'flex', alignItems: 'center'}}>
+                        <p className='user-name' 
+                        style={{display: `${pageName === 'Home' && !menuOpen ? 'block' : 'none'}`}}>
+                        Hello, {user.name}
+                        </p>
                         <div class={`menu-icon ${menuOpen ? 'close-icon' : ''}`}
                             onClick={() => setMenuOpen(!menuOpen)}>
                             <div class="leftright"></div>
