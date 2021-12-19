@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const { UserType, AuthType, HotelType, RoomType } = require("../Type.js")
+const { UserType, AuthType, HotelType, RoomType, ImageType } = require("../Type.js")
 const bcrypt = require('bcryptjs')
 const User = require("../../models/User.js")
 const Room = require("../../models/Room.js")
@@ -24,7 +24,7 @@ const addRoom = { // For adding new room
     type: RoomType,
     args: {
         hotel: { type: new GraphQLNonNull(GraphQLID) },
-        images: { type: new GraphQLList(GraphQLString) },
+        images: { type: new GraphQLList(ImageType) },
         name: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: new GraphQLNonNull(GraphQLString) },
         occupancy: { type: new GraphQLNonNull(GraphQLInt) },
@@ -74,7 +74,7 @@ const updateRoom = { // For updating room
     type: RoomType,
     args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        images: { type: new GraphQLList(GraphQLString) },
+        images: { type: new GraphQLList(ImageType) },
         name: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: new GraphQLNonNull(GraphQLString) },
         occupancy: { type: new GraphQLNonNull(GraphQLInt) },

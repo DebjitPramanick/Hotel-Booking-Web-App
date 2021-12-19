@@ -10,7 +10,7 @@ import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import ImageUpload from '../ImageUpload/ImageUpload'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { bulkImageUpload, imageUpload } from '../../utils/utilFunctions'
+import { bulkImageUpload, deleteImageBulk, imageUpload } from '../../utils/utilFunctions'
 import Loader from '../Loaders/Loader'
 
 const RoomModal = (props) => {
@@ -45,13 +45,12 @@ const RoomModal = (props) => {
         roomNumbers: propsRoom ? propsRoom.roomNumbers : []
     })
 
-    const [roomImages, setRoomImages] = useState(
-        room.images.length !== 0 ?
-            room.images : []
-    )
+    const [roomImages, setRoomImages] = useState([])
+
+    const [selected, setSelected] = useState([])
 
     const addField = () => {
-        setRoomImages([...roomImages, null])
+        setRoomImages([...roomImages, { url: null, uuid: null }])
     }
 
     const addNewRoom = (e) => {
@@ -90,7 +89,30 @@ const RoomModal = (props) => {
     const updateHotelRoom = async (e) => {
         e.preventDefault()
         setLoading(true)
-        let images = await bulkImageUpload(roomImages, propsRoom)
+
+        let images = []
+
+        if (selected.length > 0) {
+            room.images.forEach(i => {
+                if(!selected.includes(i.uuid)){
+                    images.push({url: i.url, uuid: i.uuid})
+                }
+            })
+            let delImages = []
+            room.images.forEach(i => {
+                if(selected.includes(i.uuid)){
+                    delImages.push({url: i.url, uuid: i.uuid})
+                }
+            })
+            await deleteImageBulk(delImages, propsRoom.id)
+        }
+        if(roomImages.length > 0){
+            room.images.forEach(i => {
+                images.push({url: i.url, uuid: i.uuid})
+            })
+            let udImages = await bulkImageUpload(roomImages, propsRoom)
+            images = images.concat(udImages)
+        }
 
         updateRoom({
             variables: {
@@ -149,21 +171,37 @@ const RoomModal = (props) => {
         setRoomImages(temp)
     }
 
+    const handleDelete = () => {
+
+    }
+
 
     return (
         <ModalContainer>
             <ModalBox className="modal-box">
                 {!loading ? (
                     <>
-
                         <CloseIcon className="close-icon" onClick={() => props.setRoomModal(false)} />
                         <ModalTitle>{props.title}</ModalTitle>
 
                         <GridContainer>
+                            {room.images.map((image, idx) => (
+                                <ImageUpload key={image.uuid}
+                                    imageUrl={image.url}
+                                    data={image}
+                                    styles={{ height: '160px' }}
+                                    setImageURL={(val) => changeImage(val, idx)}
+                                    setSelected={setSelected}
+                                    selected={selected} />
+                            ))}
                             {roomImages.map((image, idx) => (
-                                <ImageUpload imageUrl={image} styles={{ height: '160px' }}
-                                    refPath={`images/rooms/${propsRoom.id}/roomImage${idx}`}
-                                    setImageURL={(val) => changeImage(val, idx)} />
+                                <ImageUpload key={image.uuid}
+                                    imageUrl={image.url}
+                                    data={image}
+                                    styles={{ height: '160px' }}
+                                    setImageURL={(val) => changeImage(val, idx)}
+                                    setSelected={setSelected}
+                                    selected={selected} />
                             ))}
                             <AddField onClick={() => addField()}>
                                 <AddCircleIcon className="plus-icon" />

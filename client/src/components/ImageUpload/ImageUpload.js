@@ -10,6 +10,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BlankImg from "../../assets/hotel.png"
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const UploadContainer = styled.div`
     margin-bottom: 20px;
@@ -25,15 +26,27 @@ const ImageContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    &.selected{
+        border: 2px red solid
+    }
     img{
         max-width: 100%;
         max-height: 100%;
+    }
+    .delete-icon{
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        background: white;
+        padding: 2px;
+        border-radius: 4px
     }
 `
 
 const ImageUpload = (props) => {
 
-    const { setImageURL, imageUrl, refPath, styles } = props
+    const { setImageURL, imageUrl, data, styles, setSelected, selected } = props
     const fileInput = useRef(null)
 
     const [src, setSrc] = useState(imageUrl ? imageUrl : BlankImg);
@@ -107,6 +120,15 @@ const ImageUpload = (props) => {
         setPopup(false)
     }
 
+    const selectForDelete = () => {
+        if(selected.includes(data.uuid)){
+            let sl = selected.filter(s => s!==data.uuid)
+            setSelected(sl)
+        }
+        else{
+            setSelected([...selected, data.uuid])
+        }
+    }
 
     return (
         <UploadContainer>
@@ -133,8 +155,10 @@ const ImageUpload = (props) => {
                 </ModalContainer>
             )}
 
-            <ImageContainer onClick={() => fileInput.current.click()} style={styles}>
+            <ImageContainer onClick={() => !imageUrl ? fileInput.current.click() : null} style={styles}
+                className={`${selected.includes(data.uuid) ? 'selected' : ''}`}>
                 {preview ? <img src={preview} alt="" /> : <img src={src} alt="" />}
+                {imageUrl && <DeleteOutlineIcon className="delete-icon" onClick={selectForDelete} />}
             </ImageContainer>
 
             <Input type="file" accept="image/*" onChange={(e) => displayChange(e)}

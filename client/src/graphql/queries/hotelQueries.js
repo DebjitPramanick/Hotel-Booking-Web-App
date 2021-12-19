@@ -15,7 +15,10 @@ query($id: ID!){
     }
     rooms{
       id
-      images
+      images{
+        url
+        uuid
+      }
       name
       description
       others
@@ -59,7 +62,10 @@ query($id: ID!){
     }
     rooms{
       id
-      images
+      images{
+        url
+        uuid
+      }
       name
       description
       occupancy
@@ -98,7 +104,10 @@ query($location: String!, $from: Date!, $to: Date!, $occupancy: Int!){
       }
       rooms{
         id
-        images
+        images{
+          url
+          uuid
+        }
         name
         description
         occupancy

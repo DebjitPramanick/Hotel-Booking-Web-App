@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const ADD_HOTEL = gql`
-mutation($hotel: ID!, $images: [String]!, $name: String!, $description: String!, $others: [String]!, $occupancy: Int!, $price: Int!, $roomNumbers: [Int]!){
+mutation($hotel: ID!, $images: String, $name: String!, $description: String!, $others: [String]!, $occupancy: Int!, $price: Int!, $roomNumbers: [Int]!){
     addHotel(hotel: $hotel, images: $images, name: $name, description: $description, others: $others, occupancy: $occupancy, price: $price, roomNumbers: $roomNumbers){
       id
       name

@@ -80,6 +80,15 @@ const RoomType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         images: { type: new GraphQLList(GraphQLString) },
+        images: {
+            type: new GraphQLList(new GraphQLObjectType({
+                name: "Image",
+                fields: () => ({
+                    url: { type: GraphQLString },
+                    uuid: { type: GraphQLID },
+                })
+            }))
+        },
         name: { type: GraphQLString },
         description: { type: GraphQLString },
         addedOn: { type: GraphQLDate },
@@ -155,6 +164,14 @@ const PeopleType = new GraphQLInputObjectType({
     }
 })
 
+const ImageType = new GraphQLInputObjectType({
+    name: 'image',
+    fields: {
+        url: { type: GraphQLString },
+        uuid: { type: GraphQLID },
+    }
+})
+
 
 module.exports = {
     AuthType,
@@ -162,5 +179,6 @@ module.exports = {
     HotelType,
     RoomType,
     BookingType,
-    PeopleType
+    PeopleType,
+    ImageType
 }

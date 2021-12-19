@@ -28,7 +28,8 @@
     "react-stripe-checkout": "^2.6.3",
     "react-toastify": "^8.1.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
