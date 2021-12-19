@@ -7,6 +7,16 @@ export const settings = {
     autoplay: true,
 }
 
+
+export const detailsSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+}
+
 export const settings2 = {
     dots: true,
     infinite: true,

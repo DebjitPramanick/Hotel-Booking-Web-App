@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { FormButton, Image, SelectBox, Text } from '../../components/GlobalStyles/PageStyles'
 import RoomIMG from "../../assets/hotel.png";
 import { useNavigate } from 'react-router-dom'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { detailsSettings, settings } from '../../utils/carouselSettings';
 
 const CardContainer = styled.div`
     margin-top: 20px;
@@ -17,7 +21,7 @@ const Details = styled.div`
 `
 
 const Features = styled.div`
-    margin-top: 20px;
+    margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     align-items: center;
@@ -29,6 +33,12 @@ const Features = styled.div`
         border-radius: 20px;
         margin: 0
     }
+}
+`
+
+const SliderContainer = styled.div`
+    width: 60%;
+    padding: 16px
 }
 `
 
@@ -52,25 +62,38 @@ const RoomDetails = (props) => {
             hotel: room.hotel.id
         }
         console.log(bookingData)
-        navigate(`/payment/${room.hotel.id}/${room.id}/1`, {state: bookingData})
+        navigate(`/payment/${room.hotel.id}/${room.id}/1`, { state: bookingData })
     }
 
     return (
         <CardContainer style={{ marginTop: '20px' }}>
             <div style={{ display: 'flex', width: '100%' }}>
-                <Image style={{ backgroundImage: `url(${RoomIMG})`, height: "300px", width: "60%", }} />
+                {room.images.length === 0 ? (
+                    <Image style={{ backgroundImage: `url(${RoomIMG})`, height: "300px", width: "60%", }} />
+                ) : (
+                    <SliderContainer>
+                        <Slider {...detailsSettings}>
+                            {room.images.map(img => (
+                                <div className="banners" key={img.uuid}>
+                                    <img src={img.url} alt="" />
+                                </div>
+                            ))}
+                        </Slider>
+                    </SliderContainer>
+                )}
+
                 <Details style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="clip">{room.name}</Text>
                     <Text className="clamp small" style={{ marginTop: '12px' }}>{room.description}</Text>
                     <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>
                     <Text className="small">Price: <span>{room.price}/-</span></Text>
                     <FormButton onClick={handleBook}
-                    style={{display: 'initial', marginRight: '16px'}}>
+                        style={{ display: 'initial', marginRight: '16px' }}>
                         Book Room
                     </FormButton>
                     <SelectBox name="cars" id="cars">
-                        {room.roomNumbers.map((r,i) => (
-                            <option value={i+1}>{`${i === 0 ? '1 Room' : `${i+1} Rooms`} `}</option>
+                        {room.roomNumbers.map((r, i) => (
+                            <option value={i + 1}>{`${i === 0 ? '1 Room' : `${i + 1} Rooms`} `}</option>
                         ))}
                     </SelectBox>
                 </Details>
