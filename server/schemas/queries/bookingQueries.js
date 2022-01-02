@@ -29,6 +29,14 @@ const getBooking = { // For getting booking details
     }
 }
 
+const getAllBookings = { // For getting all booking details
+    type: new GraphQLList(BookingType),
+    async resolve(parent, args, req) {
+        let bookings = await Booking.find({})
+        return bookings
+    }
+}
+
 const getUserBookings = { // For getting user's booking details
     type: new GraphQLList(BookingType),
     args: {
@@ -77,5 +85,6 @@ module.exports = {
     getBooking,
     getRoomBookings,
     getUserBookings,
-    getHotelBookings
+    getHotelBookings,
+    getAllBookings
 }

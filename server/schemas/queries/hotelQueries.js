@@ -26,7 +26,7 @@ const getHotel = { // For getting hotel details
             throw new Error("Manager ID is required.")
         }
         else {
-            let hotel = await Hotel.find({manager: args.id})
+            let hotel = await Hotel.find({ manager: args.id })
             return hotel[0]
         }
     }
@@ -76,7 +76,28 @@ const searchHotels = { // For searching available hotels
                 ],
                 location: args.location,
                 numOfPeople: { $gte: args.occupancy }
-            }).collation( { locale: 'en', strength: 2 } )
+            }).collation({ locale: 'en', strength: 2 })
+
+            let res = []
+
+            // If there are no bookings for these dates, 
+            // return hotel details with number of rooms
+
+            if (bookings.length === 0) {
+                let hotels = await Hotel.find({
+                    location: args.location
+                }).collation({ locale: 'en', strength: 2 })
+
+                hotels.forEach(h => {
+                    res.push({ hotel: h, rooms: h.totalRooms })
+                })
+                return res
+            }
+
+
+            // If there are bookings for these dates, 
+            // show number of available rooms
+
             let map = new Map()
             bookings.forEach(b => {
                 let k = b.hotel.toString()
@@ -85,21 +106,21 @@ const searchHotels = { // For searching available hotels
                 map.set(k, c)
                 return b.hotel
             })
+
             let hotelIds = []
-            let qHotels = await Hotel.find({_id: {$in: hotelIds}})
+            let qHotels = await Hotel.find({ _id: { $in: hotelIds } })
             qHotels.forEach(q => {
                 let k = q._id.toString()
-                if(map.has(k) && q.totalRooms > map.get(k).size){
+                if (map.has(k) && q.totalRooms > map.get(k).size) {
                     hotelIds.push(q._id)
                 }
             })
 
-            let hotels = await Hotel.find({_id: {$nin: hotelIds}})
-            let res = []
+            let hotels = await Hotel.find({ _id: { $nin: hotelIds } })
             hotels.forEach(h => {
                 let k = h._id.toString()
                 let avR = h.totalRooms - (map.has(k) ? map.get(k).size : 0)
-                res.push({hotel: h, rooms: avR})
+                res.push({ hotel: h, rooms: avR })
             })
             return res
         }
