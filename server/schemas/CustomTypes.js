@@ -4,7 +4,7 @@ const User = require('../models/User.js')
 const Room = require('../models/Room.js')
 const Hotel = require('../models/Hotel.js')
 const Booking = require('../models/Booking.js')
-const { HotelType } = require('./Type.js')
+const { HotelType, RoomType } = require('./Type.js')
 
 const  {
     GraphQLID, 
@@ -28,6 +28,20 @@ const AvailableHotelType = new GraphQLObjectType({
     })
 })
 
+const AvailableRoomType = new GraphQLObjectType({
+    name: "AvailableRoom",
+    fields: () => ({
+        room: { 
+            type : RoomType,
+            resolve(parent, args){
+                return parent.room
+            }
+        },
+        roomNumbers: {type: new GraphQLList(GraphQLInt)},
+    })
+})
+
 module.exports = {
-    AvailableHotelType
+    AvailableHotelType,
+    AvailableRoomType
 }
