@@ -4,6 +4,9 @@ import { Image, Text } from '../../components/GlobalStyles/PageStyles'
 import HotelIMG from "../../assets/hotel.png";
 import RoomDetails from './RoomDetails';
 import { GlobalContext } from '../../utils/Context';
+import { useQuery } from '@apollo/client';
+import { GET_AVAILABLE_ROOMS } from '../../graphql/queries/roomQueries';
+import PageLoader from "../../components/Loaders/PageLoader"
 
 const Details = styled.div`
     border: 0.5px solid #d8d8d8;
@@ -13,7 +16,21 @@ const Details = styled.div`
 const HotelDetails = (props) => {
 
     const { hotel, params } = props
+    let total = Object.values(params.people).reduce((a,b) => a+b)
+
+    const {data, loading, error} = useQuery(GET_AVAILABLE_ROOMS, {
+        variables: {
+            hotelId: hotel.id,
+            from: params.from,
+            to: params.to,
+            occupancy: total
+        }
+    })
     const ratings = !hotel.ratings ? 0.00 : hotel.ratings
+
+    if(loading) return <PageLoader />
+
+    const rooms = data.getAvailableRooms
 
     return (
         <div>
@@ -38,8 +55,10 @@ const HotelDetails = (props) => {
             </Details>
             <Text style={{marginTop: '20px'}}>Rooms</Text>
             <div style={{marginTop: '20px'}}>
-                {hotel.rooms.map(r => (
-                    <RoomDetails room={r} params={params}/>
+                {rooms.map(r => (
+                    <RoomDetails room={r.room} 
+                    roomNumbers={r.roomNumbers} 
+                    params={params}/>
                 ))}
             </div>
         </div>

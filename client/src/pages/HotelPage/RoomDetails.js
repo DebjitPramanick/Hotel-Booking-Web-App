@@ -44,7 +44,7 @@ const SliderContainer = styled.div`
 
 const RoomDetails = (props) => {
 
-    const { room, params } = props
+    const { room, roomNumbers, params } = props
     const ratings = !room.ratings ? 0.00 : room.ratings
     const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem('user'))
@@ -92,7 +92,7 @@ const RoomDetails = (props) => {
                         Book Room
                     </FormButton>
                     <SelectBox name="cars" id="cars">
-                        {room.roomNumbers.map((r, i) => (
+                        {roomNumbers.map((r, i) => (
                             <option value={i + 1}>{`${i === 0 ? '1 Room' : `${i + 1} Rooms`} `}</option>
                         ))}
                     </SelectBox>
