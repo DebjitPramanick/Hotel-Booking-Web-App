@@ -69,21 +69,22 @@ These things must be installed in your system.
 4. Now open MongoDB
 5. Create a database collection
 6. Copy connection url
-7. Now type
-    ```sh
+7. Now run
+   ```sh
    cd server
    ```
 8. Create .env file
 9. Paste the connection url of DB with key name = MONGO_URL
 10. Now run commands
     ```sh
-   npm i
-   nodemon server.js
-   ```
+    npm i
+    nodemon server.js
+    ```
 11. Now open new terminal
 12. Now run commands
     ```sh
     cd client
+    npm i
     npm start
     ```
    
