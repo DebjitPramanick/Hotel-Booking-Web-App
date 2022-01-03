@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { PageContainer } from '../../components/GlobalStyles/PageStyles'
+import { PageContainer, Text } from '../../components/GlobalStyles/PageStyles'
 import { GlobalContext } from '../../utils/Context'
 import styled from "styled-components"
 import LeftSidebar from '../../components/Sidebars/LeftSidebar'
@@ -42,6 +42,7 @@ const Explore = (props) => {
                 {data.searchHotels.map(s =>
                     <Card data={s} params={location.state}/>
                 )}
+                <Text style={{color: 'grey', textAlign: 'center'}}>No Hotels Found</Text>
             </ResultContainer>
         </PageContainer>
     )
