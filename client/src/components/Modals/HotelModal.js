@@ -7,21 +7,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
-import { UPDATE_HOTEL } from '../../graphql/mutations/hotelMutations'
+import { ADD_HOTEL, UPDATE_HOTEL } from '../../graphql/mutations/hotelMutations'
 import ImageUpload from '../ImageUpload/ImageUpload';
 import { imageUpload } from '../../utils/utilFunctions';
 import Loader from '../Loaders/Loader';
+import { MAKE_MANAGER } from '../../graphql/mutations/userMutations';
 
 const HotelModal = (props) => {
 
     const propsHotel = props.hotel
-
-    const [updateHotel] = useMutation(UPDATE_HOTEL, {
-        refetchQueries: [
-            GET_HOTEL,
-            { variables: { id: props.hotel.id } }
-        ],
-    })
+    const user = JSON.parse(localStorage.getItem('user'))
 
     const [hide, setHide] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -29,11 +24,26 @@ const HotelModal = (props) => {
     const [hotel, setHotel] = useState({
         name: propsHotel ? propsHotel.name : '',
         description: propsHotel ? propsHotel.description : '',
-        id: props.hotel.id,
+        id: props.hotel ? props.hotel.id : null,
         image: propsHotel ? propsHotel.image : '',
         ratings: propsHotel ? propsHotel.ratings : null,
         totalRooms: propsHotel ? propsHotel.totalRooms : null,
         location: propsHotel ? propsHotel.location : ''
+    })
+
+    const [makeManager] = useMutation(MAKE_MANAGER, {
+        variables: {
+            id: user.id
+        }
+    })
+
+    const [addHotel] = useMutation(ADD_HOTEL)
+
+    const [updateHotel] = useMutation(UPDATE_HOTEL, {
+        refetchQueries: [
+            GET_HOTEL,
+            { variables: { id: props.hotel?.id } }
+        ],
     })
 
     const updateCurHotel = async (e) => {
@@ -50,7 +60,7 @@ const HotelModal = (props) => {
 
         const refPath = `images/hotels/${hotel.id}/hotelImage`
         let imageUrl = null
-        if(typeof hotel.image !== 'string'){
+        if (typeof hotel.image !== 'string') {
             imageUrl = await imageUpload(hotel.image, refPath)
         }
 
@@ -83,6 +93,78 @@ const HotelModal = (props) => {
             })
     }
 
+    const addNewHotel = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+
+        addHotel({
+            variables: {
+                manager: user.id,
+                image: null,
+                name: hotel.name,
+                description: hotel.description,
+                totalRooms: hotel.totalRooms,
+                location: hotel.location
+            }
+        })
+            .then(async res => {
+                const refPath = `images/hotels/${res.data.addHotel.id}/hotelImage`
+                let imageUrl = null
+                if (typeof hotel.image !== 'string') {
+                    imageUrl = await imageUpload(hotel.image, refPath)
+                }
+                updateHotel({
+                    variables: {
+                        name: hotel.name,
+                        description: hotel.description,
+                        id: res.data.addHotel.id,
+                        image: imageUrl,
+                        ratings: res.data.addHotel.ratings,
+                        totalRooms: hotel.totalRooms,
+                        location: hotel.location
+                    }
+                })
+                    .then(res => {
+                        toast.success("Hotel added.",{
+                            autoClose: 5500,
+                            pauseOnHover: true
+                        })
+                        makeManager({
+                            variables: {
+                                id: user.id
+                            }
+                        }).then(res => {
+                            localStorage.setItem('user', JSON.stringify(res.data.makeManager))
+                            setHide(true)
+                            setLoading(false)
+                            props.setHotelModal(false)
+                        })
+                        .catch(err => {
+                            toast.error(err, {
+                                autoClose: 5500,
+                                pauseOnHover: true
+                            })
+                            setLoading(false)
+                        })
+                    })
+                    .catch(err => {
+                        toast.error(err, {
+                            autoClose: 5500,
+                            pauseOnHover: true
+                        })
+                        setLoading(false)
+                    })
+
+            })
+            .catch(err => {
+                toast.error(err, {
+                    autoClose: 5500,
+                    pauseOnHover: true
+                })
+                setLoading(true)
+            })
+    }
+
 
     return (
         <ModalContainer>
@@ -92,9 +174,9 @@ const HotelModal = (props) => {
                         <CloseIcon className="close-icon" onClick={() => props.setHotelModal(false)} />
                         <ModalTitle>{props.title}</ModalTitle>
                         <ImageUpload imageUrl={hotel.image} refPath={`images/hotels/${hotel.id}/hotelImage`}
-                            setImageURL={(val) => setHotel({ ...hotel, image: val })} />
+                            setImageURL={(val) => setHotel({ ...hotel, image: val })} single={true} />
 
-                        <form onSubmit={props.action === 'update' ? updateCurHotel : null}>
+                        <form onSubmit={props.action === 'update' ? updateCurHotel : addNewHotel}>
                             <Input required="true" style={{ marginBottom: '16px' }}
                                 value={hotel.name} onChange={(e) => setHotel({ ...hotel, name: e.target.value })}
                                 placeholder="Hotel name">

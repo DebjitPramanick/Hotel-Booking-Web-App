@@ -112,6 +112,7 @@ const ImageUpload = (props) => {
         var file = dataURLtoFile(base64Image, "file.jpg");
         setPreview(base64Image);
         setImageURL(file)
+        console.log(file)
         setPopup(false)
     }
 
@@ -121,11 +122,11 @@ const ImageUpload = (props) => {
     }
 
     const selectForDelete = () => {
-        if(selected.includes(data.uuid)){
-            let sl = selected.filter(s => s!==data.uuid)
+        if (selected.includes(data.uuid)) {
+            let sl = selected.filter(s => s !== data.uuid)
             setSelected(sl)
         }
-        else{
+        else {
             setSelected([...selected, data.uuid])
         }
     }
@@ -155,11 +156,17 @@ const ImageUpload = (props) => {
                 </ModalContainer>
             )}
 
-            <ImageContainer onClick={() => !imageUrl ? fileInput.current.click() : null} style={styles}
-                className={`${selected.includes(data.uuid) ? 'selected' : ''}`}>
-                {preview ? <img src={preview} alt="" /> : <img src={src} alt="" />}
-                {imageUrl && <DeleteOutlineIcon className="delete-icon" onClick={selectForDelete} />}
-            </ImageContainer>
+            {props.single ? (
+                <ImageContainer onClick={() => !imageUrl ? fileInput.current.click() : null} style={styles}>
+                    {preview ? <img src={preview} alt="" /> : <img src={src} alt="" />}
+                </ImageContainer>
+            ) : (
+                <ImageContainer onClick={() => !imageUrl ? fileInput.current.click() : null} style={styles}
+                    className={`${selected.includes(data.uuid) ? 'selected' : ''}`}>
+                    {preview ? <img src={preview} alt="" /> : <img src={src} alt="" />}
+                    {imageUrl && <DeleteOutlineIcon className="delete-icon" onClick={selectForDelete} />}
+                </ImageContainer>
+            )}
 
             <Input type="file" accept="image/*" onChange={(e) => displayChange(e)}
                 style={{ display: 'none' }}

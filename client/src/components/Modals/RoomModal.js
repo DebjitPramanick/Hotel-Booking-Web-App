@@ -171,10 +171,6 @@ const RoomModal = (props) => {
         setRoomImages(temp)
     }
 
-    const handleDelete = () => {
-
-    }
-
 
     return (
         <ModalContainer>

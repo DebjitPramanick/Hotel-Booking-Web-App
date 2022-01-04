@@ -78,7 +78,7 @@ const Register = () => {
                                 placeholder="Email"
                                 value={info.email}
                                 onChange={(e) => setInfo({ ...info, email: e.target.value })}></Input>
-                            <InputContainer style={{ marginRight: '16px' }}>
+                            <InputContainer style={{ marginRight: '16px', marginTop: '10px', marginBottom: '10px' }}>
                                 <DatePicker selected={info.dob}
                                     onChange={(date) => setInfo({ ...info, dob: date })} />
                             </InputContainer>
