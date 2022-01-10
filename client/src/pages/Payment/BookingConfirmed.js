@@ -9,6 +9,8 @@ const BookingConfirmed = (props) => {
     const { user, room, booking } = props
     const navigate = useNavigate()
 
+    console.log(booking)
+
     return (
         <>
             <Confirmation>
@@ -29,7 +31,7 @@ const BookingConfirmed = (props) => {
                         Age: <span>{getAge(user.dob)}</span>
                     </Text>
                     <Text className="small">
-                        Total: <span>5 People</span>
+                        Total: <span>{booking.people.adults+booking.people.children}</span>
                     </Text>
                     <Text style={{ marginTop: '20px' }}>Booking Info</Text>
                     <Text className="small">
@@ -47,22 +49,22 @@ const BookingConfirmed = (props) => {
                         Price (Each room): <span>Rs. {room.price}</span>
                     </Text>
                     <Text className="small">
-                        Total Cost: <span>Rs. {room.price * 3}</span>
+                        Total Cost: <span>Rs. {room.price}</span>
                     </Text>
                 </div>
                 <div className="section">
                     <Text>Payment Info</Text>
                     <Text className="small">
-                        Room(s) Cost: <span>Rs. {room.price * 3}</span>
+                        Room(s) Cost: <span>Rs. {room.price}</span>
                     </Text>
                     <Text className="small">
                         Tax: <span>Rs. {20}</span>
                     </Text>
                     <Text className="small">
-                        Total Cost: <span>Rs. {room.price * 3 + 20}</span>
+                        Total Cost: <span>Rs. {room.price + 20}</span>
                     </Text>
                     <Text className="small">
-                        Payment Status: <span>Not Paid</span>
+                        Payment Status: <span>{booking.paid ? 'Paid' : 'Not Paid'}</span>
                     </Text>
                 </div>
             </Layout>

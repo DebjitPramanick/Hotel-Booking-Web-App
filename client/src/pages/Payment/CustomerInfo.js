@@ -25,7 +25,7 @@ const CustomerInfo = (props) => {
                         Age: <span>{getAge(user.dob)}</span>
                     </Text>
                     <Text className="small">
-                        Total: <span>5 People</span>
+                        Total: <span>{booking.people.adults+booking.people.children}</span>
                     </Text>
                 </div>
                 <div className="section">
