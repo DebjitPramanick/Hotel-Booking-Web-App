@@ -35,8 +35,8 @@ const SearchBox = (props) => {
     const [checkOut, setCheckOut] = useState(data ? new Date(data.to) : new Date());
     const [query, setQuery] = useState(data ? data.location : '')
     const [count, setCount] = useState({
-        children: data.people.children,
-        adults: data.people.adults
+        children: data ? data.people.children : 0,
+        adults: data ? data.people.adults : 0
     })
 
     const navigate = useNavigate()
