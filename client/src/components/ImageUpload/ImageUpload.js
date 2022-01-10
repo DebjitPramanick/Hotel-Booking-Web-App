@@ -5,10 +5,6 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { ModalBox, ModalContainer } from '../GlobalStyles/ModalStyles';
 import { ButtonsContainer } from '../../pages/Auth/ModuleStyles';
-import { storage } from "../../utils/Firebase"
-import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import BlankImg from "../../assets/hotel.png"
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 

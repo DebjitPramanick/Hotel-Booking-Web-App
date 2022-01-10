@@ -6,6 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./box.css"
 import { useNavigate } from 'react-router-dom';
 import SelectOccupancy from './SelectOccupancy';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Extras = styled.div`
     margin-top: 20px;
@@ -28,8 +30,6 @@ const SearchBox = (props) => {
 
     const data = props.params
 
-    console.log(data)
-
     const [checkIn, setCheckIn] = useState(data ? new Date(data.checkIn) : new Date());
     const [checkOut, setCheckOut] = useState(data ? new Date(data.checkOut) : new Date());
     const [query, setQuery] = useState(data ? data.location : '')
@@ -40,7 +40,15 @@ const SearchBox = (props) => {
 
     const navigate = useNavigate()
 
-    const handleSearch = () => {
+    const handleSearch = (e) => {
+        e.preventDefault()
+        if(count.children===0 && count.adults===0) {
+            toast.warning("Please enter number of people.",{
+                autoClose: 5500,
+                pauseOnHover: true
+            })
+            return
+        }
         const from = checkIn.toISOString()
         const to = checkOut.toISOString()
         const searchData = {
