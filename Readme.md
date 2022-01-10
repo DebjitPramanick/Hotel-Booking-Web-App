@@ -35,7 +35,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="./ss/ss1.png" alt=""/>
+<img src="./demo/ss1.png" alt=""/>
 <br>
 
 Simple hotel booking app with content management system. Users can book rooms in different hotels for specific dates. Hotel managers can create, update, delete a hotel and its rooms. Admin can manage everything in the app.
