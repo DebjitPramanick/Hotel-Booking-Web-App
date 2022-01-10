@@ -20,6 +20,8 @@ const Explore = (props) => {
     const params = useParams()
     const location = useLocation()
 
+    console.log(params, location)
+
     const { data, loading, error } = useQuery(SEARCH_HOTELS, {
         variables: {
             location: params.location,
@@ -37,7 +39,7 @@ const Explore = (props) => {
 
     return (
         <PageContainer>
-            <LeftSidebar data={params} />
+            <LeftSidebar data={location.state} />
             <ResultContainer>
                 {data.searchHotels.map(s =>
                     <Card data={s} params={location.state} />

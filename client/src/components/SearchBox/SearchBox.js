@@ -29,13 +29,14 @@ const InputContainer = styled.div`
 const SearchBox = (props) => {
 
     const data = props.params
+    console.log(data)
 
-    const [checkIn, setCheckIn] = useState(data ? new Date(data.checkIn) : new Date());
-    const [checkOut, setCheckOut] = useState(data ? new Date(data.checkOut) : new Date());
+    const [checkIn, setCheckIn] = useState(data ? new Date(data.from) : new Date());
+    const [checkOut, setCheckOut] = useState(data ? new Date(data.to) : new Date());
     const [query, setQuery] = useState(data ? data.location : '')
     const [count, setCount] = useState({
-        children: 0,
-        adults: 0
+        children: data.people.children,
+        adults: data.people.adults
     })
 
     const navigate = useNavigate()
@@ -55,6 +56,7 @@ const SearchBox = (props) => {
             from: from,
             to: to,
             people: count,
+            location: query
         }
         navigate(`/explore/${query}/${from}/${to}/${count.adults+count.children}`, 
         {state: searchData})
