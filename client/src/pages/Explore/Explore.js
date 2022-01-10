@@ -40,9 +40,11 @@ const Explore = (props) => {
             <LeftSidebar data={params} />
             <ResultContainer>
                 {data.searchHotels.map(s =>
-                    <Card data={s} params={location.state}/>
+                    <Card data={s} params={location.state} />
                 )}
-                <Text style={{color: 'grey', textAlign: 'center'}}>No Hotels Found</Text>
+                {data.searchHotels.length === 0 ?
+                    <Text style={{ color: 'grey', textAlign: 'center' }}>No Hotels Found</Text>
+                    : null}
             </ResultContainer>
         </PageContainer>
     )

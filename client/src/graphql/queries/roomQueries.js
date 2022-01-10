@@ -4,7 +4,10 @@ export const GET_ROOM = gql`
 query($id: ID!){
   getRoom(id: $id){
     id
-    images
+    images{
+      url
+      uuid
+    }
     name
     description
     occupancy
