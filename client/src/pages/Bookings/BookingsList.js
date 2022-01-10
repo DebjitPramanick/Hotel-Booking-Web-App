@@ -18,6 +18,9 @@ const BookingsList = (props) => {
     const [loading, setLoading] = useState(false)
     const listItems = ['Hotel Name', 'Room Name', 'From', 'To', 'Booked On', 'Amount', 'Paid', 'Actions']
 
+    const upcomingBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) > new Date()) : []
+    const oldBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) <= new Date()) : []
+
     return (
         <Container>
             <SearchBar
@@ -25,15 +28,29 @@ const BookingsList = (props) => {
                 setQuery={setQuery}
                 placeholder="Search bookings by hotel names..." />
 
+            <Text style={{ fontSize: '20px', margin: '26px 0' }}>Upcoming Bookings</Text>
             <ListHeader list={listItems} />
-            {!loading ? props.bookings.map(booking =>
+            {!loading ? upcomingBookings.map(booking =>
                 <ListItem key={booking.id}
                     data={booking}
                     setLoading={setLoading}
                     loading={loading} />
             ) : <Loader />}
-            {props.bookings.length === 0 &&
-                <Text className="small" style={{ textAlign: 'center' }}>No Bookings</Text>}
+            {upcomingBookings.length === 0 &&
+                <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Bookings</Text>}
+
+            <br/>
+
+            <Text style={{ fontSize: '20px', margin: '26px 0' }}>Old Bookings</Text>
+            <ListHeader list={listItems} />
+            {!loading ? oldBookings.map(booking =>
+                <ListItem key={booking.id}
+                    data={booking}
+                    setLoading={setLoading}
+                    loading={loading} />
+            ) : <Loader />}
+            {oldBookings.length === 0 &&
+                <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Bookings</Text>}
         </Container>
     )
 }
