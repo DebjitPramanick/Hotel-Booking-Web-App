@@ -91,7 +91,7 @@ const Profile = () => {
     const updateUser = () => {
         updateProfile({
             variables: {
-                id: curUser.id,
+                id: '',
                 name: curUser.name,
                 email: curUser.email,
                 dob: curUser.dob,
@@ -106,7 +106,7 @@ const Profile = () => {
             })
         }).catch(err => {
             setShowBtn(false)
-            toast.error(err, {
+            toast.error(err.message, {
                 autoClose: 5500,
                 pauseOnHover: true,
             })

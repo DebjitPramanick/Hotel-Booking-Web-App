@@ -78,7 +78,7 @@ const RoomModal = (props) => {
                 setLoading(false)
             })
             .catch(err => {
-                toast.error(err, {
+                toast.error(err.message, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })
@@ -136,7 +136,7 @@ const RoomModal = (props) => {
                 setLoading(false)
             })
             .catch(err => {
-                toast.error(err, {
+                toast.error(err.message, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })

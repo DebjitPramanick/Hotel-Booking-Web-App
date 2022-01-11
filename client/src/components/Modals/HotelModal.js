@@ -85,7 +85,7 @@ const HotelModal = (props) => {
                 setLoading(false)
             })
             .catch(err => {
-                toast.error(err, {
+                toast.error(err.message, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })
@@ -140,7 +140,7 @@ const HotelModal = (props) => {
                             props.setHotelModal(false)
                         })
                         .catch(err => {
-                            toast.error(err, {
+                            toast.error(err.message, {
                                 autoClose: 5500,
                                 pauseOnHover: true
                             })
@@ -148,7 +148,7 @@ const HotelModal = (props) => {
                         })
                     })
                     .catch(err => {
-                        toast.error(err, {
+                        toast.error(err.message, {
                             autoClose: 5500,
                             pauseOnHover: true
                         })
@@ -157,7 +157,7 @@ const HotelModal = (props) => {
 
             })
             .catch(err => {
-                toast.error(err, {
+                toast.error(err.message, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })

@@ -35,7 +35,7 @@ const ListItem = (props) => {
             })
         }).catch(err => {
             props.setLoading(false)
-            toast.error(err, {
+            toast.error(err.message, {
                 autoClose: 5500,
                 pauseOnHover: true
             })

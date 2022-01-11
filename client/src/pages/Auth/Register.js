@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { PageContainer } from '../../components/GlobalStyles/PageStyles';
 import Loader from "../../components/Loaders/Loader.js"
 import DatePicker from "react-datepicker";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
 
@@ -55,7 +57,10 @@ const Register = () => {
             })
             .catch(err => {
                 setLoading(false)
-                alert(err)
+                toast.error(err.message, {
+                    autoClose: 5500,
+                    pauseOnHover: true
+                })
             })
     }
 

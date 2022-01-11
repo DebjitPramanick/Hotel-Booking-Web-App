@@ -76,7 +76,7 @@ const PaymentScreen = (props) => {
                 navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: newBooking })
             }).catch(err => {
                 setLoading(false)
-                toast.error(err, {
+                toast.error(err.message, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })
@@ -84,7 +84,7 @@ const PaymentScreen = (props) => {
         })
             .catch(err => {
                 setLoading(false)
-                toast.error(err, {
+                toast.error(err.message, {
                     autoClose: 5500,
                     pauseOnHover: true
                 })
