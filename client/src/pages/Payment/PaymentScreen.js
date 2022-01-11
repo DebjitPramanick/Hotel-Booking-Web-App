@@ -16,39 +16,10 @@ const PaymentScreen = (props) => {
     const [addBooking] = useMutation(ADD_BOOKING)
     const [payAmount] = useMutation(MAKE_PAYMENT)
 
-    console.log(booking)
-
     const [loading, setLoading] = useState(false)
 
-    const handleBook = (state) => {
-        if (state === 'paylater') {
-            setLoading(true)
-            addBooking({
-                variables: {
-                    from: booking.from,
-                    to: booking.to,
-                    roomNumber: booking.roomNumber,
-                    bookedBy: booking.bookedBy,
-                    paid: booking.paid,
-                    amount: booking.amount,
-                    people: booking.people,
-                    room: booking.room,
-                    hotel: booking.hotel
-                }
-            }).then(res => {
-                navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: booking })
-            })
-                .catch(err => {
-                    toast.error(err, {
-                        autoClose: 5500,
-                        pauseOnHover: true
-                    })
-                })
-        }
-    }
-
-    const onToken = (token) => {
-        console.log(token)
+    const handleBook = () => {
+        setLoading(true)
         addBooking({
             variables: {
                 from: booking.from,
@@ -62,7 +33,34 @@ const PaymentScreen = (props) => {
                 hotel: booking.hotel
             }
         }).then(res => {
-            console.log(res)
+            let newBooking = booking
+            newBooking['id'] = res.data.addBooking.id
+            navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: newBooking })
+        })
+            .catch(err => {
+                setLoading(false)
+                toast.error(err, {
+                    autoClose: 5500,
+                    pauseOnHover: true
+                })
+            })
+    }
+
+    const onToken = (token) => {
+        setLoading(true)
+        addBooking({
+            variables: {
+                from: booking.from,
+                to: booking.to,
+                roomNumber: booking.roomNumber,
+                bookedBy: booking.bookedBy,
+                paid: booking.paid,
+                amount: booking.amount,
+                people: booking.people,
+                room: booking.room,
+                hotel: booking.hotel
+            }
+        }).then(res => {
             payAmount({
                 variables: {
                     tokenId: token.id,
@@ -70,8 +68,14 @@ const PaymentScreen = (props) => {
                     bookedBy: booking.bookedBy
                 }
             }).then(res => {
-                navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: booking })
+                setLoading(false)
+                let newBooking = booking
+                newBooking['id'] = res.data.payAmount.id
+                newBooking['paid'] = true
+                console.log(newBooking, res.data.payAmount.id)
+                navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: newBooking })
             }).catch(err => {
+                setLoading(false)
                 toast.error(err, {
                     autoClose: 5500,
                     pauseOnHover: true
@@ -79,6 +83,7 @@ const PaymentScreen = (props) => {
             })
         })
             .catch(err => {
+                setLoading(false)
                 toast.error(err, {
                     autoClose: 5500,
                     pauseOnHover: true
@@ -104,7 +109,7 @@ const PaymentScreen = (props) => {
                                 Age: <span>{getAge(user.dob)}</span>
                             </Text>
                             <Text className="small">
-                                Total: <span>{booking.people.adults+booking.people.children}</span>
+                                Total: <span>{booking.people.adults + booking.people.children}</span>
                             </Text>
                             <Text style={{ marginTop: '20px' }}>Booking Info</Text>
                             <Text className="small">
@@ -155,7 +160,7 @@ const PaymentScreen = (props) => {
                 <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`, { state: booking })}>
                     Go Back
                 </FormButton>
-                <FormButton onClick={() => handleBook('paylater')}>
+                <FormButton onClick={() => handleBook()} disabled={loading}>
                     Pay Later
                 </FormButton>
             </Layout>

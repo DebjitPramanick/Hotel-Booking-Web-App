@@ -36,7 +36,7 @@ const payAmount = { // For payment
         })
 
         const charge = await stripe.charges.create({
-            amount: booking.amount*100,
+            amount: booking.amount * 100,
             currency: 'INR',
             customer: customer.id,
             receipt_email: user.email,
@@ -49,7 +49,20 @@ const payAmount = { // For payment
 
         if (charge) {
             let res = await Booking.findByIdAndUpdate(args.bookingId,
-                { ...booking, paid: true }, { new: true })
+                {
+                    from: booking.from,
+                    to: booking.to,
+                    days: booking.days,
+                    roomNumber: booking.roomNumber,
+                    amount: booking.amount,
+                    numOfPeople: booking.numOfPeople,
+                    location: booking.location,
+                    bookedBy: booking.bookedBy,
+                    people: booking.people,
+                    room: booking.room,
+                    hotel: booking.hotel,
+                    paid: true
+                }, { new: true })
             return res
         }
         else throw new Error("Payment failed.")

@@ -49,3 +49,29 @@ query($id: ID!){
     }
 }
 `
+
+export const GET_BOOKING = gql`
+    query($id: ID!){
+        getBooking(id: id){
+            id
+            from
+            to
+            paid
+            amount
+            bookedOn
+            people
+            bookedBy{
+                name
+                email
+                username
+                id
+            }
+            hotel{
+                name
+            }
+            room{
+                name
+            } 
+        }
+    }
+`

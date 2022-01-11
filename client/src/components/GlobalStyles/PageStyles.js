@@ -73,7 +73,10 @@ export const FormButton = styled.button`
     border-radius: 40px;
     background: #ff6e29;
     cursor: pointer;
-    display: block
+    display: block;
+    :disabled{
+        background: grey
+    }
 `
 
 export const Image = styled.div`

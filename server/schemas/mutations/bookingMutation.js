@@ -74,10 +74,6 @@ const addBooking = { // For adding new booking
 }
 
 
-const updateBooking = { // For updating hotel
-
-}
-
 const cancelBooking = { // For cancelling hotel
     type: BookingType,
     args: {
