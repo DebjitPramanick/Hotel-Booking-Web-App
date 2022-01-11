@@ -9,6 +9,7 @@ import {useParams, useLocation, Navigate} from 'react-router-dom'
 import PaymentScreen from './PaymentScreen'
 import BookingConfirmed from './BookingConfirmed'
 import PageLoader from '../../components/Loaders/PageLoader'
+import PageError from '../../components/Error/PageError'
 
 
 const Payment = () => {
@@ -25,6 +26,7 @@ const Payment = () => {
     const {data, loading, error} = useQuery(GET_ROOM, {variables: {id: roomId}})
 
     if(loading) return <PageLoader />
+    if (error) return <PageError error={error} />
 
     if(!location.state) return <Navigate to="/"/>
 

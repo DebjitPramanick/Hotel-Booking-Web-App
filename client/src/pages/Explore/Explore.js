@@ -8,6 +8,8 @@ import { useParams, useLocation } from 'react-router'
 import { useQuery } from '@apollo/client'
 import { SEARCH_HOTELS } from '../../graphql/queries/hotelQueries'
 import PageLoader from '../../components/Loaders/PageLoader'
+import PageError from '../../components/Error/PageError'
+import ComponentError from '../../components/Error/ComponentError'
 
 const ResultContainer = styled.div`
     width: calc(100vw - 510px);
@@ -40,14 +42,20 @@ const Explore = (props) => {
     return (
         <PageContainer>
             <LeftSidebar data={location.state} />
+
             <ResultContainer>
-                {data.searchHotels.map(s =>
-                    <Card data={s} params={location.state} />
-                )}
-                {data.searchHotels.length === 0 ?
-                    <Text style={{ color: 'grey', textAlign: 'center' }}>No Hotels Found</Text>
-                    : null}
+                {error ? (<ComponentError error={error} />) : (
+                <>
+                    {data.searchHotels.map(s =>
+                        <Card data={s} params={location.state} />
+                    )}
+                    {data.searchHotels.length === 0 ?
+                        <Text style={{ color: 'grey', textAlign: 'center' }}>No Hotels Found</Text>
+                        : null}
+                </>
+            )}
             </ResultContainer>
+
         </PageContainer>
     )
 }

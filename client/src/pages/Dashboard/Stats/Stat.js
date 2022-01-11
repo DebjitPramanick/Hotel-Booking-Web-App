@@ -3,6 +3,7 @@ import React from 'react'
 import Loader from '../../../components/Loaders/Loader'
 import { GET_HOTEL_BOOKINGS } from '../../../graphql/queries/bookingQueries'
 import styled from 'styled-components'
+import ComponentError from '../../../components/Error/ComponentError'
 
 const Container = styled.div`
     height: 100%
@@ -39,6 +40,7 @@ const Stat = (props) => {
     }
 
     if (loading) return <Loader />
+    if (error) return <ComponentError error={error} />
 
     const bookings = data.getHotelBookings
 

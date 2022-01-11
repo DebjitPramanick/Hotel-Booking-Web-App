@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React, { useContext, useEffect } from "react";
 import { useParams, useLocation } from "react-router";
+import PageError from "../../components/Error/PageError";
 import { Image, PageContainer } from "../../components/GlobalStyles/PageStyles";
 import PageLoader from "../../components/Loaders/PageLoader";
 import { GET_HOTEL_BY_ID } from "../../graphql/queries/hotelQueries";
@@ -17,16 +18,16 @@ const Hotel = () => {
     });
     
     useEffect(() => {
-        if(!loading){
+        if(!loading && data){
             setPage(`${data.getHotelByID.name}`)
         }
         
-    }, [loading])
+    }, [loading, data])
 
     if (loading) return <PageLoader />
+    if (error) return <PageError error={error} />
 
     const hotel = data.getHotelByID;
-    console.log(hotel);
 
     return (
         <PageContainer style={{maxWidth: "1200px", marginLeft: "auto", marginRight: "auto"}}>

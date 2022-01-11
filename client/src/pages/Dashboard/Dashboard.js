@@ -14,6 +14,7 @@ import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 import HotelModal from '../../components/Modals/HotelModal'
 import PageLoader from '../../components/Loaders/PageLoader'
 import Stat from './Stats/Stat'
+import PageError from '../../components/Error/PageError'
 
 const QuickView = styled.div`
     display: grid;
@@ -123,6 +124,7 @@ const Dashboard = () => {
     ]
 
     if (loading) return <PageLoader />
+    if (error) return <PageError error={error} />
 
     const hotel = data.getHotel
 
@@ -159,10 +161,11 @@ const Dashboard = () => {
                     </Controls>
                 </Info>
                 <StatContainer>
-                    <Stat hotel={hotel}/>
+                    <Stat hotel={hotel} />
                 </StatContainer>
             </QuickView>
             <RoomsList rooms={hotel.rooms} setRoomModal={setRoomModal} />
+
         </PageContainer>
     )
 }

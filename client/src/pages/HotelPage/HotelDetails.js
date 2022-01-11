@@ -7,6 +7,7 @@ import { GlobalContext } from '../../utils/Context';
 import { useQuery } from '@apollo/client';
 import { GET_AVAILABLE_ROOMS } from '../../graphql/queries/roomQueries';
 import PageLoader from "../../components/Loaders/PageLoader"
+import ComponentError from '../../components/Error/ComponentError';
 
 const Details = styled.div`
     border: 0.5px solid #d8d8d8;
@@ -29,6 +30,7 @@ const HotelDetails = (props) => {
     const ratings = !hotel.ratings ? 0.00 : hotel.ratings
 
     if(loading) return <PageLoader />
+    if (error) return <ComponentError error={error} />
 
     const rooms = data.getAvailableRooms
 

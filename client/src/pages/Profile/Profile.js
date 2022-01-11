@@ -7,7 +7,7 @@ import { getEasyDate } from '../../utils/utilFunctions'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import HotelModal from '../../components/Modals/HotelModal'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { GET_USER } from '../../graphql/queries/userQueries'
 import { UPDATE_USER } from '../../graphql/mutations/userMutations'
 import { toast } from 'react-toastify'
