@@ -1,16 +1,11 @@
-.header-content .brand{
+.brand{
     display: flex;
     align-items: center;
     column-gap: 16px;
 }
 
-.header-content .brand a{
+.brand a{
     height: 36px;
-}
-
-.header-content .brand img{
-    height: 36px;
-    width: 36px;
 }
 
 @media (max-width: 576px) {

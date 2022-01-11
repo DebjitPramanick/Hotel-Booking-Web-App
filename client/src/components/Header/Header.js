@@ -3,6 +3,8 @@ import "./header.css"
 import { GlobalContext } from '../../utils/Context'
 import styled from 'styled-components'
 import { PageTitle, Text } from '../GlobalStyles/PageStyles'
+import HotelLogo from "../../assets/logo.png"
+import {Link} from 'react-router-dom'
 
 const FixedHeader = styled.div`
     padding: 12px 16px;
@@ -18,6 +20,16 @@ const Content = styled.div`
     align-items: center;
     column-gap: 16px;
     justify-content: space-between
+`
+
+const Logo = styled.div`
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+        height: 100%
+    }
 `
 
 const Header = (props) => {
@@ -37,6 +49,7 @@ const Header = (props) => {
             backdropFilter: 'blur(0px)' } : pageName==='Home' ? homeStyles : {}}>
             <Content>
                 <div className="brand">
+                    <Link to="/"><Logo><img src={HotelLogo} alt="/" /></Logo></Link>
                     <PageTitle>{pageName}</PageTitle>
                 </div>
                 {user && (
