@@ -27,7 +27,7 @@ const Header = (props) => {
     const user = JSON.parse(localStorage.getItem('user'))
 
     const homeStyles = {
-        backgroundColor: 'transparent', 
+        backgroundColor: '#0000009c', 
         backdropFilter: 'none'
     }
 
