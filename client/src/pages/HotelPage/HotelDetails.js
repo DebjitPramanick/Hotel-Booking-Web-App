@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Image, Text } from '../../components/GlobalStyles/PageStyles'
 import HotelIMG from "../../assets/hotel.png";
 import RoomDetails from './RoomDetails';
-import { GlobalContext } from '../../utils/Context';
 import { useQuery } from '@apollo/client';
 import { GET_AVAILABLE_ROOMS } from '../../graphql/queries/roomQueries';
 import PageLoader from "../../components/Loaders/PageLoader"

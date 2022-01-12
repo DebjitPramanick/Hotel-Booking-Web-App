@@ -1,14 +1,8 @@
-import { useMutation } from '@apollo/client'
-import React, { useState, useEffect } from 'react'
-import { FormButton } from '../GlobalStyles/FormStyles'
-import { AddField, FlexBox, ModalBox, ModalContainer, ModalTitle } from '../GlobalStyles/ModalStyles'
+import React from 'react'
+import { ModalBox, ModalContainer, ModalTitle } from '../GlobalStyles/ModalStyles'
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
-import { Text } from '../GlobalStyles/PageStyles'
-import Tippy from '@tippyjs/react'
-import { ButtonsContainer } from '../../pages/Auth/ModuleStyles'
-import { useNavigate } from 'react-router-dom'
 import Bookings from '../../pages/Bookings/Bookings';
 
 const ViewBookings = (props) => {

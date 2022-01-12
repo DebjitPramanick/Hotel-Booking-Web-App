@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import React, { useContext, useEffect } from "react";
 import { useParams, useLocation } from "react-router";
 import PageError from "../../components/Error/PageError";
-import { Image, PageContainer } from "../../components/GlobalStyles/PageStyles";
+import { PageContainer } from "../../components/GlobalStyles/PageStyles";
 import PageLoader from "../../components/Loaders/PageLoader";
 import { GET_HOTEL_BY_ID } from "../../graphql/queries/hotelQueries";
 import { GlobalContext } from "../../utils/Context";

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import "./header.css"
 import { GlobalContext } from '../../utils/Context'
 import styled from 'styled-components'
-import { PageTitle, Text } from '../GlobalStyles/PageStyles'
+import { PageTitle } from '../GlobalStyles/PageStyles'
 import HotelLogo from "../../assets/logo.png"
 import {Link} from 'react-router-dom'
 

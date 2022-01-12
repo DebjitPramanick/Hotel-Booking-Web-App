@@ -1,17 +1,10 @@
-import { useMutation } from '@apollo/client'
-import React, { useState, useEffect } from 'react'
-import { ADD_ROOM, UPDATE_ROOM } from '../../graphql/mutations/roomMutations'
-import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
-import { AddField, FlexBox, GridContainer, ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
-import { toast } from 'react-toastify';
+import React from 'react'
+import { FormButton } from '../GlobalStyles/FormStyles'
+import { FlexBox, ModalBox, ModalContainer, ModalTitle } from '../GlobalStyles/ModalStyles'
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
-import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
-import ImageUpload from '../ImageUpload/ImageUpload'
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { bulkImageUpload, deleteImageBulk, getDate, getEasyDate, imageUpload } from '../../utils/utilFunctions'
-import Loader from '../Loaders/Loader'
+import { getDate, getEasyDate } from '../../utils/utilFunctions'
 import { Text } from '../GlobalStyles/PageStyles'
 import Tippy from '@tippyjs/react'
 import { ButtonsContainer } from '../../pages/Auth/ModuleStyles'

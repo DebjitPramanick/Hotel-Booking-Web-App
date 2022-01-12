@@ -3,11 +3,10 @@ import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 import BookingsList from './BookingsList'
 import { GlobalContext } from "../../utils/Context"
 import { useQuery } from '@apollo/client'
-import { GET_HOTEL_BOOKINGS, GET_USER_BOOKINGS } from '../../graphql/queries/bookingQueries'
+import { GET_USER_BOOKINGS } from '../../graphql/queries/bookingQueries'
 import PageLoader from "../../components/Loaders/PageLoader.js"
 import PageError from '../../components/Error/PageError'
 import BookingModal from '../../components/Modals/BookingModal'
-import HotelModal from '../../components/Modals/HotelModal'
 
 const Bookings = (props) => {
 

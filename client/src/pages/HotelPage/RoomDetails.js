@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { detailsSettings, settings } from '../../utils/carouselSettings';
+import { detailsSettings } from '../../utils/carouselSettings';
 
 const CardContainer = styled.div`
     margin-top: 20px;

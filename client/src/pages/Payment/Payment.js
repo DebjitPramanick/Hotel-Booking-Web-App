@@ -20,7 +20,7 @@ const Payment = () => {
         setPage("Payment")
     }, [])
 
-    const {hotelId, roomId, step} = useParams()
+    const { roomId, step} = useParams()
     const location = useLocation()
 
     const {data, loading, error} = useQuery(GET_ROOM, {variables: {id: roomId}})

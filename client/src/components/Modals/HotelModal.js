@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
-import { ModalBox, ModalContainer, ModalTitle, RoomSelectionBox } from '../GlobalStyles/ModalStyles'
+import { ModalBox, ModalContainer, ModalTitle } from '../GlobalStyles/ModalStyles'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
