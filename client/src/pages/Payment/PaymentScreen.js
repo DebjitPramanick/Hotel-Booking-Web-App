@@ -31,7 +31,7 @@ const PaymentScreen = (props) => {
                 roomNumber: booking.roomNumber,
                 bookedBy: booking.bookedBy,
                 paid: booking.paid,
-                amount: booking.amount,
+                amount: booking.amount+20,
                 people: booking.people,
                 room: booking.room,
                 hotel: booking.hotel
@@ -82,7 +82,7 @@ const PaymentScreen = (props) => {
                     roomNumber: booking.roomNumber,
                     bookedBy: booking.bookedBy,
                     paid: booking.paid,
-                    amount: booking.amount,
+                    amount: booking.amount+20,
                     people: booking.people,
                     room: booking.room,
                     hotel: booking.hotel
@@ -174,7 +174,7 @@ const PaymentScreen = (props) => {
                                 stripeKey="pk_test_51Hr13fE7BvSkBO4prE35EeVzyGVKfQCPfpfcOZZkSLfa4jfONQeEOrd9A4wFIERlRXuVpBu3NYVm1YwCrFfY0gs400dAaCrTp0"
                                 name=""
                                 currency='USD'
-                                amount={room.price * 100}
+                                amount={(room.price+20) * 100}
                             />
                             <Text className="small" style={{ marginTop: '16px', color: 'grey' }}>
                                 *You can also pay later

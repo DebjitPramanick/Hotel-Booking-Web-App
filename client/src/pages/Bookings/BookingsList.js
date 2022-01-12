@@ -17,8 +17,10 @@ const BookingsList = (props) => {
     const [loading, setLoading] = useState(false)
     const listItems = ['Hotel Name', 'Room Name', 'From', 'To', 'Booked On', 'Amount', 'Paid', 'Actions']
 
-    const upcomingBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) > new Date()) : []
-    const oldBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) <= new Date()) : []
+    const curDate = new Date().setHours(0, 0, 0, 0)
+
+    const upcomingBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) > curDate) : []
+    const oldBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) <= curDate) : []
 
     return (
         <Container>

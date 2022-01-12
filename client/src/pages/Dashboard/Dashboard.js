@@ -15,6 +15,7 @@ import HotelModal from '../../components/Modals/HotelModal'
 import PageLoader from '../../components/Loaders/PageLoader'
 import Stat from './Stats/Stat'
 import PageError from '../../components/Error/PageError'
+import ViewBookings from '../../components/Modals/ViewBookings'
 
 const QuickView = styled.div`
     display: grid;
@@ -108,6 +109,13 @@ const Dashboard = () => {
         action: ''
     })
 
+    const [bookingsModal, setBookingsModal] = useState({
+        state: false,
+        title: '',
+        param: null,
+        action: ''
+    })
+
     useEffect(() => {
         setPage("Dashboard")
     }, [])
@@ -139,6 +147,12 @@ const Dashboard = () => {
                 action={hotelModal.action} title={hotelModal.title} hotel={hotel}
                 setHotelModal={setHotelModal} />)}
 
+            {bookingsModal.state && (<ViewBookings
+                title={bookingsModal.title}
+                setBookingsModal={setBookingsModal}
+                hotel={hotel}
+                bookings={bookingsModal.param} />)}
+
             <QuickView>
                 <Info style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})` }}>
                     <div className="card-details">
@@ -161,7 +175,7 @@ const Dashboard = () => {
                     </Controls>
                 </Info>
                 <StatContainer>
-                    <Stat hotel={hotel} />
+                    <Stat hotel={hotel} setBookingsModal={setBookingsModal}/>
                 </StatContainer>
             </QuickView>
             <RoomsList rooms={hotel.rooms} setRoomModal={setRoomModal} />

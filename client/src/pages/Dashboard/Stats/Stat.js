@@ -24,6 +24,7 @@ const Block = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    cursor: pointer;
     h2{
         margin-bottom: 10px;
     }
@@ -52,6 +53,16 @@ const Stat = (props) => {
         return total
     }
 
+    const getTodayBookings = () => {
+        let total = 0;
+        const curDate = new Date().getDate();
+
+        bookings.forEach(b => {
+            if(new Date(b.from).getDate()===curDate) total++
+        })
+        return total
+    }
+
     return (
         <Container>
             <Grid>
@@ -59,16 +70,18 @@ const Stat = (props) => {
                     <h2>Rs. {getTotalEarnings()}</h2>
                     <p>Total Earnings</p>
                 </Block>
-                <Block style={{ background: `${getRandomColor()}` }}>
+                <Block style={{ background: `${getRandomColor()}` }}
+                onClick={() => props.setBookingsModal({state: true, title: 'Hotel Bookings', param: bookings})}>
                     <h2>{bookings.length}</h2>
                     <p>Total Bookings</p>
+                    <p>(Click To See Bookings)</p>
                 </Block>
                 <Block style={{ background: `${getRandomColor()}` }}>
                     <h2>{hotel.rooms.length}</h2>
                     <p>Total Rooms</p>
                 </Block>
                 <Block style={{ background: `${getRandomColor()}` }}>
-                    <h2>{hotel.rooms.length}</h2>
+                    <h2>{getTodayBookings()}</h2>
                     <p>Bookings For Today</p>
                 </Block>
             </Grid>

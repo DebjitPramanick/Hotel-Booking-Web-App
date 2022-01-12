@@ -3,12 +3,15 @@ import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 import BookingsList from './BookingsList'
 import { GlobalContext } from "../../utils/Context"
 import { useQuery } from '@apollo/client'
-import { GET_USER_BOOKINGS } from '../../graphql/queries/bookingQueries'
+import { GET_HOTEL_BOOKINGS, GET_USER_BOOKINGS } from '../../graphql/queries/bookingQueries'
 import PageLoader from "../../components/Loaders/PageLoader.js"
 import PageError from '../../components/Error/PageError'
 import BookingModal from '../../components/Modals/BookingModal'
+import HotelModal from '../../components/Modals/HotelModal'
 
-const Bookings = () => {
+const Bookings = (props) => {
+
+    const { style, filter = 'user', hotel, bookingsData } = props
 
     const { setPage } = useContext(GlobalContext)
 
@@ -25,15 +28,15 @@ const Bookings = () => {
 
     const user = JSON.parse(localStorage.getItem('user'))
 
-    const { data, loading, error } = useQuery(GET_USER_BOOKINGS, { variables: { id: user.id } })
+    const { data, loading, error } = useQuery(GET_USER_BOOKINGS,{variables: {id: user.id}})
 
     if (loading) return <PageLoader />
     if (error) return <PageError error={error} />
 
-    const bookings = data.getUserBookings
+    const bookings = bookingsData ? bookingsData : data.getUserBookings
 
     return (
-        <PageContainer>
+        <PageContainer style={style}>
             {modal.state ? <BookingModal
                 booking={modal.param}
                 setModal={setModal}
