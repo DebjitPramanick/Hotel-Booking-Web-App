@@ -11,7 +11,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { MAKE_PAYMENT } from '../../graphql/mutations/paymentMutation'
 
 const PaymentScreen = (props) => {
-    const { user, room, booking } = props
+    const { user, room, booking, bookingExists } = props
     const navigate = useNavigate()
     const [addBooking] = useMutation(ADD_BOOKING)
     const [payAmount] = useMutation(MAKE_PAYMENT)
@@ -20,6 +20,10 @@ const PaymentScreen = (props) => {
 
     const handleBook = () => {
         setLoading(true)
+        if (bookingExists) {
+            navigate(`/bookings`)
+            return
+        }
         addBooking({
             variables: {
                 from: booking.from,
@@ -48,24 +52,12 @@ const PaymentScreen = (props) => {
 
     const onToken = (token) => {
         setLoading(true)
-        addBooking({
-            variables: {
-                from: booking.from,
-                to: booking.to,
-                roomNumber: booking.roomNumber,
-                bookedBy: booking.bookedBy,
-                paid: booking.paid,
-                amount: booking.amount,
-                people: booking.people,
-                room: booking.room,
-                hotel: booking.hotel
-            }
-        }).then(res => {
+        if (bookingExists) {
             payAmount({
                 variables: {
                     tokenId: token.id,
-                    bookingId: res.data.addBooking.id,
-                    bookedBy: booking.bookedBy
+                    bookingId: booking.id,
+                    bookedBy: booking.bookedBy.id
                 }
             }).then(res => {
                 setLoading(false)
@@ -81,14 +73,50 @@ const PaymentScreen = (props) => {
                     pauseOnHover: true
                 })
             })
-        })
-            .catch(err => {
-                setLoading(false)
-                toast.error(err.message, {
-                    autoClose: 5500,
-                    pauseOnHover: true
+        }
+        else {
+            addBooking({
+                variables: {
+                    from: booking.from,
+                    to: booking.to,
+                    roomNumber: booking.roomNumber,
+                    bookedBy: booking.bookedBy,
+                    paid: booking.paid,
+                    amount: booking.amount,
+                    people: booking.people,
+                    room: booking.room,
+                    hotel: booking.hotel
+                }
+            }).then(res => {
+                payAmount({
+                    variables: {
+                        tokenId: token.id,
+                        bookingId: res.data.addBooking.id,
+                        bookedBy: booking.bookedBy
+                    }
+                }).then(res => {
+                    setLoading(false)
+                    let newBooking = booking
+                    newBooking['id'] = res.data.payAmount.id
+                    newBooking['paid'] = true
+                    console.log(newBooking, res.data.payAmount.id)
+                    navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: newBooking })
+                }).catch(err => {
+                    setLoading(false)
+                    toast.error(err.message, {
+                        autoClose: 5500,
+                        pauseOnHover: true
+                    })
                 })
             })
+                .catch(err => {
+                    setLoading(false)
+                    toast.error(err.message, {
+                        autoClose: 5500,
+                        pauseOnHover: true
+                    })
+                })
+        }
     }
 
 

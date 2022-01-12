@@ -12,7 +12,7 @@ const ListItem = (props) => {
     const [cancelBooking] = useMutation(CANCEL_BOOKING)
 
     let keys = Object.keys(props.data)
-    keys = keys.filter(k => k!=='id' && k!=='bookedBy')
+    keys = ['hotel', 'room', 'from', 'to', 'bookedOn', 'amount', 'paid', 'actions']
 
     const handleCancel = () => {
         props.setLoading(true)

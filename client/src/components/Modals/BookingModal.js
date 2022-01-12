@@ -20,7 +20,6 @@ import { useNavigate } from 'react-router-dom'
 const BookingModal = (props) => {
 
     const booking = props.booking
-    console.log(booking)
     const navigate = useNavigate()
 
     const payLink = () => {
@@ -74,7 +73,7 @@ const BookingModal = (props) => {
                 <hr />
                 <br />
                 <Text className="small">Room Price: <span>Rs. {booking.room.price}</span></Text>
-                <Text className="small">Amount Paid: <span>Rs. {booking.amount}</span></Text>
+                <Text className="small">Amount {booking.paid ? 'Paid' : 'To Be Paid'}: <span>Rs. {booking.amount}</span></Text>
                 <Text className="small">Payment Status:
                     <span>{booking.paid ? 'Paid' : 'Not Paid'}</span>
                 </Text>

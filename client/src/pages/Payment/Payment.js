@@ -33,13 +33,15 @@ const Payment = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const room = data.getRoom
     const bookingData = location.state
+    const bookingExists = bookingData.id !== null || bookingData.id !== undefined
+    console.log(bookingExists)
 
     return (
         <PageContainer>
             <ProgressBar step={step}/>
-            {step === '1' && (<CustomerInfo user={user} room={room} booking={bookingData}/>)}
-            {step === '2' && (<PaymentScreen user={user} room={room} booking={bookingData}/>)}
-            {step === '3' && (<BookingConfirmed user={user} room={room} booking={bookingData}/>)}
+            {step === '1' && (<CustomerInfo user={user} room={room} booking={bookingData} bookingExists={bookingExists}/>)}
+            {step === '2' && (<PaymentScreen user={user} room={room} booking={bookingData} bookingExists={bookingExists}/>)}
+            {step === '3' && (<BookingConfirmed user={user} room={room} booking={bookingData} bookingExists={bookingExists}/>)}
         </PageContainer>
     )
 }
