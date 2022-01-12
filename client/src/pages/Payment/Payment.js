@@ -33,8 +33,9 @@ const Payment = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const room = data.getRoom
     const bookingData = location.state
-    const bookingExists = bookingData.id !== null || bookingData.id !== undefined
-    console.log(bookingExists)
+    const bookingExists = bookingData.id !== undefined
+
+    if(!bookingData) return <PageError error={{message: 'Booking info not available.'}}></PageError>
 
     return (
         <PageContainer>

@@ -26,6 +26,7 @@ const Hotel = () => {
 
     if (loading) return <PageLoader />
     if (error) return <PageError error={error} />
+    if(!location.state) return <PageError error={{message: 'Booking info not found.'}} />
 
     const hotel = data.getHotelByID;
 

@@ -75,11 +75,11 @@ const BookingModal = (props) => {
                 <Text className="small">Room Price: <span>Rs. {booking.room.price}</span></Text>
                 <Text className="small">Amount {booking.paid ? 'Paid' : 'To Be Paid'}: <span>Rs. {booking.amount}</span></Text>
                 <Text className="small">Payment Status:
-                    <span>{booking.paid ? 'Paid' : 'Not Paid'}</span>
+                    <span> {booking.paid ? 'Paid' : 'Not Paid'}</span>
                 </Text>
                 <ButtonsContainer>
                     <FormButton>View Hotel & Room</FormButton>
-                    <FormButton onClick={payLink}>Pay Now</FormButton>
+                    {!booking.paid ? <FormButton onClick={payLink}>Pay Now</FormButton> : null}
                 </ButtonsContainer>
             </ModalBox>
         </ModalContainer>
