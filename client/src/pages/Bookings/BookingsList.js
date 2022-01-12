@@ -13,7 +13,6 @@ const Container = styled.div`
 
 const BookingsList = (props) => {
 
-    console.log(props)
     const [query, setQuery] = useState('')
     const [loading, setLoading] = useState(false)
     const listItems = ['Hotel Name', 'Room Name', 'From', 'To', 'Booked On', 'Amount', 'Paid', 'Actions']
@@ -34,7 +33,8 @@ const BookingsList = (props) => {
                 <ListItem key={booking.id}
                     data={booking}
                     setLoading={setLoading}
-                    loading={loading} />
+                    loading={loading}
+                    setModal={props.setModal} />
             ) : <Loader />}
             {upcomingBookings.length === 0 &&
                 <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Bookings</Text>}
@@ -47,7 +47,8 @@ const BookingsList = (props) => {
                 <ListItem key={booking.id}
                     data={booking}
                     setLoading={setLoading}
-                    loading={loading} />
+                    loading={loading}
+                    setModal={props.setModal} />
             ) : <Loader />}
             {oldBookings.length === 0 &&
                 <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Bookings</Text>}

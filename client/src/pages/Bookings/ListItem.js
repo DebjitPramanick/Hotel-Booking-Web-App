@@ -12,7 +12,6 @@ const ListItem = (props) => {
     const [cancelBooking] = useMutation(CANCEL_BOOKING)
 
     let keys = Object.keys(props.data)
-    console.log(keys)
     keys = keys.filter(k => k!=='id' && k!=='bookedBy')
 
     const handleCancel = () => {
@@ -51,9 +50,8 @@ const ListItem = (props) => {
                 <Text>{props.data.paid ? 'Paid' : 'Not Paid'}</Text>
             </Tippy>
             <ActionsContainer>
-                <Button>
-                    <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
-                <Button><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png"/></Button>
+                <Button onClick={() => props.setModal({state: true, param: props.data, title: 'Booking Details'})}
+                ><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png"/></Button>
                 <Button onClick={handleCancel}><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
             </ActionsContainer>
         </Item>

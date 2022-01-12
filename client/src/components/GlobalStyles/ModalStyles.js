@@ -83,3 +83,8 @@ export const AddField = styled.div`
         font-size: 40px !important;
     }
 `
+
+export const FlexBox = styled.div`
+    display: flex;
+    justify-content: space-between
+`
