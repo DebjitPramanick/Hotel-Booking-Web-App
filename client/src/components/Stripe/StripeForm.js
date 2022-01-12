@@ -63,7 +63,6 @@ const StripeForm = () => {
             type: "card",
             card: elements.getElement(CardNumberElement)
         });
-        console.log("[PaymentMethod]", payload);
     };
 
 
@@ -75,7 +74,6 @@ const StripeForm = () => {
                     <CardNumberElement
                         options={options}
                         onChange={event => {
-                            console.log("CardNumberElement [change]", event);
                         }}
                     />
                 </CardInputWrapper>
@@ -86,7 +84,6 @@ const StripeForm = () => {
                     <CardExpiryElement
                         options={options}
                         onChange={event => {
-                            console.log("CardNumberElement [change]", event);
                         }}
                     />
                 </CardInputWrapper>
@@ -97,7 +94,6 @@ const StripeForm = () => {
                     <CardCvcElement
                         options={options}
                         onChange={event => {
-                            console.log("CardNumberElement [change]", event);
                         }}
                     />
                 </CardInputWrapper>

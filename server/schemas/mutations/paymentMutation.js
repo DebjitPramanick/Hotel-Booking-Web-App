@@ -31,7 +31,6 @@ const payAmount = { // For payment
             email: user.email,
             source: args.tokenId
         }).catch(e => {
-            console.log(e)
             throw new Error("Payment failed.");
         })
 
@@ -43,7 +42,6 @@ const payAmount = { // For payment
             description: "Transaction",
         }, { idempotencyKey: Math.round(Math.random() * 10000) })
             .catch(e => {
-                console.log(e)
                 throw new Error("Payment failed.");
             })
 

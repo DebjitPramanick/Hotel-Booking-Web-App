@@ -22,8 +22,6 @@ const Explore = (props) => {
     const params = useParams()
     const location = useLocation()
 
-    console.log(params, location)
-
     const { data, loading, error } = useQuery(SEARCH_HOTELS, {
         variables: {
             location: params.location,

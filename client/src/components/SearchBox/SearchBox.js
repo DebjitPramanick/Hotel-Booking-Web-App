@@ -29,7 +29,6 @@ const InputContainer = styled.div`
 const SearchBox = (props) => {
 
     const data = props.params
-    console.log(data)
 
     const [checkIn, setCheckIn] = useState(data ? new Date(data.from) : new Date());
     const [checkOut, setCheckOut] = useState(data ? new Date(data.to) : new Date());

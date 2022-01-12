@@ -108,7 +108,6 @@ const ImageUpload = (props) => {
         var file = dataURLtoFile(base64Image, "file.jpg");
         setPreview(base64Image);
         setImageURL(file)
-        console.log(file)
         setPopup(false)
     }
 

@@ -64,7 +64,6 @@ const PaymentScreen = (props) => {
                 let newBooking = booking
                 newBooking['id'] = res.data.payAmount.id
                 newBooking['paid'] = true
-                console.log(newBooking, res.data.payAmount.id)
                 navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: newBooking })
             }).catch(err => {
                 setLoading(false)
@@ -99,7 +98,6 @@ const PaymentScreen = (props) => {
                     let newBooking = booking
                     newBooking['id'] = res.data.payAmount.id
                     newBooking['paid'] = true
-                    console.log(newBooking, res.data.payAmount.id)
                     navigate(`/payment/${room.hotel.id}/${room.id}/3`, { state: newBooking })
                 }).catch(err => {
                     setLoading(false)
