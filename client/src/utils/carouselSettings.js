@@ -1,3 +1,41 @@
+const arrowStyles = {
+    width: '30px',
+    height: '30px',
+    borderRadius: '50%',
+    background: 'green',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: '2px',
+    background: '#ff6e29'
+}
+
+const SampleNextArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{
+                ...arrowStyles
+            }}
+            onClick={onClick}
+        />
+    );
+}
+
+const SamplePrevArrow = (props) => {
+    const { className, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{
+                ...arrowStyles
+            }}
+            onClick={onClick}
+        />
+    );
+}
+
 export const settings = {
     dots: true,
     infinite: true,
@@ -5,6 +43,8 @@ export const settings = {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />
 }
 
 
@@ -15,26 +55,30 @@ export const detailsSettings = {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />
 }
 
 export const settings2 = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 800,
+    autoplaySpeed: 1200,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
     responsive: [
-        {
-            breakpoint: 1400,
-            settings: {
-                dots: true,
-                infinite: true,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-            }  
-        },
+        // {
+        //     breakpoint: 1400,
+        //     settings: {
+        //         dots: true,
+        //         infinite: true,
+        //         slidesToShow: 2,
+        //         slidesToScroll: 1,
+        //     }
+        // },
         {
             breakpoint: 900,
             settings: {
@@ -42,7 +86,7 @@ export const settings2 = {
                 infinite: true,
                 slidesToShow: 3,
                 slidesToScroll: 1,
-            }  
+            }
         },
         {
             breakpoint: 680,
@@ -51,9 +95,18 @@ export const settings2 = {
                 infinite: true,
                 slidesToShow: 2,
                 slidesToScroll: 1,
-            }  
+            }
         },
-        
+        {
+            breakpoint: 480,
+            settings: {
+                dots: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+            }
+        },
+
     ]
 }
 

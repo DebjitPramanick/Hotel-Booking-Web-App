@@ -7,7 +7,7 @@ import SearchBox from '../../components/SearchBox/SearchBox'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { settings, urls } from '../../utils/carouselSettings'
+import { settings, settings2, urls } from '../../utils/carouselSettings'
 
 const HomeContainer = styled.div`
     display: flex;
@@ -37,13 +37,8 @@ const SliderContainer = styled.div`
         height: 100%;
         border-radius: 16px
     }
-
-    .slick-arrow{
-        background: grey;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        z-index: 99
+    @media(max-width: 1100px){
+        max-width: calc(100vw - 80px);
     }
 `
 
@@ -74,7 +69,7 @@ const Home = () => {
             </HomeContainer>
 
             <SliderContainer>
-                <Slider {...settings}>
+                <Slider {...settings2}>
                     {urls.map(u => (
                         <div className="banners">
                             <img src={u} alt="" />
