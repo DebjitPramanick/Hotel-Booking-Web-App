@@ -19,8 +19,15 @@ const BookingsList = (props) => {
 
     const curDate = new Date().setHours(0, 0, 0, 0)
 
-    const upcomingBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) > curDate) : []
-    const oldBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) <= curDate) : []
+    let upcomingBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) > curDate) : []
+    let oldBookings = props.bookings ? props.bookings.filter(b => new Date(b.from) <= curDate) : []
+
+    upcomingBookings = upcomingBookings.filter(b => {
+        return b.hotel.name.toLowerCase().includes(query.toString().toLowerCase())
+    })
+    oldBookings = oldBookings.filter(b => {
+        return b.hotel.name.toLowerCase().includes(query.toString().toLowerCase())
+    })
 
     return (
         <Container>
