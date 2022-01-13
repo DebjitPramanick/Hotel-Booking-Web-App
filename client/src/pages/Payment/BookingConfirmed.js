@@ -9,8 +9,6 @@ const BookingConfirmed = (props) => {
     const { user, room, booking } = props
     const navigate = useNavigate()
 
-    console.log(booking)
-
     return (
         <>
             <Confirmation>

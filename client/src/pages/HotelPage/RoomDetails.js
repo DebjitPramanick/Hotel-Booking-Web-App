@@ -50,8 +50,6 @@ const RoomDetails = (props) => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [roomsNum, setroomsNum] = useState(0)
 
-    console.log(roomsNum, roomNumbers)
-
     const handleBook = () => {
         if (roomNumbers.length > 0) {
             let nums = [];

@@ -17,8 +17,7 @@ const PaymentScreen = (props) => {
     const [payAmount] = useMutation(MAKE_PAYMENT)
 
     const [loading, setLoading] = useState(false)
-    console.log(booking)
-
+    
     const handleBook = () => {
         setLoading(true)
         if (bookingExists) {
