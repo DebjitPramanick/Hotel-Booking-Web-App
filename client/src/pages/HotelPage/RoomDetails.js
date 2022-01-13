@@ -54,7 +54,7 @@ const RoomDetails = (props) => {
         if (roomNumbers.length > 0) {
             let nums = [];
             let i = 0;
-            while(i<roomsNum){
+            while (i < roomsNum) {
                 nums.push(roomNumbers[i]);
                 i++;
             }
@@ -65,14 +65,14 @@ const RoomDetails = (props) => {
                 roomNumbers: nums,
                 bookedBy: user.id,
                 paid: false,
-                amount: room.price*nums.length,
+                amount: room.price * nums.length,
                 people: params.people,
                 room: room.id,
                 hotel: room.hotel.id
             }
             navigate(`/payment/${room.hotel.id}/${room.id}/1`, { state: bookingData })
         }
-        else{
+        else {
             alert("No available rooms.")
         }
     }
@@ -99,19 +99,23 @@ const RoomDetails = (props) => {
                     <Text className="clamp small" style={{ marginTop: '12px' }}>{room.description}</Text>
                     <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>
                     <Text className="small">Price: <span>{room.price}/-</span></Text>
-                    <FormButton onClick={handleBook}
+                    {params['view']===undefined ? (
+                        <FormButton onClick={handleBook}
                         style={{ display: 'initial', marginRight: '16px' }}>
                         Book Room
                     </FormButton>
-                    <SelectBox name="cars" id="cars"
-                        onChange={(e) => setroomsNum(Number(e.target.value))}
-                        value={roomsNum}>
-                        {roomNumbers.map((r, i) => (
-                            <option value={i + 1}
-                            >{`${i === 0 ? '1 Room' : `${i + 1} Rooms`} `}
-                            </option>
-                        ))}
-                    </SelectBox>
+                    ) : null}
+                    {roomNumbers.length !== 0 ? (
+                        <SelectBox name="cars" id="cars"
+                            onChange={(e) => setroomsNum(Number(e.target.value))}
+                            value={roomsNum}>
+                            {roomNumbers.map((r, i) => (
+                                <option value={i + 1}
+                                >{`${i === 0 ? '1 Room' : `${i + 1} Rooms`} `}
+                                </option>
+                            ))}
+                        </SelectBox>
+                    ) : null}
                 </Details>
             </div>
             <Features>

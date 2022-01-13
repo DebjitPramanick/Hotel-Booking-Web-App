@@ -6,7 +6,7 @@ import { PageContainer } from "../../components/GlobalStyles/PageStyles";
 import PageLoader from "../../components/Loaders/PageLoader";
 import { GET_HOTEL_BY_ID } from "../../graphql/queries/hotelQueries";
 import { GlobalContext } from "../../utils/Context";
-import HotelDetails from "./HotelDetails";
+import HotelDetails, { ManagerView } from "./HotelDetails";
 
 
 const Hotel = () => {
@@ -29,6 +29,12 @@ const Hotel = () => {
     if(!location.state) return <PageError error={{message: 'Booking info not found.'}} />
 
     const hotel = data.getHotelByID;
+
+    if (location.state['view']!==undefined && location.state['view'] === 'manager') return (
+        <PageContainer style={{maxWidth: "1200px", marginLeft: "auto", marginRight: "auto"}}>
+            <ManagerView params={location.state} hotel={hotel}/>
+        </PageContainer>
+    )
 
     return (
         <PageContainer style={{maxWidth: "1200px", marginLeft: "auto", marginRight: "auto"}}>

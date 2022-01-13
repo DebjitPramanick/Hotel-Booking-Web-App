@@ -58,7 +58,7 @@ const ListItem = (props) => {
                     { state: true, title: 'Update Room Details', param: props.data, action: 'update' })
                 }>
                     <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
-                <Button onClick={() => navigate(`/hotel/${props.data.hotel.id}`)}
+                <Button onClick={() => navigate(`/hotel/${props.data.hotel.id}`, {state: {view: 'manager'}})}
                 ><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png" /></Button>
                 <Button onClick={handleDelete}><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
             </ActionsContainer>
