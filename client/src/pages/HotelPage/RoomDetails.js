@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormButton, Image, SelectBox, Text } from '../../components/GlobalStyles/PageStyles'
 import RoomIMG from "../../assets/hotel.png";
@@ -48,20 +48,35 @@ const RoomDetails = (props) => {
     const ratings = !room.ratings ? 0.00 : room.ratings
     const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem('user'))
+    const [roomsNum, setroomsNum] = useState(0)
+
+    console.log(roomsNum, roomNumbers)
 
     const handleBook = () => {
-        const bookingData = {
-            from: params.from,
-            to: params.to,
-            roomNumber: 103,
-            bookedBy: user.id,
-            paid: false,
-            amount: room.price,
-            people: params.people,
-            room: room.id,
-            hotel: room.hotel.id
+        if (roomNumbers.length > 0) {
+            let nums = [];
+            let i = 0;
+            while(i<roomsNum){
+                nums.push(roomNumbers[i]);
+                i++;
+            }
+
+            const bookingData = {
+                from: params.from,
+                to: params.to,
+                roomNumbers: nums,
+                bookedBy: user.id,
+                paid: false,
+                amount: room.price*nums.length,
+                people: params.people,
+                room: room.id,
+                hotel: room.hotel.id
+            }
+            navigate(`/payment/${room.hotel.id}/${room.id}/1`, { state: bookingData })
         }
-        navigate(`/payment/${room.hotel.id}/${room.id}/1`, { state: bookingData })
+        else{
+            alert("No available rooms.")
+        }
     }
 
     return (
@@ -90,9 +105,13 @@ const RoomDetails = (props) => {
                         style={{ display: 'initial', marginRight: '16px' }}>
                         Book Room
                     </FormButton>
-                    <SelectBox name="cars" id="cars">
+                    <SelectBox name="cars" id="cars"
+                        onChange={(e) => setroomsNum(Number(e.target.value))}
+                        value={roomsNum}>
                         {roomNumbers.map((r, i) => (
-                            <option value={i + 1}>{`${i === 0 ? '1 Room' : `${i + 1} Rooms`} `}</option>
+                            <option value={i + 1}
+                            >{`${i === 0 ? '1 Room' : `${i + 1} Rooms`} `}
+                            </option>
                         ))}
                     </SelectBox>
                 </Details>

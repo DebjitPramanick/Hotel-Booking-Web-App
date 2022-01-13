@@ -32,6 +32,7 @@ const HotelDetails = (props) => {
     if (error) return <ComponentError error={error} />
 
     const rooms = data.getAvailableRooms
+    console.log(rooms)
 
     return (
         <div>

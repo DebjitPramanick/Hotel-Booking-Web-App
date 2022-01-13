@@ -55,7 +55,11 @@ const BookingModal = (props) => {
                     </div>
 
                     <div style={{ flexBasis: '46%' }}>
-                        <Text className="small">Rooms: <span>{booking.roomNumber}</span></Text>
+                        <Text className="small">Rooms: 
+                            {booking.roomNumbers.map(r =>
+                                (<span className="highlight" style={{ margin: '4px 2px' }}>{r}</span>)
+                            )}
+                        </Text>
                         <Text className="small">Number of persons: <span>{booking.numOfPeople}</span></Text>
                         <Text className="small">Adults: <span>{booking.people.adults}</span></Text>
                         <Text className="small">Children: <span>{booking.people.children}</span></Text>

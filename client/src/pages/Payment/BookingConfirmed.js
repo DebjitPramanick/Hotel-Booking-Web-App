@@ -9,6 +9,8 @@ const BookingConfirmed = (props) => {
     const { user, room, booking } = props
     const navigate = useNavigate()
 
+    console.log(booking)
+
     return (
         <>
             <Confirmation>
@@ -29,7 +31,7 @@ const BookingConfirmed = (props) => {
                         Age: <span>{getAge(user.dob)}</span>
                     </Text>
                     <Text className="small">
-                        Total: <span>{booking.people.adults+booking.people.children}</span>
+                        Total: <span>{booking.people.adults + booking.people.children}</span>
                     </Text>
                     <Text style={{ marginTop: '20px' }}>Booking Info</Text>
                     <Text className="small">
@@ -39,7 +41,8 @@ const BookingConfirmed = (props) => {
                         Room: <span>{room.name}</span>
                     </Text>
                     <Text className="small" style={{ margin: '-10px 0 10px 0' }}>
-                        Room Number(s): {[1, 2, 3].map(r =>
+                        Room Number(s):
+                        {booking.roomNumbers.map(r =>
                             (<span className="highlight" style={{ margin: '4px 2px' }}>{r}</span>)
                         )}
                     </Text>
@@ -47,19 +50,19 @@ const BookingConfirmed = (props) => {
                         Price (Each room): <span>Rs. {room.price}</span>
                     </Text>
                     <Text className="small">
-                        Total Cost: <span>Rs. {room.price}</span>
+                        Total Cost: <span>Rs. {booking.amount}</span>
                     </Text>
                 </div>
                 <div className="section">
                     <Text>Payment Info</Text>
                     <Text className="small">
-                        Room(s) Cost: <span>Rs. {room.price}</span>
+                        Room(s) Cost: <span>Rs. {booking.amount}</span>
                     </Text>
                     <Text className="small">
                         Tax: <span>Rs. {20}</span>
                     </Text>
                     <Text className="small">
-                        Total Cost: <span>Rs. {room.price + 20}</span>
+                        Total Cost: <span>Rs. {booking.amount + 20}</span>
                     </Text>
                     <Text className="small">
                         Payment Status: <span>{booking.paid ? 'Paid' : 'Not Paid'}</span>
@@ -67,8 +70,8 @@ const BookingConfirmed = (props) => {
                 </div>
             </Layout>
             <Layout className="buttons">
-                <FormButton onClick={() => navigate(`/bookings`)} 
-                style={{marginLeft: 'auto'}}>
+                <FormButton onClick={() => navigate(`/bookings`)}
+                    style={{ marginLeft: 'auto' }}>
                     Your Bookings
                 </FormButton>
             </Layout>

@@ -14,7 +14,7 @@ query($id: ID!){
             children
             adults
         }
-        roomNumber
+        roomNumbers
         numOfPeople
         location
         bookedBy{
@@ -52,7 +52,7 @@ query($id: ID!){
             children
             adults
         }
-        roomNumber
+        roomNumbers
         numOfPeople
         location
         bookedBy{
@@ -90,7 +90,7 @@ export const GET_BOOKING = gql`
             children
             adults
         }
-        roomNumber
+        roomNumbers
         numOfPeople
         location
         bookedBy{

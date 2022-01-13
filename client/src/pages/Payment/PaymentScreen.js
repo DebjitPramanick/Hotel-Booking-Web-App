@@ -17,6 +17,7 @@ const PaymentScreen = (props) => {
     const [payAmount] = useMutation(MAKE_PAYMENT)
 
     const [loading, setLoading] = useState(false)
+    console.log(booking)
 
     const handleBook = () => {
         setLoading(true)
@@ -28,10 +29,10 @@ const PaymentScreen = (props) => {
             variables: {
                 from: booking.from,
                 to: booking.to,
-                roomNumber: booking.roomNumber,
+                roomNumbers: booking.roomNumbers,
                 bookedBy: booking.bookedBy,
                 paid: booking.paid,
-                amount: booking.amount+20,
+                amount: booking.amount + 20,
                 people: booking.people,
                 room: booking.room,
                 hotel: booking.hotel
@@ -78,10 +79,10 @@ const PaymentScreen = (props) => {
                 variables: {
                     from: booking.from,
                     to: booking.to,
-                    roomNumber: booking.roomNumber,
+                    roomNumbers: booking.roomNumbers,
                     bookedBy: booking.bookedBy,
                     paid: booking.paid,
-                    amount: booking.amount+20,
+                    amount: booking.amount + 20,
                     people: booking.people,
                     room: booking.room,
                     hotel: booking.hotel
@@ -145,7 +146,8 @@ const PaymentScreen = (props) => {
                                 Room: <span>{room.name}</span>
                             </Text>
                             <Text className="small" style={{ margin: '-10px 0 10px 0' }}>
-                                Room Number(s): {[1, 2, 3].map(r =>
+                                Room Number(s):
+                                {booking.roomNumbers.map(r =>
                                     (<span className="highlight" style={{ margin: '4px 2px' }}>{r}</span>)
                                 )}
                             </Text>
@@ -153,26 +155,27 @@ const PaymentScreen = (props) => {
                                 Price (Each room): <span>Rs. {room.price}</span>
                             </Text>
                             <Text className="small">
-                                Total Cost: <span>Rs. {room.price}</span>
+                                Total Cost: <span>Rs. {booking.amount}</span>
                             </Text>
                         </div>
                         <div className="section">
                             <Text>Payment Info</Text>
                             <Text className="small">
-                                Room(s) Cost: <span>Rs. {room.price}</span>
+                                Room(s) Cost: <span>Rs. {booking.amount}</span>
                             </Text>
                             <Text className="small">
                                 Tax: <span>Rs. {20}</span>
                             </Text>
                             <Text className="small">
-                                Total Cost: <span>Rs. {room.price + 20}</span>
+                                Total Cost: 
+                                <span>Rs. {booking.amount + 20}</span>
                             </Text>
                             <StripeCheckout
                                 token={onToken}
                                 stripeKey="pk_test_51Hr13fE7BvSkBO4prE35EeVzyGVKfQCPfpfcOZZkSLfa4jfONQeEOrd9A4wFIERlRXuVpBu3NYVm1YwCrFfY0gs400dAaCrTp0"
                                 name=""
                                 currency='USD'
-                                amount={(room.price+20) * 100}
+                                amount={(booking.amount + 20) * 100}
                             />
                             <Text className="small" style={{ marginTop: '16px', color: 'grey' }}>
                                 *You can also pay later

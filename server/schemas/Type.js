@@ -129,7 +129,7 @@ const BookingType = new GraphQLObjectType({
                 })
             })
         },
-        roomNumber: { type: GraphQLInt },
+        roomNumbers: { type: new GraphQLList(GraphQLInt) },
         amount: { type: GraphQLInt },
         paid: { type: GraphQLBoolean },
         numOfPeople: { type: GraphQLInt },

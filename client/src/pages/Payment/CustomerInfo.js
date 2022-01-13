@@ -9,6 +9,7 @@ import { Layout } from './CommonStyles'
 const CustomerInfo = (props) => {
     const { user, room, booking } = props
     const navigate = useNavigate()
+    console.log(booking)
 
     return (
         <>
@@ -25,7 +26,7 @@ const CustomerInfo = (props) => {
                         Age: <span>{getAge(user.dob)}</span>
                     </Text>
                     <Text className="small">
-                        Total: <span>{booking.people.adults+booking.people.children}</span>
+                        Total: <span>{booking.people.adults+booking.people.children} Persons</span>
                     </Text>
                 </div>
                 <div className="section">
@@ -37,16 +38,16 @@ const CustomerInfo = (props) => {
                         Room: <span>{room.name}</span>
                     </Text>
                     <Text className="small" style={{ margin: '-10px 0 10px 0' }}>
-                        Room Number(s): <span className="highlight" style={{ margin: '4px 2px' }}>{booking.roomNumber}</span>
-                        {/* {[1, 2, 3].map(r =>
+                        Room Number(s): 
+                        {booking.roomNumbers.map(r =>
                             (<span className="highlight" style={{ margin: '4px 2px' }}>{r}</span>)
-                        )} */}
+                        )}
                     </Text>
                     <Text className="small">
-                        Price (Each room): <span>Rs. {booking.amount}</span>
+                        Price (Each room): <span>Rs. {room.price}</span>
                     </Text>
                     <Text className="small">
-                        Total Cost: <span>Rs. {booking.amount * 1}</span>
+                        Total Cost: <span>Rs. {booking.amount}</span>
                     </Text>
                 </div>
             </Layout>

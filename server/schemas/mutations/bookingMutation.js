@@ -28,7 +28,7 @@ const addBooking = { // For adding new booking
     args: {
         from: { type: new GraphQLNonNull(GraphQLDate) },
         to: { type: new GraphQLNonNull(GraphQLDate) },
-        roomNumber: { type: new GraphQLNonNull(GraphQLInt) },
+        roomNumbers: { type: new GraphQLNonNull(new GraphQLList(GraphQLInt)) },
         paid: { type: new GraphQLNonNull(GraphQLBoolean) },
         amount: { type: new GraphQLNonNull(GraphQLInt) },
         bookedBy: { type: new GraphQLNonNull(GraphQLID) },
@@ -42,7 +42,7 @@ const addBooking = { // For adding new booking
         let roomData = await Room.findById(args.room)
         if (!roomData) throw new Error('Room ID is wrong.')
 
-        let query = await Booking.findOne({ from: args.from, to: args.to, room: args.room, roomNumber: args.roomNumber })
+        let query = await Booking.findOne({ from: args.from, to: args.to, room: args.room })
         if (query) {
             throw new Error('Cannot book room(s) on same date.')
         }
@@ -55,7 +55,7 @@ const addBooking = { // For adding new booking
                 from: args.from,
                 to: args.to,
                 days: cntDays,
-                roomNumber: args.roomNumber,
+                roomNumbers: args.roomNumbers,
                 paid: args.paid,
                 amount: args.amount,
                 numOfPeople: total,
