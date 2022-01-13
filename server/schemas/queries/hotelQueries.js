@@ -72,7 +72,7 @@ const searchHotels = { // For searching available hotels
             let bookings = await Booking.find({
                 $or: [
                     { from: { $gte: args.from, $lte: args.to } },
-                    { to: { $lte: args.to, $gte: args.from } }
+                    { to: { $gte: args.from, $lte: args.to } }
                 ],
                 location: args.location,
                 numOfPeople: { $gte: args.occupancy }
@@ -102,7 +102,7 @@ const searchHotels = { // For searching available hotels
             bookings.forEach(b => {
                 let k = b.hotel.toString()
                 let c = map.has(k) ? map.get(k) : new Set()
-                c.add(b.roomNumber)
+                b.roomNumbers.forEach(r => c.add(r))
                 map.set(k, c)
                 return b.hotel
             })

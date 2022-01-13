@@ -64,7 +64,7 @@ const getAvailableRooms = { // For getting room details
             let bookings = await Booking.find({
                 $or: [
                     { from: { $gte: args.from, $lte: args.to } },
-                    { to: { $lte: args.to, $gte: args.from } }
+                    { to: { $gte: args.from, $lte: args.to } }
                 ],
                 hotel: args.hotelId,
                 numOfPeople: { $gte: args.occupancy }
@@ -76,6 +76,8 @@ const getAvailableRooms = { // For getting room details
 
             // If there are no bookings for these dates, 
             // return all rooms
+
+            console.log(bookings.length)
 
             if (bookings.length === 0) {
                 let res = []
@@ -98,11 +100,13 @@ const getAvailableRooms = { // For getting room details
             bookings.forEach(b => {
                 let k = b.hotel.toString()
                 let c = map.has(k) ? map.get(k) : new Set()
-                c.add(b.roomNumber)
-                occRooms.push(b.roomNumber)
+                b.roomNumbers.forEach(r => c.add(r))
+                b.roomNumbers.forEach(r => occRooms.push(r))
                 map.set(k, c)
                 return b.hotel
             })
+
+            console.log(occRooms, map)
 
             res = hotel.rooms.map(async r => {
                 let room = await Room.findById(r)
