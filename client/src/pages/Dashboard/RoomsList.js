@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Text } from '../../components/GlobalStyles/PageStyles'
 import Loader from '../../components/Loaders/Loader'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import ListHeader from './ListHeader'
@@ -14,6 +15,9 @@ const RoomsList = (props) => {
     const [query, setQuery] = useState('')
     const [loading, setLoading] = useState(false)
     const listItems = ['Image', 'Room Name', 'Description', "Price", 'Occupancy', 'Ratings', 'Added On', 'Actions']
+    let rooms = props.rooms.filter(r => {
+        return r.name.toLowerCase().includes(query.toString().toLowerCase())
+    })
 
     return (
         <Container>
@@ -23,11 +27,13 @@ const RoomsList = (props) => {
                 placeholder="Search rooms by names..." />
 
             <ListHeader list={listItems} />
-            {!loading ? props.rooms.map(room =>
+            {!loading ? rooms.map(room =>
                 <ListItem key={room.id} data={room}
                     setRoomModal={props.setRoomModal}
                     setLoading={setLoading} />)
                 : <Loader />}
+            {rooms.length === 0 &&
+                <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Rooms</Text>}
         </Container>
     )
 }

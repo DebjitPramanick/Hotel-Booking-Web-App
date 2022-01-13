@@ -77,8 +77,6 @@ const getAvailableRooms = { // For getting room details
             // If there are no bookings for these dates, 
             // return all rooms
 
-            console.log(bookings.length)
-
             if (bookings.length === 0) {
                 let res = []
                 res = hotel.rooms.map(async r => {
@@ -105,8 +103,6 @@ const getAvailableRooms = { // For getting room details
                 map.set(k, c)
                 return b.hotel
             })
-
-            console.log(occRooms, map)
 
             res = hotel.rooms.map(async r => {
                 let room = await Room.findById(r)
