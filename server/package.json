@@ -18,6 +18,7 @@
     "graphql": "^16.0.1",
     "graphql-date": "^1.0.3",
     "graphql-type-json": "^0.3.2",
+    "heroku": "^7.59.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.14",

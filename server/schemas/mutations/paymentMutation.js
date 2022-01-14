@@ -3,7 +3,10 @@ const { UserType, AuthType, HotelType, BookingType, PeopleType } = require("../T
 const User = require("../../models/User.js")
 const Booking = require("../../models/Booking.js")
 const Stripe = require('stripe');
-const stripe = new Stripe('sk_test_51Hr13fE7BvSkBO4pKZaivsbiLMdykp67V4jDLs2sb8Gjuu9crHPBs9yHKv59acXvEa89INAoNgL2PXHPOcdGgnDc005AlcrJd1');
+const dotenv = require('dotenv')
+
+dotenv.config()
+const stripe = new Stripe(process.env.STRIPE_SK);
 
 const {
     GraphQLID,
