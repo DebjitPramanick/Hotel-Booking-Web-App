@@ -1,6 +1,8 @@
 <h1 align="center">Hotel Booking Web App</h1>
   <p align="center">
     A hotel room booking web app with MERN Stack.    <br />
+    <a href="https://hotel-booking-app-2022.netlify.app/">Live Site</a>
+    .
     <a href="https://github.com/DebjitPramanick/Hotel-Booking-Web-App/issues">Report Bug</a>
     ·
     <a href="https://github.com/DebjitPramanick/Hotel-Booking-Web-App/issues">Request Feature</a>
@@ -46,6 +48,7 @@ Simple hotel booking app with content management system. Users can book rooms in
 * [Express JS](https://expressjs.com/)
 * [GraphQL](https://graphql.org/)
 * [MongoDB](https://www.mongodb.com/)
+* [Stripe](https://stripe.com/en-in)
 
 
 <!-- GETTING STARTED -->
