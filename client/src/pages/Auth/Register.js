@@ -48,7 +48,6 @@ const Register = () => {
             .then(res => {
                 const user = res.data.createUser
                 localStorage.setItem('user', JSON.stringify(user))
-                setLoading(false)
                 setTimeout(() => {
                     user.isManager ?
                         window.location.href = '/dashboard' :

@@ -7,6 +7,7 @@ import { AuthContainer, ButtonsContainer, FormContainer } from './ModuleStyles'
 import { useNavigate } from 'react-router-dom'
 import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 import Loader from "../../components/Loaders/Loader.js"
+import { toast } from 'react-toastify'
 
 const Login = () => {
 
@@ -21,7 +22,6 @@ const Login = () => {
     const [login] = useLazyQuery(LOGIN_USER, {
         fetchPolicy: 'network-only',
         onCompleted: res => {
-            setLoading(false)
             let user = res.login
             localStorage.setItem('user', JSON.stringify(user))
             setTimeout(() => {
@@ -32,7 +32,10 @@ const Login = () => {
         },
         onError: err => {
             setLoading(false)
-            alert(err.message)
+            toast.error(err.message, {
+                autoClose: 5500,
+                pauseOnHover: true
+            })
         }
     })
 

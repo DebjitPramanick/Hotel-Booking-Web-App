@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { detailsSettings } from '../../utils/carouselSettings';
+import { toast } from 'react-toastify';
 
 const CardContainer = styled.div`
     margin-top: 20px;
@@ -73,7 +74,10 @@ const RoomDetails = (props) => {
             navigate(`/payment/${room.hotel.id}/${room.id}/1`, { state: bookingData })
         }
         else {
-            alert("No available rooms.")
+            toast.error("No available rooms.", {
+                autoClose: 5500,
+                pauseOnHover: true
+            })
         }
     }
 
