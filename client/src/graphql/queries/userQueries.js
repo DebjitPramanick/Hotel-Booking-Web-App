@@ -21,7 +21,7 @@ query($email: String!, $password: String!){
 `
 
 export const GET_USER = gql`
-query($id: ID){
+query($id: ID!){
   getUser(id: $id){
     id
     name

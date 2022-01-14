@@ -92,7 +92,7 @@ const Dashboard = () => {
     const user = JSON.parse(localStorage.getItem('user'))
 
     const { loading, data, error } = useQuery(GET_HOTEL, {
-        variables: { id: user.id },
+        variables: { id: user?.id },
     })
 
     const [roomModal, setRoomModal] = useState({

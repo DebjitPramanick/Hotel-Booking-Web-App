@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -6,7 +6,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Header from "./components/Header/Header";
 import MainMenu from "./components/MainMenu/MainMenu";
@@ -22,129 +22,141 @@ import Payment from "./pages/Payment/Payment";
 import { ToastContainer } from "react-toastify";
 import Bookings from "./pages/Bookings/Bookings";
 import Profile from "./pages/Profile/Profile";
+import { GET_USER } from "./graphql/queries/userQueries";
+import { GENERATE_TOKEN } from "./graphql/mutations/userMutations";
 
-const client = new ApolloClient({
-  uri: "http://localhost:8000/graphql",
-  cache: new InMemoryCache(),
-});
 
 function App() {
+
+  const [generateToken] = useMutation(GENERATE_TOKEN)
+
+  const cahedUser = JSON.parse(localStorage.getItem('user'))
+  const { error } = useQuery(GET_USER, { variables: { id: cahedUser?.id } })
+
+  useEffect(() => {
+    if (error && error.message === 'Unauthenticated user!') {
+      generateToken({ variables: { refreshToken: cahedUser.refreshToken } })
+        .then(res => {
+          let user = res.data.generateToken
+          localStorage.setItem('user', JSON.stringify(user))
+        })
+    }
+  }, [error])
+
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(cahedUser);
   const [page, setPage] = useState("Home");
 
   return (
-    <ApolloProvider client={client}>
-      <GlobalContext.Provider
-        value={{ menuOpen, setMenuOpen, user, setPage, setUser }}
-      >
-        <div className="App">
-          <ToastContainer />
-          <Router>
-            <Header page={page} />
-            <MainMenu />
-            <Routes>
-              <Route exact path="/register" element={<Register />}></Route>
-              <Route exact path="/login" element={<Login />}></Route>
-              <Route exact path="/logout" element={<Logout />}></Route>
+    <GlobalContext.Provider
+      value={{ menuOpen, setMenuOpen, user, setPage, setUser }}
+    >
+      <div className="App">
+        <ToastContainer />
+        <Router>
+          <Header page={page} />
+          <MainMenu />
+          <Routes>
+            <Route exact path="/register" element={<Register />}></Route>
+            <Route exact path="/login" element={<Login />}></Route>
+            <Route exact path="/logout" element={<Logout />}></Route>
 
-              <Route
-                exact
-                path="/dashboard"
-                element={
-                  managerRoute ? <Dashboard /> : <Navigate to="/login" />
-                }
-              ></Route>
+            <Route
+              exact
+              path="/dashboard"
+              element={
+                managerRoute ? <Dashboard /> : <Navigate to="/login" />
+              }
+            ></Route>
 
+            <Route
+              exact
+              path="/"
+              element={
+                managerRoute || userRoute ? (
+                  <Home />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            ></Route>
+
+            <Route path="/explore">
               <Route
-                exact
-                path="/"
+                path=":location/:checkIn/:checkOut/:people"
                 element={
                   managerRoute || userRoute ? (
-                    <Home />
+                    <Explore />
                   ) : (
                     <Navigate to="/login" />
                   )
                 }
-              ></Route>
-
-              <Route path="/explore">
-                <Route
-                  path=":location/:checkIn/:checkOut/:people"
-                  element={
-                    managerRoute || userRoute ? (
-                      <Explore />
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
-
-                <Route
-                  path=""
-                  element={
-                    managerRoute || userRoute ? (
-                      <Explore />
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
-              </Route>
+              />
 
               <Route
-                exact
-                path="/hotel/:id"
+                path=""
                 element={
                   managerRoute || userRoute ? (
-                    <Hotel />
+                    <Explore />
                   ) : (
                     <Navigate to="/login" />
                   )
                 }
-              ></Route>
+              />
+            </Route>
 
-              <Route
-                exact
-                path="/payment/:hotelId/:roomId/:step"
-                element={
-                  managerRoute || userRoute ? (
-                    <Payment />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              ></Route>
+            <Route
+              exact
+              path="/hotel/:id"
+              element={
+                managerRoute || userRoute ? (
+                  <Hotel />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            ></Route>
 
-              <Route
-                exact
-                path="/bookings"
-                element={
-                  managerRoute || userRoute ? (
-                    <Bookings />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              ></Route>
+            <Route
+              exact
+              path="/payment/:hotelId/:roomId/:step"
+              element={
+                managerRoute || userRoute ? (
+                  <Payment />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            ></Route>
 
-              <Route
-                exact
-                path="/profile"
-                element={
-                  managerRoute || userRoute ? (
-                    <Profile />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              ></Route>
+            <Route
+              exact
+              path="/bookings"
+              element={
+                managerRoute || userRoute ? (
+                  <Bookings />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            ></Route>
 
-            </Routes>
-          </Router>
-        </div>
-      </GlobalContext.Provider>
-    </ApolloProvider>
+            <Route
+              exact
+              path="/profile"
+              element={
+                managerRoute || userRoute ? (
+                  <Profile />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            ></Route>
+
+          </Routes>
+        </Router>
+      </div>
+    </GlobalContext.Provider>
   );
 }
 
