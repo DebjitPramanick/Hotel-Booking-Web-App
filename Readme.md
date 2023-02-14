@@ -1,7 +1,7 @@
 <h1 align="center">Hotel Booking Web App</h1>
   <p align="center">
     A hotel room booking web app with MERN Stack.    <br />
-    <a href="https://hotel-booking-app-2022.netlify.app/">Live Site</a>
+    <a href="https://hotel-booking-web-app.vercel.app/">Live Site</a>
     .
     <a href="https://github.com/DebjitPramanick/Hotel-Booking-Web-App/issues">Report Bug</a>
     ·
@@ -94,6 +94,11 @@ These things must be installed in your system.
 ## Usage
 
 Here are some examples of how my app works.
+
+Login credentials:
+Email: admin2023@gmail.com
+Pass: 1234
+
 <br>
 <img src="./demo/ss2.png" alt=""/>
 <br>
