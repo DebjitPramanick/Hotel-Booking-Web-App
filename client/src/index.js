@@ -6,7 +6,7 @@ import App from './App';
 const user = JSON.parse(localStorage.getItem('user'))
 
 const client = new ApolloClient({
-  uri: "https://hotel-management-app-2022.herokuapp.com/graphql",
+  uri: "https://hotelbooking-be.onrender.com/graphql",
   cache: new InMemoryCache(),
   headers: {
     authorization: user ? `Bearer ${user.accessToken}` : ' ',
