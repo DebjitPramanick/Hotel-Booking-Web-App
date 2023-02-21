@@ -10,7 +10,7 @@ import BookingModal from '../../components/Modals/BookingModal'
 
 const Bookings = (props) => {
 
-    const { style, filter = 'user', hotel, bookingsData } = props
+    const { style, bookingsData } = props
 
     const { setPage } = useContext(GlobalContext)
 

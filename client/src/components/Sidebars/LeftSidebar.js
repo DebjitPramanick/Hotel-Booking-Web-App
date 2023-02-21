@@ -8,6 +8,7 @@ const SidebarContainer = styled.div`
     border-radius: 10px;
     position: fixed;
     width: 460px;
+    z-index: 9;
 
     @media(max-width: 1000px) {
         width: 100%;

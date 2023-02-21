@@ -14,5 +14,7 @@
 }
 
 .tippy-content{
-    padding: 0;
+    padding: 0 !important;
+    box-shadow: 5px 6px 20px 3px #66666682;
+    z-index: 9999 !important;
 }

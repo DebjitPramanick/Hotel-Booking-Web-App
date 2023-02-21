@@ -46,10 +46,10 @@ const SliderContainer = styled.div`
 const RoomDetails = (props) => {
 
     const { room, roomNumbers, params } = props
-    const ratings = !room.ratings ? 0.00 : room.ratings
+    // const ratings = !room.ratings ? 0.00 : room.ratings
     const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem('user'))
-    const [roomsNum, setroomsNum] = useState(0)
+    const [roomsNum, setroomsNum] = useState(1)
 
     const handleBook = () => {
         if (roomNumbers.length > 0) {
@@ -59,6 +59,8 @@ const RoomDetails = (props) => {
                 nums.push(roomNumbers[i]);
                 i++;
             }
+
+            console.log(nums)
 
             const bookingData = {
                 from: params.from,
@@ -71,6 +73,7 @@ const RoomDetails = (props) => {
                 room: room.id,
                 hotel: room.hotel.id
             }
+            console.log("ROOMPAGE", bookingData)
             navigate(`/payment/${room.hotel.id}/${room.id}/1`, { state: bookingData })
         }
         else {
@@ -101,7 +104,6 @@ const RoomDetails = (props) => {
                 <Details style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="clip">{room.name}</Text>
                     <Text className="clamp small" style={{ marginTop: '12px' }}>{room.description}</Text>
-                    <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>
                     <Text className="small">Price: <span>{room.price}/-</span></Text>
                     {params['view']===undefined ? (
                         <FormButton onClick={handleBook}

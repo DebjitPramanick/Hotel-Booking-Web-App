@@ -97,6 +97,7 @@ export const SearchBoxContainer = styled.div`
     padding: 20px;
     border-radius: 10px;
     box-shadow: 5px 6px 20px 3px #66666682;
+    z-index: 9999;
 
     .small-search-button {
         margin: 22px 0 0 auto;

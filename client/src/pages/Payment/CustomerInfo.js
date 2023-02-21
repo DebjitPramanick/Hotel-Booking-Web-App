@@ -10,6 +10,8 @@ const CustomerInfo = (props) => {
     const { user, room, booking } = props
     const navigate = useNavigate()
 
+    console.log(props)
+
     return (
         <>
             <Layout>

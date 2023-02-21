@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import SearchBar from '../../components/SearchBar/SearchBar'
-import ListHeader from './ListHeader'
-import ListItem from "./ListItem"
 import { Text } from "../../components/GlobalStyles/PageStyles"
 import Loader from '../../components/Loaders/Loader'
+import BookingCard from './BookingCard'
+import { GridContainer } from '../../components/GlobalStyles/ModalStyles'
 
 const Container = styled.div`
     margin-top: 20px;
+
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+
+        @media(max-width: 375px){
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+    }
 
 `
 
@@ -15,7 +23,6 @@ const BookingsList = (props) => {
 
     const [query, setQuery] = useState('')
     const [loading, setLoading] = useState(false)
-    const listItems = ['Hotel Name', 'Room Name', 'From', 'To', 'Booked On', 'Amount', 'Paid', 'Actions']
 
     const curDate = new Date().setHours(0, 0, 0, 0)
 
@@ -37,28 +44,33 @@ const BookingsList = (props) => {
                 placeholder="Search bookings by hotel names..." />
 
             <Text style={{ fontSize: '20px', margin: '26px 0' }}>Upcoming Bookings</Text>
-            <ListHeader list={listItems} />
-            {!loading ? upcomingBookings.map(booking =>
-                <ListItem key={booking.id}
-                    data={booking}
-                    setLoading={setLoading}
-                    loading={loading}
-                    setModal={props.setModal} />
-            ) : <Loader />}
+
+            <GridContainer className='grid-container'>
+                {!loading ? upcomingBookings.concat(upcomingBookings).concat(upcomingBookings).concat(upcomingBookings).concat(upcomingBookings).map(booking =>
+                    <BookingCard
+                        key={booking.id}
+                        data={booking}
+                        setLoading={setLoading}
+                        loading={loading}
+                        setModal={props.setModal} />
+                ) : <Loader />}
+            </GridContainer>
             {upcomingBookings.length === 0 &&
                 <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Bookings</Text>}
 
-            <br/>
+            <br />
 
             <Text style={{ fontSize: '20px', margin: '26px 0' }}>Old Bookings</Text>
-            <ListHeader list={listItems} />
-            {!loading ? oldBookings.map(booking =>
-                <ListItem key={booking.id}
-                    data={booking}
-                    setLoading={setLoading}
-                    loading={loading}
-                    setModal={props.setModal} />
-            ) : <Loader />}
+            <GridContainer className='grid-container'>
+                {!loading ? oldBookings.map(booking =>
+                    <BookingCard
+                        key={booking.id}
+                        data={booking}
+                        setLoading={setLoading}
+                        loading={loading}
+                        setModal={props.setModal} />
+                ) : <Loader />}
+            </GridContainer>
             {oldBookings.length === 0 &&
                 <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Bookings</Text>}
         </Container>
