@@ -40,7 +40,7 @@ const Header = (props) => {
     return (
         <FixedHeader
             style={menuOpen ? { backgroundColor: '#fff', 
-            backdropFilter: 'blur(0px)' } : {}}>
+            backdropFilter: 'blur(0px)' } : pageName === 'Home'? {} : {background: 'white'}}>
             <Content>
                 <div className="brand">
                     <Link to="/"><Logo><img src={HotelLogo} alt="/" /></Logo></Link>
