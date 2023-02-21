@@ -14,7 +14,9 @@ const Container = styled.div`
 const RoomsList = (props) => {
     const [query, setQuery] = useState('')
     const [loading, setLoading] = useState(false)
-    const listItems = ['Image', 'Room Name', 'Description', "Price", 'Occupancy', 'Ratings', 'Added On', 'Actions']
+    const listHeaderItems = ['Room Name', "Price", 'Occupancy', 'Added On', 'Actions']
+    const itemProperties = ['name', 'price', 'occupancy', 'addedOn', 'actions']
+
     let rooms = props.rooms.filter(r => {
         return r.name.toLowerCase().includes(query.toString().toLowerCase())
     })
@@ -26,11 +28,12 @@ const RoomsList = (props) => {
                 setQuery={setQuery}
                 placeholder="Search rooms by names..." />
 
-            <ListHeader list={listItems} />
+            <ListHeader list={listHeaderItems} />
             {!loading ? rooms.map(room =>
                 <ListItem key={room.id} data={room}
                     setRoomModal={props.setRoomModal}
-                    setLoading={setLoading} />)
+                    setLoading={setLoading}
+                    items={itemProperties} />)
                 : <Loader />}
             {rooms.length === 0 &&
                 <Text className="small" style={{ textAlign: 'center', marginTop: '20px' }}>No Rooms</Text>}

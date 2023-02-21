@@ -61,7 +61,7 @@ const Home = () => {
             </HomeContainer>
 
             <ImgContainer>
-                <img src={TravelImg} alt="/"></img>
+                <img src={TravelImg} alt="/" loading='lazy'></img>
             </ImgContainer>
 
         </PageContainer>

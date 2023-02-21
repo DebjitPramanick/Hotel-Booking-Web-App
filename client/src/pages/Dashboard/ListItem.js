@@ -8,13 +8,14 @@ import { useMutation } from '@apollo/client';
 import { DELETE_ROOM } from '../../graphql/mutations/roomMutations';
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries';
 import { toast } from 'react-toastify';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ListItem = (props) => {
 
     const [deleteRoom] = useMutation(DELETE_ROOM)
 
-    let keys = Object.keys(props.data)
-    keys = keys.filter(k => k !== 'others' && k !== 'id' && k !== 'roomNumbers' && k !== 'hotel')
+    let keys = props.items
+    console.log(keys, props.data)
     const navigate = useNavigate()
 
     const handleDelete = () => {
@@ -29,7 +30,7 @@ const ListItem = (props) => {
             ]
         }).then(res => {
             props.setLoading(false)
-            toast.success('Room deleted successfully',{
+            toast.success('Room deleted successfully', {
                 autoClose: 5500,
                 pauseOnHover: true
             })
@@ -43,26 +44,38 @@ const ListItem = (props) => {
     }
 
     return (
-        <Item style={{ gridTemplateColumns: `repeat(${keys.length}, 1fr)` }}>
-            <Text><Tippy interactive={true} content={'Room Image'} placement="bottom"><p>{props.data.name}</p></Tippy></Text>
-            <Tippy interactive={true} content={props.data.name} placement="bottom"><Text>{props.data.name}</Text></Tippy>
-            <Tippy interactive={true} content={props.data.description} placement="bottom"><Text>{props.data.description}</Text></Tippy>
-            <Tippy interactive={true} content={props.data.price} placement="bottom"><Text>{props.data.price}</Text></Tippy>
-            <Tippy interactive={true} content={props.data.occupancy} placement="bottom"><Text>{props.data.occupancy}</Text></Tippy>
-            <Tippy interactive={true} content={props.data.ratings} placement="bottom"><Text>{props.data.ratings}</Text></Tippy>
-            <Tippy interactive={true} content={getEasyDate(props.data.addedOn)} placement="bottom">
-                <Text>{getDate(props.data.addedOn)}</Text>
-            </Tippy>
-            <ActionsContainer>
-                <Button onClick={() => props.setRoomModal(
-                    { state: true, title: 'Update Room Details', param: props.data, action: 'update' })
-                }>
-                    <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
-                <Button onClick={() => navigate(`/hotel/${props.data.hotel.id}`, {state: {view: 'manager'}})}
-                ><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png" /></Button>
-                <Button onClick={handleDelete}><img alt="" width="20px" src="https://img.icons8.com/flat-round/48/000000/delete-sign.png" /></Button>
-            </ActionsContainer>
-        </Item>
+        <>
+            <Item style={{ gridTemplateColumns: `repeat(${keys.length}, 1fr)` }} className="normal-col">
+                <Text>{props.data.name}</Text>
+                <Tippy interactive={true} content={props.data.price} placement="bottom"><Text>{props.data.price}</Text></Tippy>
+                <Tippy interactive={true} content={props.data.occupancy} placement="bottom"><Text>{props.data.occupancy}</Text></Tippy>
+                <Tippy interactive={true} content={getEasyDate(props.data.addedOn)} placement="bottom">
+                    <Text>{getDate(props.data.addedOn)}</Text>
+                </Tippy>
+                <ActionsContainer>
+                    <Button onClick={() => props.setRoomModal(
+                        { state: true, title: 'Update Room Details', param: props.data, action: 'update' })
+                    }>
+                        <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
+                    <Button onClick={() => navigate(`/hotel/${props.data.hotel.id}`, { state: { view: 'manager' } })}
+                    ><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png" /></Button>
+                    <Button onClick={handleDelete}><DeleteIcon style={{ color: '#ff6464' }} /></Button>
+                </ActionsContainer>
+            </Item>
+
+            <Item className="responsive-col">
+                <Text>{props.data.name}</Text>
+                <ActionsContainer style={{justifyContent: 'flex-end'}}>
+                    <Button onClick={() => props.setRoomModal(
+                        { state: true, title: 'Update Room Details', param: props.data, action: 'update' })
+                    }>
+                        <img alt="" width="20px" src="https://img.icons8.com/plumpy/24/000000/edit--v1.png" /></Button>
+                    <Button onClick={() => navigate(`/hotel/${props.data.hotel.id}`, { state: { view: 'manager' } })}
+                    ><img alt="" width="20px" src="https://img.icons8.com/color/48/000000/connection-status-off--v1.png" /></Button>
+                    <Button onClick={handleDelete}><DeleteIcon style={{ color: '#ff6464' }} /></Button>
+                </ActionsContainer>
+            </Item>
+        </>
     )
 }
 

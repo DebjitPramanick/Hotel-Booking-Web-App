@@ -8,7 +8,24 @@ export const Item = styled.div`
   align-items: center;
   justify-content: space-between;
   border-radius: 6px;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+
+  &.normal-col{
+    @media(max-width: 700px) {
+      display: none;
+    }
+  }
+
+  &.responsive-col{
+    display: none;
+    grid-template-columns: 0.5fr 1fr !important;
+
+    @media(max-width: 700px) {
+      display: grid;
+    }
+  }
+
+  
 `;
 
 export const Text = styled.p`

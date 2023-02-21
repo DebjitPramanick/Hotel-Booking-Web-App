@@ -20,7 +20,12 @@ import ViewBookings from '../../components/Modals/ViewBookings'
 const QuickView = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr;
-    height: 360px
+    height: 360px;
+
+    @media(max-width: 1000px){
+        display: block;
+        height: fit-content
+    }
 `
 const Info = styled.div`
     width: 100%;
@@ -43,6 +48,11 @@ const Info = styled.div`
         bottom: 0;
         background: #00000066;
         padding: 16px;
+    }
+
+    @media(max-width: 1000px){
+        height: 360px;
+        margin: 0
     }
 `
 const Controls = styled.div`
@@ -74,6 +84,10 @@ const StatContainer = styled.div`
     border: 1px solid orange;
     margin-left: 10px;
     max-width: -webkit-fill-available;
+
+    @media(max-width: 1000px){
+        margin: 20px 0 0
+    }
 `
 
 const CardText = styled.div`
