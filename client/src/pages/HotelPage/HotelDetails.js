@@ -66,7 +66,17 @@ const HotelDetails = (props) => {
             occupancy: total
         }
     })
-    const ratings = !hotel.ratings ? 0.00 : hotel.ratings
+    // const ratings = !hotel.ratings ? 0.00 : hotel.ratings
+
+    const getPriceRange = () => {
+        console.log(hotel)
+        let prices = hotel.rooms.map(room => room.price)
+        let maxPrice = Math.max(...prices)
+        let minPrice = Math.min(...prices)
+
+        if(maxPrice === minPrice) return `${maxPrice}/-`;
+        return `${minPrice} - ${maxPrice}/-`;
+    }
 
     if (loading) return <PageLoader />
     if (error) return <ComponentError error={error} />
@@ -79,8 +89,7 @@ const HotelDetails = (props) => {
                 <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, height: "300px", width: "60%", }} />
                 <Details style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="small">Location: <span>{hotel.location}</span></Text>
-                    <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>
-                    <Text className="small">Price: <span>1500-5960/-</span></Text>
+                    <Text className="small">Price: <span>{getPriceRange()}</span></Text>
                 </Details>
             </div>
             <Details style={{ marginTop: '20px' }}>

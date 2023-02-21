@@ -51,7 +51,7 @@ const CustomerInfo = (props) => {
                 </div>
             </Layout>
             <Layout className="buttons">
-                <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/1`, {state: booking})}>
+                <FormButton onClick={() => navigate(`/hotel/${room.hotel.id}`, {state: booking})}>
                     Go Back
                 </FormButton>
                 <FormButton onClick={() => navigate(`/payment/${room.hotel.id}/${room.id}/2`, {state: booking})}>
