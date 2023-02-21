@@ -46,7 +46,7 @@ const BookingsList = (props) => {
             <Text style={{ fontSize: '20px', margin: '26px 0' }}>Upcoming Bookings</Text>
 
             <GridContainer className='grid-container'>
-                {!loading ? upcomingBookings.concat(upcomingBookings).concat(upcomingBookings).concat(upcomingBookings).concat(upcomingBookings).map(booking =>
+                {!loading ? upcomingBookings.map(booking =>
                     <BookingCard
                         key={booking.id}
                         data={booking}
