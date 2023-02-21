@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FormButton, FormTitle, Input } from '../GlobalStyles/FormStyles'
+import { SearchBoxContainer } from '../../components/GlobalStyles/PageStyles'
 import styled from 'styled-components'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,11 +9,14 @@ import { useNavigate } from 'react-router-dom';
 import SelectOccupancy from './SelectOccupancy';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SearchIcon from '@mui/icons-material/Search';
+import { fontSize } from '@mui/system';
 
 const Extras = styled.div`
     margin-top: 20px;
     display: flex;
     align-items: center;
+    gap: 12px
 `
 
 const InputContainer = styled.div`
@@ -29,6 +33,7 @@ const InputContainer = styled.div`
 const SearchBox = (props) => {
 
     const data = props.params
+    const styles = props.styles
 
     const [checkIn, setCheckIn] = useState(data ? new Date(data.from) : new Date());
     const [checkOut, setCheckOut] = useState(data ? new Date(data.to) : new Date());
@@ -42,8 +47,8 @@ const SearchBox = (props) => {
 
     const handleSearch = (e) => {
         e.preventDefault()
-        if(count.children===0 && count.adults===0) {
-            toast.warning("Please enter number of people.",{
+        if (count.children === 0 && count.adults === 0) {
+            toast.warning("Please enter number of people.", {
                 autoClose: 5500,
                 pauseOnHover: true
             })
@@ -57,45 +62,48 @@ const SearchBox = (props) => {
             people: count,
             location: query
         }
-        navigate(`/explore/${query}/${from}/${to}/${count.adults+count.children}`, 
-        {state: searchData})
+        navigate(`/explore/${query}/${from}/${to}/${count.adults + count.children}`,
+            { state: searchData })
     }
 
+
     return (
-        <>
-            <FormTitle style={{ color: '#fff', marginBottom: '20px' }}>Search Hotels</FormTitle>
+        <SearchBoxContainer style={styles}>
+            <FormTitle style={{ marginBottom: '20px', color: '#000', fontSize: '20px' }}>Travel where you want</FormTitle>
             <form onSubmit={handleSearch}>
                 <Input placeholder="Enter hotel name or location"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     required={true}></Input>
                 <Extras>
-                    <InputContainer style={{ marginRight: '16px' }}>
-                        <label>Check-In</label>
+                    <InputContainer>
+                        <label style={{ color: '#000' }}>Check-In</label>
                         <DatePicker selected={checkIn}
                             onChange={(date) => setCheckIn(date)} />
                     </InputContainer>
 
-                    <InputContainer style={{ marginRight: '16px' }}>
-                        <label>Check-Out</label>
+                    <InputContainer>
+                        <label style={{ color: '#000' }}>Check-Out</label>
                         <DatePicker selected={checkOut}
                             onChange={(date) => setCheckOut(date)} />
                     </InputContainer>
 
                     <InputContainer>
-                        <label>People</label>
-                        <SelectOccupancy count={count} setCount={setCount}/>
+                        <label style={{ color: '#000' }}>Guests</label>
+                        <SelectOccupancy count={count} setCount={setCount} />
                     </InputContainer>
 
+                    <FormButton type="submit" className='small-search-button'>
+                        <SearchIcon style={{ fontSize: '22px', marginTop: '2px', marginLeft: "2px" }} />
+                    </FormButton>
                 </Extras>
 
-                <FormButton type="submit"
-                    style={{ margin: '18px 0 0 auto', fontSize: '16px', width: '140px' }}>
-                    Search
+                <FormButton type="submit" className='large-search-button'>
+                    <SearchIcon style={{ fontSize: '22px', marginTop: '2px', marginLeft: "2px" }} />
                 </FormButton>
 
             </form>
-        </>
+        </SearchBoxContainer>
     )
 }
 

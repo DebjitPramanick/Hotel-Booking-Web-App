@@ -14,6 +14,7 @@ const OcpBox = styled.div`
     padding: 10px 12px;
     border-radius: 4px;
     cursor: pointer;
+    border: 1px solid #b6b6b6
 `
 
 const SelectionBox = styled.div`

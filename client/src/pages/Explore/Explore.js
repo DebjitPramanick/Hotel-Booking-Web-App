@@ -8,15 +8,20 @@ import { useParams, useLocation } from 'react-router'
 import { useQuery } from '@apollo/client'
 import { SEARCH_HOTELS } from '../../graphql/queries/hotelQueries'
 import PageLoader from '../../components/Loaders/PageLoader'
-import PageError from '../../components/Error/PageError'
 import ComponentError from '../../components/Error/ComponentError'
 
 const ResultContainer = styled.div`
     width: calc(100vw - 510px);
-    margin-left: auto
+    margin-left: auto;
+
+    @media(max-width: 1000px) {
+        width: 100%;
+        margin-top: 30px
+    }
+
 `
 
-const Explore = (props) => {
+const Explore = () => {
 
     const { setPage } = useContext(GlobalContext)
     const params = useParams()
@@ -33,6 +38,7 @@ const Explore = (props) => {
 
     useEffect(() => {
         setPage("Explore")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (loading) return <PageLoader />

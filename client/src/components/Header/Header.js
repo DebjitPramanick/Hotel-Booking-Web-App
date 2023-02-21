@@ -8,7 +8,6 @@ import {Link} from 'react-router-dom'
 
 const FixedHeader = styled.div`
     padding: 12px 16px;
-    backdrop-filter: blur(42px);
     position: fixed;
     top: 0;
     width: 100%;
@@ -38,19 +37,14 @@ const Header = (props) => {
 
     const user = JSON.parse(localStorage.getItem('user'))
 
-    const homeStyles = {
-        backgroundColor: '#0000009c', 
-        backdropFilter: 'none'
-    }
-
     return (
         <FixedHeader
             style={menuOpen ? { backgroundColor: '#fff', 
-            backdropFilter: 'blur(0px)' } : pageName==='Home' ? homeStyles : {}}>
+            backdropFilter: 'blur(0px)' } : {}}>
             <Content>
                 <div className="brand">
                     <Link to="/"><Logo><img src={HotelLogo} alt="/" /></Logo></Link>
-                    <PageTitle>{pageName}</PageTitle>
+                    <PageTitle style={menuOpen ? {color: 'black'} : {}}>{pageName}</PageTitle>
                 </div>
                 {user && (
                     <div className="collection" style={{display: 'flex', alignItems: 'center'}}>

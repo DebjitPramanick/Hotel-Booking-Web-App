@@ -25,11 +25,11 @@
 
 .collection .user-name{
     display: block;
-    padding: 6px 10px;
-    border-radius: 40px;
+    padding: 8px 10px;
+    border-radius: 4px;
     color: #fff;
-    border: 2px solid #ff6e29;
     margin-right: 16px;
+    background-color: #ff6e29;
 }
 
 .menu-icon{

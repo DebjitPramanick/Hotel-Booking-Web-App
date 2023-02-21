@@ -3,10 +3,9 @@ import styled from 'styled-components'
 export const PageTitle = styled.div`
     text-transform: capitalize;
     padding: 8px 12px 6px 12px;
-    border-radius: 27px;
-    border: 2px solid #ff6e29;
+    border-radius: 4px;
     font-weight: 700;
-    color: #ff6e29
+    color: #fff
 `
 
 export const PageContainer = styled.div`
@@ -25,6 +24,8 @@ export const PageContainer = styled.div`
         background: #0000004d;
         z-index: 1;
     }
+
+
 `
 
 export const SplitContainer = styled.div`
@@ -94,14 +95,38 @@ export const Image = styled.div`
 
 export const SearchBoxContainer = styled.div`
     padding: 20px;
-    background: #00000063;
-    border-radius: 6px;
+    border-radius: 10px;
+    box-shadow: 5px 6px 20px 3px #66666682;
+
+    .small-search-button {
+        margin: 22px 0 0 auto;
+        height: 40px;
+        width: 40px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media(max-width: 700px) {
+            display: none;
+        }
+    }
+
+    .large-search-button {
+        display: none;
+        width: 100%;
+        margin-top: 16px;
+
+        @media(max-width: 700px) {
+            display: block
+        }
+    }
 `
 
 export const Text = styled.p`
     font-size: 26px;
     font-weight: bold;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     &.small{
         font-size: 16px;
         font-weight: normal;
