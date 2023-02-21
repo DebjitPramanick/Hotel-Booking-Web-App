@@ -19,6 +19,16 @@ export const ManagerView = (props) => {
 
     const rooms = hotel.rooms
 
+    const getPriceRange = () => {
+        if(hotel.rooms.length === 0) return "Price - N/A"
+        let prices = hotel.rooms.map(room => room.price)
+        let maxPrice = Math.max(...prices)
+        let minPrice = Math.min(...prices)
+
+        if(maxPrice === minPrice) return `${maxPrice}/-`;
+        return `${minPrice} - ${maxPrice}/-`;
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', width: '100%' }}>
@@ -26,7 +36,7 @@ export const ManagerView = (props) => {
                 <Details style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="small">Location: <span>{hotel.location}</span></Text>
                     <Text className="small">Ratings: <span className="highlight">{ratings}</span></Text>
-                    <Text className="small">Price: <span>1500-5960/-</span></Text>
+                    <Text className="small">Price: <span>{getPriceRange()}</span></Text>
                 </Details>
             </div>
             <Details style={{ marginTop: '20px' }}>
@@ -53,7 +63,7 @@ export const ManagerView = (props) => {
 }
 
 
-const HotelDetails = (props) => {
+export const HotelDetails = (props) => {
 
     const { hotel, params } = props
     let total = Object.values(params.people).reduce((a, b) => a + b)
@@ -69,7 +79,7 @@ const HotelDetails = (props) => {
     // const ratings = !hotel.ratings ? 0.00 : hotel.ratings
 
     const getPriceRange = () => {
-        console.log(hotel)
+        if(hotel.rooms.length === 0) return "Price - N/A"
         let prices = hotel.rooms.map(room => room.price)
         let maxPrice = Math.max(...prices)
         let minPrice = Math.min(...prices)
@@ -114,5 +124,3 @@ const HotelDetails = (props) => {
         </div>
     )
 }
-
-export default HotelDetails

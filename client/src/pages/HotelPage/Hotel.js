@@ -6,7 +6,7 @@ import { PageContainer } from "../../components/GlobalStyles/PageStyles";
 import PageLoader from "../../components/Loaders/PageLoader";
 import { GET_HOTEL_BY_ID } from "../../graphql/queries/hotelQueries";
 import { GlobalContext } from "../../utils/Context";
-import HotelDetails, { ManagerView } from "./HotelDetails";
+import { HotelDetails, ManagerView } from "./HotelDetails";
 
 
 const Hotel = () => {

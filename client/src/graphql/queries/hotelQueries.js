@@ -115,6 +115,7 @@ query($location: String!, $from: Date!, $to: Date!, $occupancy: Int!){
         price
         addedOn
         ratings
+        roomNumbers
         hotel{
           id
           name
