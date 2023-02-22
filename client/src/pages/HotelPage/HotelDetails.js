@@ -119,7 +119,7 @@ export const HotelDetails = (props) => {
     if (loading) return <PageLoader />
     if (error) return <ComponentError error={error} />
 
-    const rooms = data.getAvailableRooms
+    const rooms = data.getAvailableRooms;
 
     return (
         <div>
