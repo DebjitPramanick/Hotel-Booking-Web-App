@@ -37,6 +37,12 @@ const Header = (props) => {
 
     const user = JSON.parse(localStorage.getItem('user'))
 
+    const getFirstName = (name) => {
+        let names = name.split(" ")
+        if(names.length > 0) return names[0];
+        else return name;
+    }
+
     return (
         <FixedHeader
             style={menuOpen ? { backgroundColor: '#fff', 
@@ -50,7 +56,7 @@ const Header = (props) => {
                     <div className="collection" style={{display: 'flex', alignItems: 'center'}}>
                         <p className='user-name' 
                         style={{display: `${pageName === 'Home' && !menuOpen ? 'block' : 'none'}`}}>
-                        Hello, {user.name}
+                        Hello, {getFirstName(user.name)}
                         </p>
                         <div class={`menu-icon ${menuOpen ? 'close-icon' : ''}`}
                             onClick={() => setMenuOpen(!menuOpen)}>

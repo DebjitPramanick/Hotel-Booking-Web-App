@@ -68,7 +68,8 @@ const BookingsList = (props) => {
                         data={booking}
                         setLoading={setLoading}
                         loading={loading}
-                        setModal={props.setModal} />
+                        setModal={props.setModal}
+                        isOld={true} />
                 ) : <Loader />}
             </GridContainer>
             {oldBookings.length === 0 &&

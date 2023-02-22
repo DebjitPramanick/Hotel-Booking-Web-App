@@ -13,14 +13,15 @@ import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import { PageContainer } from '../../components/GlobalStyles/PageStyles'
 import HotelModal from '../../components/Modals/HotelModal'
 import PageLoader from '../../components/Loaders/PageLoader'
-import Stat from './Stats/Stat'
 import PageError from '../../components/Error/PageError'
 import ViewBookings from '../../components/Modals/ViewBookings'
+import QuickStat from './Stats/QuickStat'
 
 const QuickView = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr;
     height: 360px;
+    gap: 16px;
 
     @media(max-width: 1000px){
         display: block;
@@ -30,9 +31,8 @@ const QuickView = styled.div`
 const Info = styled.div`
     width: 100%;
     height: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     background: grey;
-    margin-right: 10px;
     max-width: -webkit-fill-available;
     position: relative;
     overflow: hidden;
@@ -40,6 +40,7 @@ const Info = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
+    margin-bottom: 16px;
     .card-details{
         position: absolute;
         top: 0;
@@ -79,15 +80,9 @@ const Controls = styled.div`
 
 const StatContainer = styled.div`
     width: 100%;
-    padding: 20px;
     border-radius: 20px;
-    border: 1px solid orange;
-    margin-left: 10px;
     max-width: -webkit-fill-available;
-
-    @media(max-width: 1000px){
-        margin: 20px 0 0
-    }
+    margin-bottom: 20px;
 `
 
 const CardText = styled.div`
@@ -167,6 +162,10 @@ const Dashboard = () => {
                 hotel={hotel}
                 bookings={bookingsModal.param} />)}
 
+            <StatContainer>
+                <QuickStat hotel={hotel} setBookingsModal={setBookingsModal} />
+            </StatContainer>
+
             <QuickView>
                 <Info style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})` }}>
                     <div className="card-details">
@@ -188,11 +187,10 @@ const Dashboard = () => {
                         ))}
                     </Controls>
                 </Info>
-                <StatContainer>
-                    <Stat hotel={hotel} setBookingsModal={setBookingsModal}/>
-                </StatContainer>
+
+                <RoomsList rooms={hotel.rooms} setRoomModal={setRoomModal} />
             </QuickView>
-            <RoomsList rooms={hotel.rooms} setRoomModal={setRoomModal} />
+
 
         </PageContainer>
     )

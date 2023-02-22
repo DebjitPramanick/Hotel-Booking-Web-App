@@ -7,7 +7,10 @@ import ListHeader from './ListHeader'
 import ListItem from "./ListItem"
 
 const Container = styled.div`
-    margin-top: 20px;
+
+    @media(max-width: 1000px){
+        margin-top: 20px;
+    }
 
 `
 

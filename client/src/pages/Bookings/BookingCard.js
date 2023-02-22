@@ -34,9 +34,11 @@ const CardContainer = styled.div`
         font-size: 14px;
         width: fit-content;
         margin-top: 6px !important;
+        color: #fff;
 
         &.paid{
             background: #5fffc5;
+            color: #008d5a
         }
     }
     
@@ -95,7 +97,7 @@ const BookingCard = (props) => {
                         onClick={() => props.setModal({ state: true, param: props.data, title: 'Booking Details' })}>
                         <MoreHorizIcon style={{ color: '#fff' }} />
                     </Button>
-                    <Button style={{ background: '#ff6e29' }} onClick={handleCancel}><AutoDeleteIcon style={{ color: '#fff' }} /></Button>
+                    {!props.isOld && <Button style={{ background: '#ff6e29' }} onClick={handleCancel}><AutoDeleteIcon style={{ color: '#fff' }} /></Button>}
                 </ActionsContainer>
             </div>
             <div className='details'>
