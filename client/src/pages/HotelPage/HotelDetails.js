@@ -13,6 +13,35 @@ const Details = styled.div`
     padding: 16px
 `
 
+const Flex = styled.div`
+
+    display: flex;
+    width: 100%;
+
+    @media(max-width: 600px) {
+        flex-direction: column
+    }
+
+    .img-container {
+        @media(max-width: 600px) {
+            width: 100% !important;
+            margin: 0 0 16px 0;
+
+        }
+    }
+
+    .details {
+        border: 0.5px solid #d8d8d8;
+        padding: 16px;
+
+        @media(max-width: 600px) {
+            width: 100% !important;
+            margin: 0 0 16px 0 !important;
+
+        }
+    }
+`
+
 export const ManagerView = (props) => {
     const { hotel, params } = props
     const ratings = !hotel.ratings ? 0.00 : hotel.ratings
@@ -20,24 +49,24 @@ export const ManagerView = (props) => {
     const rooms = hotel.rooms
 
     const getPriceRange = () => {
-        if(hotel.rooms.length === 0) return "Price - N/A"
+        if (hotel.rooms.length === 0) return "Price - N/A"
         let prices = hotel.rooms.map(room => room.price)
         let maxPrice = Math.max(...prices)
         let minPrice = Math.min(...prices)
 
-        if(maxPrice === minPrice) return `${maxPrice}/-`;
+        if (maxPrice === minPrice) return `${maxPrice}/-`;
         return `${minPrice} - ${maxPrice}/-`;
     }
 
     return (
         <div>
-            <div style={{ display: 'flex', width: '100%' }}>
-                <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, height: "300px", width: "60%", }} />
-                <Details style={{ width: '40%', marginLeft: '20px' }}>
+            <Flex>
+                <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, height: "300px", width: "60%", }} className="img-container" />
+                <div className='details' style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="small">Location: <span>{hotel.location}</span></Text>
                     <Text className="small">Price: <span>{getPriceRange()}</span></Text>
-                </Details>
-            </div>
+                </div>
+            </Flex>
             <Details style={{ marginTop: '20px' }}>
                 <Text className="clip">{hotel.name}</Text>
                 <Text className="clamp small" style={{ marginTop: '12px' }}>{hotel.description}</Text>
@@ -78,12 +107,12 @@ export const HotelDetails = (props) => {
     // const ratings = !hotel.ratings ? 0.00 : hotel.ratings
 
     const getPriceRange = () => {
-        if(hotel.rooms.length === 0) return "Price - N/A"
+        if (hotel.rooms.length === 0) return "Price - N/A"
         let prices = hotel.rooms.map(room => room.price)
         let maxPrice = Math.max(...prices)
         let minPrice = Math.min(...prices)
 
-        if(maxPrice === minPrice) return `${maxPrice}/-`;
+        if (maxPrice === minPrice) return `${maxPrice}/-`;
         return `${minPrice} - ${maxPrice}/-`;
     }
 
@@ -94,13 +123,13 @@ export const HotelDetails = (props) => {
 
     return (
         <div>
-            <div style={{ display: 'flex', width: '100%' }}>
-                <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, height: "300px", width: "60%", }} />
-                <Details style={{ width: '40%', marginLeft: '20px' }}>
+            <Flex>
+                <Image style={{ backgroundImage: `url(${hotel.image ? hotel.image : HotelIMG})`, height: "300px", width: "60%", }} className="img-container" />
+                <div className='details' style={{ width: '40%', marginLeft: '20px' }}>
                     <Text className="small">Location: <span>{hotel.location}</span></Text>
                     <Text className="small">Price: <span>{getPriceRange()}</span></Text>
-                </Details>
-            </div>
+                </div>
+            </Flex>
             <Details style={{ marginTop: '20px' }}>
                 <Text className="clip">{hotel.name}</Text>
                 <Text className="clamp small" style={{ marginTop: '12px' }}>{hotel.description}</Text>

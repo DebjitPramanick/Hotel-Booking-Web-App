@@ -23,10 +23,10 @@ const Details = styled.div`
 
 const Features = styled.div`
     margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    grid-gap: 8px;
+    gap: 8px;
     p{
         text-align: center;
         padding: 6px 10px;
@@ -34,13 +34,40 @@ const Features = styled.div`
         border-radius: 20px;
         margin: 0
     }
+
+    @media(max-width: 600px) {
+        margin-top: 20px;
+    }
 }
 `
 
 const SliderContainer = styled.div`
     width: 60%;
     padding: 16px
-}
+`
+
+const Flex = styled.div`
+
+    display: flex;
+    width: 100%;
+
+    @media(max-width: 600px) {
+        flex-direction: column
+    }
+
+    .img-container {
+        @media(max-width: 600px) {
+            width: 100% !important;
+            margin: 0 0 16px 0;
+        }
+    }
+
+    .details {
+        @media(max-width: 600px) {
+            width: 100% !important;
+            margin: 0 0 16px 0 !important;
+        }
+    }
 `
 
 const RoomDetails = (props) => {
@@ -86,11 +113,11 @@ const RoomDetails = (props) => {
 
     return (
         <CardContainer style={{ marginTop: '20px' }}>
-            <div style={{ display: 'flex', width: '100%' }}>
+            <Flex>
                 {room.images.length === 0 ? (
-                    <Image style={{ backgroundImage: `url(${RoomIMG})`, height: "300px", width: "60%", }} />
+                    <Image style={{ backgroundImage: `url(${RoomIMG})`, height: "300px", width: "60%", }} className="img-container" />
                 ) : (
-                    <SliderContainer>
+                    <SliderContainer className="img-container">
                         <Slider {...detailsSettings}>
                             {room.images.map(img => (
                                 <div className="banners" key={img.uuid}>
@@ -101,15 +128,15 @@ const RoomDetails = (props) => {
                     </SliderContainer>
                 )}
 
-                <Details style={{ width: '40%', marginLeft: '20px' }}>
+                <Details style={{ width: '40%', marginLeft: '20px' }} className="details">
                     <Text className="clip">{room.name}</Text>
                     <Text className="clamp small" style={{ marginTop: '12px' }}>{room.description}</Text>
                     <Text className="small">Price: <span>{room.price}/-</span></Text>
-                    {params['view']===undefined ? (
+                    {params['view'] === undefined ? (
                         <FormButton onClick={handleBook}
-                        style={{ display: 'initial', marginRight: '16px' }}>
-                        Book Room
-                    </FormButton>
+                            style={{ display: 'initial', marginRight: '16px' }}>
+                            Book Room
+                        </FormButton>
                     ) : null}
                     {roomNumbers.length !== 0 ? (
                         <SelectBox name="cars" id="cars"
@@ -123,10 +150,10 @@ const RoomDetails = (props) => {
                         </SelectBox>
                     ) : null}
                 </Details>
-            </div>
+            </Flex>
             <Features>
-                {room.others.map(oth => (
-                    <Text className="small">{oth}</Text>
+                {room.others.concat(room.others).map(oth => (
+                    <Text style={{fontSize: '12px'}} className="small">{oth}</Text>
                 ))}
             </Features>
 
