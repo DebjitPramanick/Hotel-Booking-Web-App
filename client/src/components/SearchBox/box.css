@@ -1,0 +1,20 @@
+.react-datepicker-wrapper{
+    width: 100%;
+    display: inline-block;
+    margin-right: 16px;
+}
+
+.react-datepicker-wrapper input{
+    border: 1px solid #b6b6b6;
+    outline: 0;
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.tippy-content{
+    padding: 0 !important;
+    box-shadow: 5px 6px 20px 3px #66666682;
+    z-index: 9999 !important;
+}

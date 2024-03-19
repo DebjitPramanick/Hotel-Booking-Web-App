@@ -1,0 +1,24 @@
+.search-bar{
+    position: relative;
+}
+
+.search-res{
+    top: 100%;
+    background-color: #fff;
+    border: 1px solid #b6b6b6;
+    width: 100%;
+    border-radius: 0 0 4px 4px;
+    position: absolute;
+}
+
+.search-res li{
+    padding: 10px;
+    cursor: pointer;
+    color: #838383;
+}
+
+.search-res li:hover{
+    background-color: #b6b6b6;
+    color: #111111;
+    font-weight: 600;
+}
