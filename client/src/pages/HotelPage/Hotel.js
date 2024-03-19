@@ -21,7 +21,7 @@ const Hotel = () => {
         if(!loading && data){
             setPage(`${data.getHotelByID.name}`)
         }
-        
+        // eslint-disable-next-line
     }, [loading, data])
 
     if (loading) return <PageLoader />

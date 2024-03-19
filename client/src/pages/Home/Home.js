@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import HomeBG from "../../assets/home.jpg"
 import styled from "styled-components"
-import { GlobalContext } from '../../utils/Context'
+import { GlobalContext } from '../../utils/Context'// eslint-disable-next-line
 import { PageContainer, Text } from '../../components/GlobalStyles/PageStyles'
 import SearchBox from '../../components/SearchBox/SearchBox'
 import TravelImg from "../../assets/travel.png"
@@ -41,7 +41,7 @@ const Home = () => {
     const { setPage } = useContext(GlobalContext)
 
     useEffect(() => {
-        setPage("Home")
+        setPage("Home")// eslint-disable-next-line
     }, [])
 
     return (

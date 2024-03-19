@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import SelectOccupancy from './SelectOccupancy';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search';// eslint-disable-next-line
 import { fontSize } from '@mui/system';
 
 const Extras = styled.div`

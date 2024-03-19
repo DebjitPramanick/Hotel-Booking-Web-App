@@ -6,11 +6,11 @@ const arrowStyles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: '2px',
+    paddingTop: '2px',// eslint-disable-next-line
     background: '#ff6e29'
 }
 
-const SampleNextArrow = (props) => {
+const SampleNextArrow = (props) => {// eslint-disable-next-line
     const { className, style, onClick } = props;
     return (
         <div

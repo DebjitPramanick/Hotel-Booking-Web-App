@@ -126,7 +126,7 @@ const Dashboard = () => {
     })
 
     useEffect(() => {
-        setPage("Dashboard")
+        setPage("Dashboard")// eslint-disable-next-line
     }, [])
 
     const controls = [

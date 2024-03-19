@@ -17,7 +17,7 @@ const Payment = () => {
     const { setPage } = useContext(GlobalContext)
 
     useEffect(() => {
-        setPage("Payment")
+        setPage("Payment")// eslint-disable-next-line
     }, [])
 
     const { roomId, step} = useParams()

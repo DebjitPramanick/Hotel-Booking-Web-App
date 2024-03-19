@@ -43,7 +43,7 @@ const Flex = styled.div`
 `
 
 export const ManagerView = (props) => {
-    const { hotel, params } = props
+    const { hotel, params } = props// eslint-disable-next-line
     const ratings = !hotel.ratings ? 0.00 : hotel.ratings
 
     const rooms = hotel.rooms

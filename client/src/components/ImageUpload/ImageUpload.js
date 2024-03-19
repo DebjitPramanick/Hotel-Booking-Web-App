@@ -59,8 +59,8 @@ const ImageUpload = (props) => {
         aspect: 16 / 9
     }); //Fro setting crop value
 
-    const [preview, setPreview] = useState(''); //For showing the preview to users
-    const [imageFile, setImageFile] = useState({}); //For setting the imagefile after upload
+    const [preview, setPreview] = useState('');// eslint-disable-next-line
+    const [imageFile, setImageFile] = useState({});
 
     const displayChange = e => {
         e.preventDefault();

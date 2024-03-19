@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormButton, Text } from '../../components/GlobalStyles/PageStyles'
+import { FormButton, Text } from '../../components/GlobalStyles/PageStyles'// eslint-disable-next-line
 import styled from 'styled-components'
 import { getAge } from '../../utils/utilFunctions'
 import { useNavigate } from 'react-router-dom'

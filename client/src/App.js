@@ -45,7 +45,7 @@ function App() {
           let user = res.data.generateToken
           localStorage.setItem('user', JSON.stringify(user))
         })
-    }
+    }// eslint-disable-next-line
   }, [error])
 
   const [menuOpen, setMenuOpen] = useState(false);

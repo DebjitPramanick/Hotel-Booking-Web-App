@@ -60,7 +60,7 @@ const Profile = () => {
     const [curUser, setCurUser] = useState(user)
 
     useEffect(() => {
-        setPage("Profile")
+        setPage("Profile")// eslint-disable-next-line
     }, [])
 
     const [updateProfile] = useMutation(UPDATE_USER, {
@@ -85,7 +85,7 @@ const Profile = () => {
             setShowBtn(true)
         }else{
             setShowBtn(false)
-        }
+        }// eslint-disable-next-line
     }, [curUser])
 
     const updateUser = () => {

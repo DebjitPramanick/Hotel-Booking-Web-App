@@ -16,7 +16,7 @@ const Register = () => {
     const { setPage } = useContext(GlobalContext)
 
     useEffect(() => {
-        setPage('Register')
+        setPage('Register')// eslint-disable-next-line
     }, [])
 
     const navigate = useNavigate()

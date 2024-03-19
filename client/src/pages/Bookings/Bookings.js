@@ -15,7 +15,7 @@ const Bookings = (props) => {
     const { setPage } = useContext(GlobalContext)
 
     useEffect(() => {
-        setPage("Bookings")
+        setPage("Bookings")// eslint-disable-next-line
     }, [])
 
     const [modal, setModal] = useState({

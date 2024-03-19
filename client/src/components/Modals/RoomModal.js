@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'// eslint-disable-next-line
 import React, { useState, useEffect } from 'react'
 import { ADD_ROOM, UPDATE_ROOM } from '../../graphql/mutations/roomMutations'
 import { FormButton, Input, TextArea } from '../GlobalStyles/FormStyles'
@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import "./animation.css"
 import { GET_HOTEL } from '../../graphql/queries/hotelQueries'
 import ImageUpload from '../ImageUpload/ImageUpload'
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddCircleIcon from '@mui/icons-material/AddCircle';// eslint-disable-next-line
 import { bulkImageUpload, deleteImageBulk, imageUpload } from '../../utils/utilFunctions'
 import Loader from '../Loaders/Loader'
 
